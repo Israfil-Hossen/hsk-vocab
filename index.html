@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#EDF5FD">
+<title>HSK 30-Day Mastery · ISRAFIL HOSSEN · UCAS</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;700;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#EDF5FD;--bg2:#F5F9FE;--bg3:#fff;--tx:#152030;--tx2:#3D5A73;--tx3:#7E9BB5;
+--pri:#1A73E8;--pri-l:#5BA3F5;--pri-d:#0D47A1;--pri-bg:rgba(26,115,232,.07);--pri-bg2:rgba(26,115,232,.14);
+--acc:#E8590C;--acc-bg:rgba(232,89,12,.08);
+--ok:#0F9D58;--ok-bg:rgba(15,157,88,.08);--warn:#F4B400;--warn-bg:rgba(244,180,0,.1);
+--err:#DB4437;--err-bg:rgba(219,68,55,.08);
+--h1:#0F9D58;--h2:#1A73E8;--h3:#F4B400;--h4:#DB4437;
+--r:14px;--r2:10px;--sh:0 1px 8px rgba(0,0,0,.05);--sh2:0 4px 16px rgba(0,0,0,.08);
+--font:'Outfit','Noto Sans SC',sans-serif;--cn:'Noto Sans SC',sans-serif;--se:'Noto Serif SC',serif}
+html{-webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);min-height:100dvh;overflow-x:hidden;line-height:1.5;padding-bottom:70px}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(170deg,#EDF5FD 0%,#DAEAF8 50%,#C5DDEF 100%);z-index:-1;pointer-events:none}
+
+/* === HEADER === */
+.hd{position:sticky;top:0;z-index:100;background:rgba(237,245,253,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(26,115,232,.06);padding:8px 14px;padding-top:max(8px,env(safe-area-inset-top))}
+.hd-in{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:8px}
+.logo{display:flex;align-items:center;gap:7px;cursor:pointer}.logo-i{width:36px;height:36px;background:linear-gradient(135deg,#4DA3FF,#1A73E8);border-radius:9px;display:flex;align-items:center;justify-content:center;font:900 1.1rem var(--se);color:#fff;box-shadow:0 2px 6px rgba(26,115,232,.25)}.logo-t{font-size:.82rem;font-weight:800;letter-spacing:-.02em}.logo-s{font-size:.58rem;color:var(--tx3);font-weight:500}
+.hd-r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.badge{display:flex;align-items:center;gap:3px;padding:3px 8px;border-radius:50px;font-size:.65rem;font-weight:700}
+.badge-ok{background:var(--ok-bg);color:#0A7B43}.badge-warn{background:var(--warn-bg);color:#A67C00}
+
+/* === TABS === */
+.tabs{max-width:640px;margin:0 auto;padding:5px 14px 0;display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tab{padding:4px 13px;border-radius:50px;border:1.5px solid rgba(26,115,232,.1);background:#fff;color:var(--tx2);font-size:.7rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;font-family:var(--font);flex-shrink:0}
+.tab.on{color:#fff;border-color:transparent}
+.tab[data-l="0"].on{background:var(--pri)}.tab[data-l="1"].on{background:var(--h1)}.tab[data-l="2"].on{background:var(--h2)}.tab[data-l="3"].on{background:var(--h3);color:#543D00}.tab[data-l="4"].on{background:var(--h4)}
+
+/* === CONTENT AREA === */
+.mx{max-width:640px;margin:0 auto;padding:0 14px}
+
+/* === INFO CARD === */
+.icard{background:#fff;border-radius:var(--r);padding:12px;display:flex;align-items:center;gap:11px;box-shadow:var(--sh);margin-top:8px}
+.icard-icon{width:52px;height:52px;background:linear-gradient(135deg,#4DA3FF,#0D47A1);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.icard h2{font-size:.85rem;font-weight:700}.icard .ist{display:flex;gap:12px;margin-top:3px}.icard .is{font-size:.68rem;color:var(--tx3);display:flex;align-items:center;gap:3px}.icard .is .d{width:6px;height:6px;border-radius:50%}.d-b{background:var(--pri)}.d-g{background:var(--ok)}.d-y{background:var(--warn)}
+
+/* === PROGRESS === */
+.pbar{height:5px;background:#D8E6F0;border-radius:5px;overflow:hidden;margin-top:6px}.pfill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--h1),var(--h2),var(--h3),var(--h4));transition:width .5s}.plbl{display:flex;justify-content:space-between;margin-top:2px;font-size:.62rem;color:var(--tx3)}
+
+/* === SEARCH === */
+.srch{position:relative;margin-top:7px}.srch input{width:100%;padding:8px 11px 8px 34px;border:1.5px solid rgba(26,115,232,.1);border-radius:var(--r2);background:#fff;font:.82rem var(--font);outline:none;color:var(--tx)}.srch input:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(26,115,232,.08)}.srch input::placeholder{color:var(--tx3)}.srch svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--tx3);pointer-events:none}
+
+/* === DAY GRID === */
+.stit{display:flex;align-items:center;gap:6px;margin:12px 0 5px}.stit .si{width:20px;height:20px;background:var(--pri);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.6rem;font-weight:800}.stit h3{font-size:.8rem;font-weight:700}.stit .sc{font-size:.66rem;color:var(--tx3);margin-left:auto}
+.dgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding-bottom:20px}
+.dtile{aspect-ratio:1;background:#fff;border:2px solid rgba(26,115,232,.08);border-radius:var(--r2);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.2s;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.dtile:hover{transform:translateY(-2px);box-shadow:var(--sh2)}.dtile:active{transform:scale(.96)}
+.dtile .dn{font-size:1.25rem;font-weight:800;color:var(--pri);line-height:1}.dtile .dl{font-size:.48rem;color:var(--tx3);font-weight:600;margin-top:1px}
+.dtile .db{position:absolute;top:3px;right:3px;min-width:14px;height:14px;border-radius:3px;background:var(--pri-bg);display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:800;color:var(--pri);padding:0 2px}
+.dtile.cmp{background:linear-gradient(135deg,#E6F4EA,#CEEAD6);border-color:#81C784}.dtile.cmp .dn{color:var(--ok)}.dtile.cmp .db{background:var(--ok);color:#fff}
+.dtile.prt{border-color:var(--warn)}.dtile.prt .db{background:var(--warn);color:#fff}
+.dtile.tdy{border-color:var(--pri);border-width:2.5px;box-shadow:0 0 0 3px rgba(26,115,232,.1)}
+.dtile .dpb{position:absolute;bottom:0;left:0;right:0;height:2.5px;background:#E4ECF2;border-radius:0 0 8px 8px;overflow:hidden}.dtile .dpf{height:100%;background:var(--pri);transition:width .3s}
+
+/* === DAY VIEW === */
+.dview{display:none}.dview.show{display:block}
+.bbtn{display:inline-flex;align-items:center;gap:4px;background:none;border:none;color:var(--pri);font:.82rem/1 var(--font);font-weight:600;cursor:pointer;padding:8px 0}
+.dhdr{background:#fff;border-radius:var(--r);padding:12px;margin:5px 0 8px;box-shadow:var(--sh);display:flex;align-items:center;justify-content:space-between}
+.dhdr h2{font-size:.95rem;font-weight:800}.dhdr .sub{font-size:.65rem;color:var(--tx3);margin-top:1px}.dhdr .fr{font-size:1.2rem;font-weight:800;color:var(--pri)}.dhdr .lbl{font-size:.58rem;color:var(--tx3)}
+
+/* Mode toggle */
+.mtog{display:flex;margin-bottom:10px;border-radius:var(--r2);overflow:hidden;border:1.5px solid rgba(26,115,232,.12);background:#fff}
+.mbtn{flex:1;padding:9px;border:none;background:transparent;color:var(--tx2);font:.78rem/1 var(--font);font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:4px}
+.mbtn.on{background:var(--pri-bg2);color:var(--pri-d)}.mbtn+.mbtn{border-left:1.5px solid rgba(26,115,232,.08)}
+
+/* === LEARN MODE === */
+.llist{display:none}.llist.show{display:block}
+.lwrap{background:#fff;border-radius:var(--r2);box-shadow:var(--sh);overflow:hidden}
+
+/* Root group header */
+.rghdr{display:flex;align-items:center;gap:8px;padding:10px 12px 4px;background:#F8FBFE}
+.rgchar{font:900 1.3rem var(--se);color:var(--pri-d);width:36px;height:36px;background:var(--pri-bg);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:.2s}
+.rgchar:hover{background:var(--pri);color:#fff}
+.rginfo{flex:1}.rginfo .rn{font-size:.72rem;font-weight:600;color:var(--tx)}.rginfo .rc{font-size:.6rem;color:var(--tx3)}
+.rgline{flex:1;height:1px;background:linear-gradient(90deg,rgba(26,115,232,.12),transparent)}
+
+/* Word card in learn list */
+.wc{padding:12px;border-bottom:1px solid #EEF3F7;cursor:pointer;transition:background .12s}
+.wc:last-child{border-bottom:none}.wc:hover{background:#F6FAFD}.wc:active{background:#EEF5FC}
+.wc .wpy{font-size:.78rem;color:var(--tx3);font-weight:500}
+.wc .whz{font:700 1.6rem/1.25 var(--se);display:flex;align-items:center;gap:7px;margin:1px 0 2px}
+.wc .whz .spk{width:26px;height:26px;border-radius:50%;background:var(--pri-bg);color:var(--pri);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7rem;flex-shrink:0;border:none;transition:.2s}
+.wc .whz .spk:hover{background:var(--pri);color:#fff}
+.wc .wmeta{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.wc .wpos{font-size:.6rem;color:var(--pri);font-weight:700;background:var(--pri-bg);padding:1px 6px;border-radius:50px}
+.wc .wmn{font-size:.78rem;color:var(--tx2)}
+.wc .wdec{font-size:.62rem;color:var(--acc);background:var(--acc-bg);padding:2px 6px;border-radius:50px;margin-left:auto}
+
+/* === PRACTICE MODE === */
+.prac{display:none;text-align:center;padding:8px 0}.prac.show{display:block}
+.pdots{display:flex;gap:3px;margin-bottom:14px;justify-content:center}.pdot{width:20px;height:3.5px;border-radius:3px;background:#DCE6EF;transition:.3s}.pdot.dn{background:var(--ok)}.pdot.cur{background:var(--pri)}.pdot.wr{background:var(--err)}
+.pinst{font-size:.75rem;color:var(--tx3);margin-bottom:20px}
+.pprm{font-size:1.3rem;font-weight:700;margin-bottom:6px;line-height:1.4;min-height:60px;display:flex;align-items:center;justify-content:center}
+.pslots{display:flex;gap:5px;justify-content:center;margin-bottom:28px;min-height:44px;flex-wrap:wrap;align-items:center}
+.psl{min-width:38px;height:40px;border-bottom:2px solid #C8D6E0;display:flex;align-items:center;justify-content:center;font:700 1.2rem var(--cn);transition:.2s;padding:0 4px;cursor:pointer}
+.psl.fl{border-color:var(--pri);color:var(--pri-d)}.psl.ok{border-color:var(--ok);color:var(--ok)}.psl.wr{border-color:var(--err);color:var(--err)}
+.pchs{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.pch{min-width:52px;height:44px;border-radius:var(--r2);background:#F2F6FA;border:1.5px solid #DCE6EF;font:600 1.1rem var(--cn);cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;padding:0 8px}
+.pch:hover{border-color:var(--pri-l);background:var(--pri-bg)}.pch:active{transform:scale(.95)}.pch.used{opacity:.25;pointer-events:none}
+.pres{padding:14px;background:#fff;border-radius:var(--r2);box-shadow:var(--sh);margin-top:14px}
+.pres h3{font-size:.95rem;font-weight:700}.pres .psc{font-size:1.8rem;font-weight:800;color:var(--pri)}
+.pnxt{margin-top:12px;padding:10px 28px;border:none;border-radius:50px;background:var(--pri);color:#fff;font:.85rem/1 var(--font);font-weight:700;cursor:pointer}
+.pskip{margin-top:6px;background:none;border:none;color:var(--tx3);font:.75rem var(--font);cursor:pointer;padding:6px 14px}
+
+/* === QUIZ MODE === */
+.quiz{display:none;text-align:center;padding:8px 0}.quiz.show{display:block}
+.qcard{background:#fff;border-radius:var(--r);padding:24px 16px;box-shadow:var(--sh);margin-bottom:12px}
+.qcard .qhz{font:900 2.8rem/1.2 var(--se)}.qcard .qpy{font-size:1rem;color:var(--acc);font-weight:600;margin-top:4px}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.qopt{padding:10px;border:1.5px solid #DCE6EF;border-radius:var(--r2);background:#fff;font:.82rem/1.3 var(--font);cursor:pointer;transition:.15s;text-align:left}
+.qopt:hover{border-color:var(--pri-l);background:var(--pri-bg)}.qopt:active{transform:scale(.98)}
+.qopt.right{background:var(--ok-bg);border-color:var(--ok);color:#0A7B43;pointer-events:none}
+.qopt.wrong{background:var(--err-bg);border-color:var(--err);color:#B71C1C;pointer-events:none}
+.qopt.dis{pointer-events:none;opacity:.5}
+
+/* === DETAIL VIEW === */
+.detv{display:none}.detv.show{display:block}
+.dcard{background:#fff;border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-top:6px}
+.dtop{display:flex;justify-content:space-between;align-items:flex-start}
+.dtbtn{width:32px;height:32px;border-radius:50%;border:1.5px solid #DCE6EF;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx3);font-size:.82rem;transition:.2s}.dtbtn:hover{border-color:var(--pri);color:var(--pri)}.dtbtn.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.dpy{font-size:.95rem;color:var(--tx3);font-weight:500;margin-bottom:3px}
+.dhz{font:900 2.8rem/1.2 var(--se);display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.dhz .dsp{width:34px;height:34px;border-radius:50%;background:var(--pri-bg);color:var(--pri);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:1rem;transition:.2s}.dhz .dsp:hover{background:var(--pri);color:#fff}
+.dpos{display:inline-block;padding:2px 9px;border-radius:50px;font-size:.65rem;font-weight:700;margin-bottom:5px}
+.dpos-v{background:rgba(26,115,232,.08);color:var(--pri)}.dpos-n{background:var(--ok-bg);color:#0A7B43}.dpos-adj{background:rgba(232,89,12,.08);color:#BF360C}.dpos-adv{background:rgba(106,27,154,.08);color:#6A1B9A}.dpos-conj{background:rgba(62,80,96,.08);color:#37474F}.dpos-other{background:var(--pri-bg);color:var(--pri)}
+.dmn{font-size:.95rem;color:var(--tx2);line-height:1.5}
+
+/* Decomposition box */
+.ddec{background:var(--acc-bg);border-radius:var(--r2);padding:10px;margin-top:10px;text-align:center}
+.ddec .ddl{font-size:.55rem;color:var(--acc);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:3px}
+.ddec .ddf{font:700 1.1rem var(--cn);color:#BF360C;line-height:1.6}
+
+/* Root box */
+.droot{background:var(--pri-bg);border-radius:var(--r2);padding:10px;margin-top:10px;text-align:center}
+.droot .drl{font-size:.55rem;color:var(--pri);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:2px}
+.droot .drc{font:900 1.6rem var(--se);color:var(--pri-d)}
+.droot .drw{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:5px}
+.droot .drch{font:400 .78rem var(--cn);padding:4px 8px;background:#fff;border-radius:5px;cursor:pointer;border:1px solid transparent;transition:.2s}.droot .drch:hover{border-color:var(--pri)}
+.droot .drch small{font-size:.6rem;color:var(--tx3)}
+
+/* Examples */
+.dexs{margin-top:12px;padding-top:10px;border-top:1px solid #EEF3F7}
+.dexs h4{font-size:.72rem;color:var(--tx3);text-align:center;margin-bottom:10px;display:flex;align-items:center;gap:6px;justify-content:center}.dexs h4::before,.dexs h4::after{content:'';flex:1;height:1px;background:#E4ECF2;max-width:60px}
+.exc{background:#F6FAFD;border-radius:var(--r2);padding:11px;margin-bottom:7px;position:relative}
+.exc .ep{font-size:.72rem;color:var(--tx3);line-height:1.5}.exc .eh{font:400 1rem/1.7 var(--cn);letter-spacing:.3px}.exc .eh .hl{color:var(--pri);font-weight:600}
+.exc .em{font-size:.72rem;color:var(--tx3);margin-top:2px;font-style:italic}
+.exc .es{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:var(--pri-bg);color:var(--pri);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.72rem;transition:.2s}.exc .es:hover{background:var(--pri);color:#fff}
+
+/* SRS buttons */
+.srs-btns{display:flex;gap:5px;margin-top:10px}
+.srs-btn{flex:1;padding:10px;border:2px solid transparent;border-radius:var(--r2);font:.78rem/1 var(--font);font-weight:700;cursor:pointer;transition:.2s;text-align:center}
+.srs-hard{background:var(--err-bg);border-color:rgba(219,68,55,.2);color:#B71C1C}
+.srs-mid{background:var(--warn-bg);border-color:rgba(244,180,0,.2);color:#A67C00}
+.srs-easy{background:var(--ok-bg);border-color:rgba(15,157,88,.2);color:#0A7B43}
+.srs-btn:hover{transform:translateY(-1px)}
+
+/* === REVIEW TAB === */
+.revw{display:none}.revw.show{display:block}
+.rev-empty{text-align:center;padding:32px 16px;color:var(--tx3)}
+.rev-empty .big{font-size:2.5rem;margin-bottom:8px;opacity:.3}
+
+/* === STATS === */
+.statsv{display:none}.statsv.show{display:block}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+.sbox{background:#fff;border-radius:var(--r2);padding:12px;text-align:center;box-shadow:var(--sh)}.sbox .sv{font-size:1.6rem;font-weight:800}.sv-1{color:var(--pri)}.sv-2{color:var(--ok)}.sv-3{color:var(--warn)}.sv-4{color:var(--acc)}.sbox .sl{font-size:.65rem;color:var(--tx3);margin-top:1px}
+.lvprog{background:#fff;border-radius:var(--r2);padding:12px;box-shadow:var(--sh)}
+.lvrow{display:flex;align-items:center;gap:7px;margin-bottom:7px}.lvrow:last-child{margin-bottom:0}.lvn{font-size:.72rem;font-weight:600;width:44px}.lvt{flex:1;height:6px;background:#EEE;border-radius:6px;overflow:hidden}.lvf{height:100%;border-radius:6px;transition:width .5s}.lvf-1{background:var(--h1)}.lvf-2{background:var(--h2)}.lvf-3{background:var(--h3)}.lvf-4{background:var(--h4)}.lvpc{font-size:.65rem;color:var(--tx3);width:32px;text-align:right}
+.rstbtn{width:100%;padding:10px;border:2px solid var(--err);border-radius:var(--r2);background:transparent;color:var(--err);font:.8rem/1 var(--font);font-weight:600;cursor:pointer;margin-top:12px;transition:.2s}.rstbtn:hover{background:var(--err);color:#fff}
+
+/* === BOTTOM NAV === */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(26,115,232,.06);z-index:90;padding:4px 0;padding-bottom:max(4px,env(safe-area-inset-bottom))}
+.bnav-in{display:flex;justify-content:space-around;max-width:500px;margin:0 auto}
+.ni{display:flex;flex-direction:column;align-items:center;gap:0;padding:3px 10px;color:var(--tx3);cursor:pointer;border:none;background:none;font:.54rem var(--font);font-weight:600}
+.ni svg{width:19px;height:19px;margin-bottom:1px}.ni.on{color:var(--pri)}
+
+/* Search results */
+.sres{padding-bottom:10px}
+.src{background:#fff;border-radius:var(--r2);padding:10px 12px;margin-bottom:4px;display:flex;align-items:center;gap:9px;box-shadow:0 1px 2px rgba(0,0,0,.03);cursor:pointer;position:relative;overflow:hidden;transition:.12s}
+.src::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.src[data-l="1"]::before{background:var(--h1)}.src[data-l="2"]::before{background:var(--h2)}.src[data-l="3"]::before{background:var(--h3)}.src[data-l="4"]::before{background:var(--h4)}
+.src:hover{box-shadow:var(--sh)}.src .sh{font:700 1.3rem var(--se);min-width:40px}.src .sb{flex:1;min-width:0}.src .sp{font-size:.75rem;color:var(--acc);font-weight:600}.src .sm{font-size:.68rem;color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.src .sbd{font-size:.48rem;padding:2px 5px;border-radius:50px;font-weight:700;color:#fff;flex-shrink:0}
+.sbd[data-l="1"]{background:var(--h1)}.sbd[data-l="2"]{background:var(--h2)}.sbd[data-l="3"]{background:var(--h3);color:#543D00}.sbd[data-l="4"]{background:var(--h4)}
+
+/* Animations */
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.dtile,.wc,.src{animation:fi .2s ease both}
+@media(max-width:400px){.dgrid{grid-template-columns:repeat(4,1fr)}.dtile .dn{font-size:1.1rem}}
+
+</style>
+</head>
+<body>
+<header class="hd"><div class="hd-in">
+<div class="logo" onclick="goHome()"><div class="logo-i">汉</div><div><div class="logo-t">HSK 30-Day Mastery</div><div class="logo-s">ISRAFIL HOSSEN · UCAS · 中国科学院大学</div></div></div>
+<div class="hd-r"><div class="badge badge-ok" id="bLearned">✓ <span id="sn">0</span></div><div class="badge badge-warn" id="bReview">↻ <span id="rn">0</span></div></div>
+</div></header>
+<div class="tabs" id="tabs"><button class="tab on" data-l="0">All</button><button class="tab" data-l="1">HSK 1</button><button class="tab" data-l="2">HSK 2</button><button class="tab" data-l="3">HSK 3</button><button class="tab" data-l="4">HSK 4</button></div>
+
+<!-- HOME -->
+<div id="homeV" class="mx">
+<div class="icard"><div class="icard-icon">📚</div><div class="info-body"><h2 id="it">HSK 1-4 Vocabulary</h2><div class="ist"><div class="is"><div class="d d-b"></div><span id="iw">0</span></div><div class="is"><div class="d d-g"></div><span id="il">0</span></div><div class="is"><div class="d d-y"></div><span id="ir">30 days</span></div></div></div></div>
+<div class="pbar"><div class="pfill" id="pf" style="width:0%"></div></div><div class="plbl"><span id="pt">0/0</span><span id="pp">0%</span></div>
+<div class="srch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input id="sb" type="text" placeholder="Search hanzi, pinyin, meaning, বাংলা..."></div>
+<div id="sresW" class="sres" style="display:none"></div>
+<div id="dgw"><div class="stit"><div class="si">📅</div><h3>30-Day Study Plan</h3><div class="sc" id="dpc"></div></div><div class="dgrid" id="dg"></div></div>
+</div>
+
+<!-- DAY VIEW -->
+<div class="dview mx" id="dayV">
+<button class="bbtn" onclick="goHome()">← Back to Plan</button>
+<div class="dhdr"><div><h2 id="dtt"></h2><div class="sub" id="dts"></div></div><div style="text-align:right"><div class="fr" id="dfr"></div><div class="lbl">learned</div></div></div>
+<div class="mtog">
+<button class="mbtn on" id="mL" onclick="setMode('learn')">📖 Learn</button>
+<button class="mbtn" id="mP" onclick="setMode('practice')">🧩 Practice</button>
+<button class="mbtn" id="mQ" onclick="setMode('quiz')">🧠 Quiz</button>
+</div>
+<div class="llist show" id="learnL"></div>
+<div class="prac" id="pracA"></div>
+<div class="quiz" id="quizA"></div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div class="detv mx" id="detV"><button class="bbtn" id="detBack">← Back</button><div id="detC"></div></div>
+
+<!-- REVIEW VIEW -->
+<div class="revw mx" id="revV">
+<div class="stit" style="margin-top:12px"><div class="si">↻</div><h3>SRS Review</h3><div class="sc" id="revCount"></div></div>
+<div id="revContent"></div>
+</div>
+
+<!-- STATS VIEW -->
+<div class="statsv mx" id="statV">
+<div class="stit" style="margin-top:12px"><div class="si">📊</div><h3>Your Progress</h3></div>
+<div class="sgrid" id="sg"></div>
+<div class="lvprog" id="lp"></div>
+<button class="rstbtn" onclick="resetAll()">🗑 Reset All Progress</button>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bnav"><div class="bnav-in">
+<button class="ni on" data-nav="home" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</button>
+<button class="ni" data-nav="review" onclick="navTo('review')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>Review</button>
+<button class="ni" data-nav="stats" onclick="navTo('stats')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Stats</button>
+</div></nav>
+<script>
+const W=[
+{h:"爱",p:"ài",m:"love",b:"ভালোবাসা",l:1,r:"爱",pos:"v"},{h:"八",p:"bā",m:"eight",b:"আট",l:1,r:"—",pos:"num"},{h:"爸爸",p:"bàba",m:"father",b:"বাবা",l:1,r:"爸",pos:"n"},{h:"杯子",p:"bēizi",m:"cup",b:"কাপ",l:1,r:"子",pos:"n"},{h:"北京",p:"Běijīng",m:"Beijing",b:"বেইজিং",l:1,r:"北",pos:"n"},
+{h:"本",p:"běn",m:"(MW books)",b:"বই গণনা",l:1,r:"本",pos:"mw"},{h:"不",p:"bù",m:"not",b:"না",l:1,r:"不",pos:"adv"},{h:"不客气",p:"bú kèqi",m:"you're welcome",b:"স্বাগত",l:1,r:"不",pos:"other"},{h:"菜",p:"cài",m:"vegetable; dish",b:"সবজি",l:1,r:"菜",pos:"n"},{h:"茶",p:"chá",m:"tea",b:"চা",l:1,r:"—",pos:"n"},
+{h:"吃",p:"chī",m:"eat",b:"খাওয়া",l:1,r:"吃",pos:"v"},{h:"出租车",p:"chūzūchē",m:"taxi",b:"ট্যাক্সি",l:1,r:"出",pos:"n"},{h:"打电话",p:"dǎ diànhuà",m:"make a call",b:"ফোন করা",l:1,r:"打",pos:"v"},{h:"大",p:"dà",m:"big",b:"বড়",l:1,r:"大",pos:"adj"},{h:"的",p:"de",m:"(possessive)",b:"সম্বন্ধ কণা",l:1,r:"的",pos:"other"},
+{h:"点",p:"diǎn",m:"o'clock; a little",b:"টা",l:1,r:"点",pos:"n"},{h:"电脑",p:"diànnǎo",m:"computer",b:"কম্পিউটার",l:1,r:"电",pos:"n"},{h:"电视",p:"diànshì",m:"TV",b:"টেলিভিশন",l:1,r:"电",pos:"n"},{h:"电影",p:"diànyǐng",m:"movie",b:"চলচ্চিত্র",l:1,r:"电",pos:"n"},{h:"东西",p:"dōngxi",m:"thing",b:"জিনিস",l:1,r:"西",pos:"n"},
+{h:"都",p:"dōu",m:"all",b:"সব",l:1,r:"都",pos:"adv"},{h:"读",p:"dú",m:"read",b:"পড়া",l:1,r:"读",pos:"v"},{h:"对不起",p:"duìbuqǐ",m:"sorry",b:"দুঃখিত",l:1,r:"不",pos:"other"},{h:"多",p:"duō",m:"many",b:"অনেক",l:1,r:"多",pos:"adj"},{h:"多少",p:"duōshao",m:"how many",b:"কত",l:1,r:"多",pos:"other"},
+{h:"儿子",p:"érzi",m:"son",b:"ছেলে",l:1,r:"子",pos:"n"},{h:"二",p:"èr",m:"two",b:"দুই",l:1,r:"—",pos:"num"},{h:"饭店",p:"fàndiàn",m:"restaurant",b:"রেস্তোরাঁ",l:1,r:"饭",pos:"n"},{h:"飞机",p:"fēijī",m:"airplane",b:"বিমান",l:1,r:"机",pos:"n"},{h:"分钟",p:"fēnzhōng",m:"minute",b:"মিনিট",l:1,r:"分",pos:"n"},
+{h:"高兴",p:"gāoxìng",m:"happy",b:"খুশি",l:1,r:"高",pos:"adj"},{h:"个",p:"gè",m:"(general MW)",b:"গণনা",l:1,r:"个",pos:"mw"},{h:"工作",p:"gōngzuò",m:"work",b:"কাজ",l:1,r:"作",pos:"v"},{h:"狗",p:"gǒu",m:"dog",b:"কুকুর",l:1,r:"—",pos:"n"},{h:"汉语",p:"Hànyǔ",m:"Chinese language",b:"চীনা ভাষা",l:1,r:"语",pos:"n"},
+{h:"好",p:"hǎo",m:"good",b:"ভালো",l:1,r:"好",pos:"adj"},{h:"喝",p:"hē",m:"drink",b:"পান করা",l:1,r:"—",pos:"v"},{h:"和",p:"hé",m:"and",b:"এবং",l:1,r:"和",pos:"conj"},{h:"很",p:"hěn",m:"very",b:"খুব",l:1,r:"—",pos:"adv"},{h:"后面",p:"hòumiàn",m:"behind",b:"পেছনে",l:1,r:"面",pos:"n"},
+{h:"回",p:"huí",m:"return",b:"ফিরে আসা",l:1,r:"回",pos:"v"},{h:"会",p:"huì",m:"can; will",b:"পারা",l:1,r:"会",pos:"v"},{h:"火车站",p:"huǒchēzhàn",m:"train station",b:"রেল স্টেশন",l:1,r:"车",pos:"n"},{h:"几",p:"jǐ",m:"how many",b:"কয়টি",l:1,r:"几",pos:"other"},{h:"家",p:"jiā",m:"home; family",b:"বাড়ি",l:1,r:"家",pos:"n"},
+{h:"叫",p:"jiào",m:"be called",b:"ডাকা",l:1,r:"—",pos:"v"},{h:"今天",p:"jīntiān",m:"today",b:"আজ",l:1,r:"天",pos:"n"},{h:"九",p:"jiǔ",m:"nine",b:"নয়",l:1,r:"—",pos:"num"},{h:"开",p:"kāi",m:"open; drive",b:"খোলা",l:1,r:"开",pos:"v"},{h:"看",p:"kàn",m:"look; watch",b:"দেখা",l:1,r:"看",pos:"v"},
+{h:"看见",p:"kànjiàn",m:"see",b:"দেখতে পাওয়া",l:1,r:"见",pos:"v"},{h:"块",p:"kuài",m:"(MW money)",b:"টাকা গণনা",l:1,r:"—",pos:"mw"},{h:"来",p:"lái",m:"come",b:"আসা",l:1,r:"来",pos:"v"},{h:"老师",p:"lǎoshī",m:"teacher",b:"শিক্ষক",l:1,r:"师",pos:"n"},{h:"了",p:"le",m:"(particle)",b:"কণা",l:1,r:"了",pos:"other"},
+{h:"冷",p:"lěng",m:"cold",b:"ঠান্ডা",l:1,r:"冷",pos:"adj"},{h:"里",p:"lǐ",m:"inside",b:"ভেতরে",l:1,r:"里",pos:"n"},{h:"零",p:"líng",m:"zero",b:"শূন্য",l:1,r:"—",pos:"num"},{h:"六",p:"liù",m:"six",b:"ছয়",l:1,r:"—",pos:"num"},{h:"妈妈",p:"māma",m:"mother",b:"মা",l:1,r:"妈",pos:"n"},
+{h:"吗",p:"ma",m:"(question)",b:"প্রশ্ন কণা",l:1,r:"—",pos:"other"},{h:"买",p:"mǎi",m:"buy",b:"কেনা",l:1,r:"—",pos:"v"},{h:"猫",p:"māo",m:"cat",b:"বিড়াল",l:1,r:"猫",pos:"n"},{h:"没",p:"méi",m:"not have",b:"নেই",l:1,r:"没",pos:"adv"},{h:"没关系",p:"méi guānxi",m:"it doesn't matter",b:"কিছু হয়নি",l:1,r:"关",pos:"other"},
+{h:"米饭",p:"mǐfàn",m:"rice",b:"ভাত",l:1,r:"米",pos:"n"},{h:"名字",p:"míngzi",m:"name",b:"নাম",l:1,r:"名",pos:"n"},{h:"明天",p:"míngtiān",m:"tomorrow",b:"আগামীকাল",l:1,r:"明",pos:"n"},{h:"哪",p:"nǎ",m:"which",b:"কোন",l:1,r:"哪",pos:"other"},{h:"哪儿",p:"nǎr",m:"where",b:"কোথায়",l:1,r:"儿",pos:"other"},
+{h:"那",p:"nà",m:"that",b:"ওটা",l:1,r:"—",pos:"other"},{h:"呢",p:"ne",m:"(particle)",b:"কণা",l:1,r:"—",pos:"other"},{h:"能",p:"néng",m:"can",b:"পারা",l:1,r:"能",pos:"v"},{h:"你",p:"nǐ",m:"you",b:"তুমি",l:1,r:"—",pos:"other"},{h:"年",p:"nián",m:"year",b:"বছর",l:1,r:"年",pos:"n"},
+{h:"女儿",p:"nǚ'ér",m:"daughter",b:"মেয়ে",l:1,r:"儿",pos:"n"},{h:"朋友",p:"péngyou",m:"friend",b:"বন্ধু",l:1,r:"友",pos:"n"},{h:"漂亮",p:"piàoliang",m:"pretty",b:"সুন্দর",l:1,r:"亮",pos:"adj"},{h:"苹果",p:"píngguǒ",m:"apple",b:"আপেল",l:1,r:"果",pos:"n"},{h:"七",p:"qī",m:"seven",b:"সাত",l:1,r:"—",pos:"num"},
+{h:"前面",p:"qiánmiàn",m:"in front",b:"সামনে",l:1,r:"面",pos:"n"},{h:"钱",p:"qián",m:"money",b:"টাকা",l:1,r:"—",pos:"n"},{h:"请",p:"qǐng",m:"please",b:"অনুগ্রহ করে",l:1,r:"请",pos:"v"},{h:"去",p:"qù",m:"go",b:"যাওয়া",l:1,r:"去",pos:"v"},{h:"热",p:"rè",m:"hot",b:"গরম",l:1,r:"热",pos:"adj"},
+{h:"人",p:"rén",m:"person",b:"মানুষ",l:1,r:"人",pos:"n"},{h:"认识",p:"rènshi",m:"know",b:"চেনা",l:1,r:"认",pos:"v"},{h:"三",p:"sān",m:"three",b:"তিন",l:1,r:"—",pos:"num"},{h:"商店",p:"shāngdiàn",m:"shop",b:"দোকান",l:1,r:"商",pos:"n"},{h:"上",p:"shàng",m:"up; on",b:"উপরে",l:1,r:"上",pos:"n"},
+{h:"上午",p:"shàngwǔ",m:"morning",b:"সকাল",l:1,r:"上",pos:"n"},{h:"少",p:"shǎo",m:"few",b:"কম",l:1,r:"少",pos:"adj"},{h:"谁",p:"shéi",m:"who",b:"কে",l:1,r:"—",pos:"other"},{h:"什么",p:"shénme",m:"what",b:"কী",l:1,r:"么",pos:"other"},{h:"十",p:"shí",m:"ten",b:"দশ",l:1,r:"十",pos:"num"},
+{h:"时候",p:"shíhou",m:"time; moment",b:"সময়",l:1,r:"时",pos:"n"},{h:"是",p:"shì",m:"be; is",b:"হওয়া",l:1,r:"是",pos:"v"},{h:"书",p:"shū",m:"book",b:"বই",l:1,r:"书",pos:"n"},{h:"水",p:"shuǐ",m:"water",b:"পানি",l:1,r:"水",pos:"n"},{h:"水果",p:"shuǐguǒ",m:"fruit",b:"ফল",l:1,r:"果",pos:"n"},
+{h:"睡觉",p:"shuìjiào",m:"sleep",b:"ঘুমানো",l:1,r:"觉",pos:"v"},{h:"说",p:"shuō",m:"speak",b:"বলা",l:1,r:"说",pos:"v"},{h:"四",p:"sì",m:"four",b:"চার",l:1,r:"—",pos:"num"},{h:"岁",p:"suì",m:"years old",b:"বছর বয়স",l:1,r:"—",pos:"mw"},{h:"他",p:"tā",m:"he",b:"সে",l:1,r:"他",pos:"other"},
+{h:"她",p:"tā",m:"she",b:"সে (মহিলা)",l:1,r:"—",pos:"other"},{h:"太",p:"tài",m:"too",b:"অতি",l:1,r:"太",pos:"adv"},{h:"天气",p:"tiānqì",m:"weather",b:"আবহাওয়া",l:1,r:"气",pos:"n"},{h:"听",p:"tīng",m:"listen",b:"শোনা",l:1,r:"—",pos:"v"},{h:"同学",p:"tóngxué",m:"classmate",b:"সহপাঠী",l:1,r:"学",pos:"n"},
+{h:"喂",p:"wèi",m:"hello (phone)",b:"হ্যালো",l:1,r:"—",pos:"other"},{h:"我",p:"wǒ",m:"I; me",b:"আমি",l:1,r:"—",pos:"other"},{h:"我们",p:"wǒmen",m:"we",b:"আমরা",l:1,r:"—",pos:"other"},{h:"五",p:"wǔ",m:"five",b:"পাঁচ",l:1,r:"—",pos:"num"},{h:"喜欢",p:"xǐhuan",m:"like",b:"পছন্দ করা",l:1,r:"欢",pos:"v"},
+{h:"下",p:"xià",m:"down; below",b:"নিচে",l:1,r:"下",pos:"n"},{h:"下午",p:"xiàwǔ",m:"afternoon",b:"বিকেল",l:1,r:"下",pos:"n"},{h:"下雨",p:"xià yǔ",m:"rain",b:"বৃষ্টি",l:1,r:"下",pos:"v"},{h:"先生",p:"xiānsheng",m:"Mr.",b:"মহাশয়",l:1,r:"生",pos:"n"},{h:"现在",p:"xiànzài",m:"now",b:"এখন",l:1,r:"现",pos:"n"},
+{h:"想",p:"xiǎng",m:"think; want",b:"চাওয়া",l:1,r:"想",pos:"v"},{h:"小",p:"xiǎo",m:"small",b:"ছোট",l:1,r:"小",pos:"adj"},{h:"小姐",p:"xiǎojiě",m:"Miss",b:"মিস",l:1,r:"小",pos:"n"},{h:"些",p:"xiē",m:"some",b:"কিছু",l:1,r:"—",pos:"mw"},{h:"写",p:"xiě",m:"write",b:"লেখা",l:1,r:"—",pos:"v"},
+{h:"谢谢",p:"xièxie",m:"thanks",b:"ধন্যবাদ",l:1,r:"谢",pos:"other"},{h:"星期",p:"xīngqī",m:"week",b:"সপ্তাহ",l:1,r:"期",pos:"n"},{h:"学生",p:"xuéshēng",m:"student",b:"ছাত্র",l:1,r:"生",pos:"n"},{h:"学习",p:"xuéxí",m:"study",b:"পড়াশোনা",l:1,r:"学",pos:"v"},{h:"学校",p:"xuéxiào",m:"school",b:"স্কুল",l:1,r:"学",pos:"n"},
+{h:"一",p:"yī",m:"one",b:"এক",l:1,r:"一",pos:"num"},{h:"衣服",p:"yīfu",m:"clothes",b:"জামাকাপড়",l:1,r:"服",pos:"n"},{h:"医生",p:"yīshēng",m:"doctor",b:"ডাক্তার",l:1,r:"生",pos:"n"},{h:"医院",p:"yīyuàn",m:"hospital",b:"হাসপাতাল",l:1,r:"医",pos:"n"},{h:"椅子",p:"yǐzi",m:"chair",b:"চেয়ার",l:1,r:"子",pos:"n"},
+{h:"有",p:"yǒu",m:"have",b:"আছে",l:1,r:"有",pos:"v"},{h:"月",p:"yuè",m:"month",b:"মাস",l:1,r:"月",pos:"n"},{h:"再见",p:"zàijiàn",m:"goodbye",b:"বিদায়",l:1,r:"见",pos:"other"},{h:"在",p:"zài",m:"at; in",b:"তে",l:1,r:"在",pos:"v"},{h:"怎么",p:"zěnme",m:"how",b:"কিভাবে",l:1,r:"么",pos:"other"},
+{h:"怎么样",p:"zěnmeyàng",m:"how is it",b:"কেমন",l:1,r:"么",pos:"other"},{h:"这",p:"zhè",m:"this",b:"এটা",l:1,r:"—",pos:"other"},{h:"中国",p:"Zhōngguó",m:"China",b:"চীন",l:1,r:"中",pos:"n"},{h:"中午",p:"zhōngwǔ",m:"noon",b:"দুপুর",l:1,r:"中",pos:"n"},{h:"住",p:"zhù",m:"live",b:"থাকা",l:1,r:"住",pos:"v"},
+{h:"桌子",p:"zhuōzi",m:"table",b:"টেবিল",l:1,r:"子",pos:"n"},{h:"字",p:"zì",m:"character",b:"অক্ষর",l:1,r:"字",pos:"n"},{h:"昨天",p:"zuótiān",m:"yesterday",b:"গতকাল",l:1,r:"天",pos:"n"},{h:"坐",p:"zuò",m:"sit",b:"বসা",l:1,r:"坐",pos:"v"},{h:"做",p:"zuò",m:"do; make",b:"করা",l:1,r:"做",pos:"v"},
+{h:"吧",p:"ba",m:"(suggestion)",b:"পরামর্শ কণা",l:2,r:"—",pos:"other"},{h:"白",p:"bái",m:"white",b:"সাদা",l:2,r:"白",pos:"adj"},{h:"百",p:"bǎi",m:"hundred",b:"একশ",l:2,r:"百",pos:"num"},{h:"帮助",p:"bāngzhù",m:"help",b:"সাহায্য",l:2,r:"帮",pos:"v"},{h:"报纸",p:"bàozhǐ",m:"newspaper",b:"সংবাদপত্র",l:2,r:"报",pos:"n"},
+{h:"比",p:"bǐ",m:"compare",b:"তুলনা",l:2,r:"比",pos:"v"},{h:"别",p:"bié",m:"don't",b:"করো না",l:2,r:"别",pos:"adv"},{h:"宾馆",p:"bīnguǎn",m:"hotel",b:"হোটেল",l:2,r:"馆",pos:"n"},{h:"长",p:"cháng",m:"long",b:"লম্বা",l:2,r:"长",pos:"adj"},{h:"唱歌",p:"chànggē",m:"sing",b:"গান গাওয়া",l:2,r:"—",pos:"v"},
+{h:"出",p:"chū",m:"go out",b:"বের হওয়া",l:2,r:"出",pos:"v"},{h:"穿",p:"chuān",m:"wear",b:"পরা",l:2,r:"—",pos:"v"},{h:"船",p:"chuán",m:"boat",b:"নৌকা",l:2,r:"—",pos:"n"},{h:"次",p:"cì",m:"time (occurrence)",b:"বার",l:2,r:"—",pos:"mw"},{h:"从",p:"cóng",m:"from",b:"থেকে",l:2,r:"从",pos:"other"},
+{h:"错",p:"cuò",m:"wrong",b:"ভুল",l:2,r:"错",pos:"adj"},{h:"打篮球",p:"dǎ lánqiú",m:"play basketball",b:"বাস্কেটবল",l:2,r:"打",pos:"v"},{h:"大家",p:"dàjiā",m:"everyone",b:"সবাই",l:2,r:"大",pos:"n"},{h:"到",p:"dào",m:"arrive",b:"পৌঁছানো",l:2,r:"到",pos:"v"},{h:"得",p:"de",m:"(complement)",b:"পরিপূরক কণা",l:2,r:"得",pos:"other"},
+{h:"等",p:"děng",m:"wait",b:"অপেক্ষা",l:2,r:"—",pos:"v"},{h:"弟弟",p:"dìdi",m:"younger brother",b:"ছোট ভাই",l:2,r:"弟",pos:"n"},{h:"第一",p:"dì-yī",m:"first",b:"প্রথম",l:2,r:"一",pos:"other"},{h:"懂",p:"dǒng",m:"understand",b:"বোঝা",l:2,r:"—",pos:"v"},{h:"对",p:"duì",m:"correct",b:"সঠিক",l:2,r:"对",pos:"adj"},
+{h:"房间",p:"fángjiān",m:"room",b:"ঘর",l:2,r:"间",pos:"n"},{h:"非常",p:"fēicháng",m:"very",b:"অত্যন্ত",l:2,r:"常",pos:"adv"},{h:"服务员",p:"fúwùyuán",m:"waiter",b:"পরিচারক",l:2,r:"服",pos:"n"},{h:"高",p:"gāo",m:"tall",b:"লম্বা",l:2,r:"高",pos:"adj"},{h:"告诉",p:"gàosu",m:"tell",b:"বলা",l:2,r:"告",pos:"v"},
+{h:"哥哥",p:"gēge",m:"elder brother",b:"বড় ভাই",l:2,r:"哥",pos:"n"},{h:"给",p:"gěi",m:"give",b:"দেওয়া",l:2,r:"—",pos:"v"},{h:"公共汽车",p:"gōnggòng qìchē",m:"bus",b:"বাস",l:2,r:"公",pos:"n"},{h:"公司",p:"gōngsī",m:"company",b:"কোম্পানি",l:2,r:"公",pos:"n"},{h:"贵",p:"guì",m:"expensive",b:"দামি",l:2,r:"—",pos:"adj"},
+{h:"过",p:"guò",m:"(experience)",b:"অভিজ্ঞতা",l:2,r:"过",pos:"other"},{h:"孩子",p:"háizi",m:"child",b:"শিশু",l:2,r:"子",pos:"n"},{h:"还",p:"hái",m:"still",b:"এখনও",l:2,r:"还",pos:"adv"},{h:"好吃",p:"hǎochī",m:"delicious",b:"সুস্বাদু",l:2,r:"好",pos:"adj"},{h:"黑",p:"hēi",m:"black",b:"কালো",l:2,r:"黑",pos:"adj"},
+{h:"红",p:"hóng",m:"red",b:"লাল",l:2,r:"红",pos:"adj"},{h:"欢迎",p:"huānyíng",m:"welcome",b:"স্বাগত",l:2,r:"欢",pos:"v"},{h:"还是",p:"háishi",m:"or (question)",b:"নাকি",l:2,r:"是",pos:"conj"},{h:"回答",p:"huídá",m:"answer",b:"উত্তর",l:2,r:"回",pos:"v"},{h:"机场",p:"jīchǎng",m:"airport",b:"বিমানবন্দর",l:2,r:"机",pos:"n"},
+{h:"鸡蛋",p:"jīdàn",m:"egg",b:"ডিম",l:2,r:"蛋",pos:"n"},{h:"件",p:"jiàn",m:"(MW clothes)",b:"জামা গণনা",l:2,r:"件",pos:"mw"},{h:"教室",p:"jiàoshì",m:"classroom",b:"শ্রেণীকক্ষ",l:2,r:"教",pos:"n"},{h:"姐姐",p:"jiějie",m:"elder sister",b:"বড় বোন",l:2,r:"姐",pos:"n"},{h:"介绍",p:"jièshào",m:"introduce",b:"পরিচয়",l:2,r:"—",pos:"v"},
+{h:"进",p:"jìn",m:"enter",b:"ঢোকা",l:2,r:"进",pos:"v"},{h:"近",p:"jìn",m:"near",b:"কাছে",l:2,r:"近",pos:"adj"},{h:"就",p:"jiù",m:"then; just",b:"তখন",l:2,r:"—",pos:"adv"},{h:"觉得",p:"juéde",m:"feel; think",b:"মনে হওয়া",l:2,r:"得",pos:"v"},{h:"咖啡",p:"kāfēi",m:"coffee",b:"কফি",l:2,r:"—",pos:"n"},
+{h:"开始",p:"kāishǐ",m:"begin",b:"শুরু",l:2,r:"开",pos:"v"},{h:"考试",p:"kǎoshì",m:"exam",b:"পরীক্ষা",l:2,r:"考",pos:"n"},{h:"可能",p:"kěnéng",m:"possible",b:"সম্ভব",l:2,r:"可",pos:"adv"},{h:"可以",p:"kěyǐ",m:"can; may",b:"পারা",l:2,r:"可",pos:"v"},{h:"课",p:"kè",m:"class",b:"ক্লাস",l:2,r:"—",pos:"n"},
+{h:"快",p:"kuài",m:"fast",b:"দ্রুত",l:2,r:"快",pos:"adj"},{h:"快乐",p:"kuàilè",m:"happy",b:"সুখী",l:2,r:"快",pos:"adj"},{h:"累",p:"lèi",m:"tired",b:"ক্লান্ত",l:2,r:"累",pos:"adj"},{h:"离",p:"lí",m:"from; away",b:"দূরে",l:2,r:"离",pos:"v"},{h:"两",p:"liǎng",m:"two (with MW)",b:"দুই",l:2,r:"—",pos:"num"},
+{h:"路",p:"lù",m:"road",b:"রাস্তা",l:2,r:"路",pos:"n"},{h:"旅游",p:"lǚyóu",m:"travel",b:"ভ্রমণ",l:2,r:"游",pos:"v"},{h:"卖",p:"mài",m:"sell",b:"বিক্রি",l:2,r:"—",pos:"v"},{h:"慢",p:"màn",m:"slow",b:"ধীর",l:2,r:"—",pos:"adj"},{h:"忙",p:"máng",m:"busy",b:"ব্যস্ত",l:2,r:"忙",pos:"adj"},
+{h:"每",p:"měi",m:"every",b:"প্রতি",l:2,r:"—",pos:"other"},{h:"妹妹",p:"mèimei",m:"younger sister",b:"ছোট বোন",l:2,r:"妹",pos:"n"},{h:"门",p:"mén",m:"door",b:"দরজা",l:2,r:"门",pos:"n"},{h:"面条",p:"miàntiáo",m:"noodles",b:"নুডলস",l:2,r:"面",pos:"n"},{h:"男",p:"nán",m:"male",b:"পুরুষ",l:2,r:"—",pos:"n"},
+{h:"您",p:"nín",m:"you (polite)",b:"আপনি",l:2,r:"—",pos:"other"},{h:"牛奶",p:"niúnǎi",m:"milk",b:"দুধ",l:2,r:"奶",pos:"n"},{h:"女",p:"nǚ",m:"female",b:"মহিলা",l:2,r:"女",pos:"n"},{h:"旁边",p:"pángbiān",m:"beside",b:"পাশে",l:2,r:"边",pos:"n"},{h:"跑步",p:"pǎobù",m:"run",b:"দৌড়ানো",l:2,r:"步",pos:"v"},
+{h:"便宜",p:"piányi",m:"cheap",b:"সস্তা",l:2,r:"便",pos:"adj"},{h:"票",p:"piào",m:"ticket",b:"টিকেট",l:2,r:"—",pos:"n"},{h:"妻子",p:"qīzi",m:"wife",b:"স্ত্রী",l:2,r:"子",pos:"n"},{h:"起床",p:"qǐchuáng",m:"get up",b:"ওঠা",l:2,r:"起",pos:"v"},{h:"千",p:"qiān",m:"thousand",b:"হাজার",l:2,r:"千",pos:"num"},
+{h:"铅笔",p:"qiānbǐ",m:"pencil",b:"পেন্সিল",l:2,r:"笔",pos:"n"},{h:"晴",p:"qíng",m:"sunny",b:"রৌদ্র",l:2,r:"—",pos:"adj"},{h:"让",p:"ràng",m:"let",b:"দিতে দেওয়া",l:2,r:"—",pos:"v"},{h:"日",p:"rì",m:"day",b:"দিন",l:2,r:"日",pos:"n"},{h:"上班",p:"shàngbān",m:"go to work",b:"কাজে যাওয়া",l:2,r:"上",pos:"v"},
+{h:"身体",p:"shēntǐ",m:"body",b:"শরীর",l:2,r:"体",pos:"n"},{h:"生病",p:"shēngbìng",m:"get sick",b:"অসুস্থ",l:2,r:"生",pos:"v"},{h:"生日",p:"shēngrì",m:"birthday",b:"জন্মদিন",l:2,r:"生",pos:"n"},{h:"时间",p:"shíjiān",m:"time",b:"সময়",l:2,r:"时",pos:"n"},{h:"事情",p:"shìqing",m:"matter",b:"ব্যাপার",l:2,r:"情",pos:"n"},
+{h:"手表",p:"shǒubiǎo",m:"watch",b:"হাতঘড়ি",l:2,r:"表",pos:"n"},{h:"手机",p:"shǒujī",m:"cellphone",b:"মোবাইল",l:2,r:"机",pos:"n"},{h:"说话",p:"shuōhuà",m:"speak",b:"কথা বলা",l:2,r:"话",pos:"v"},{h:"送",p:"sòng",m:"give; send",b:"পাঠানো",l:2,r:"—",pos:"v"},{h:"虽然",p:"suīrán",m:"although",b:"যদিও",l:2,r:"然",pos:"conj"},
+{h:"它",p:"tā",m:"it",b:"এটা",l:2,r:"—",pos:"other"},{h:"踢足球",p:"tī zúqiú",m:"play football",b:"ফুটবল",l:2,r:"球",pos:"v"},{h:"题",p:"tí",m:"question; topic",b:"প্রশ্ন",l:2,r:"题",pos:"n"},{h:"跳舞",p:"tiàowǔ",m:"dance",b:"নাচ",l:2,r:"—",pos:"v"},{h:"外",p:"wài",m:"outside",b:"বাইরে",l:2,r:"外",pos:"n"},
+{h:"完",p:"wán",m:"finish",b:"শেষ",l:2,r:"完",pos:"v"},{h:"玩",p:"wán",m:"play",b:"খেলা",l:2,r:"玩",pos:"v"},{h:"晚上",p:"wǎnshang",m:"evening",b:"সন্ধ্যা",l:2,r:"上",pos:"n"},{h:"往",p:"wǎng",m:"toward",b:"দিকে",l:2,r:"往",pos:"other"},{h:"为什么",p:"wèi shénme",m:"why",b:"কেন",l:2,r:"为",pos:"other"},
+{h:"问",p:"wèn",m:"ask",b:"জিজ্ঞাসা",l:2,r:"问",pos:"v"},{h:"问题",p:"wèntí",m:"problem",b:"সমস্যা",l:2,r:"问",pos:"n"},{h:"西瓜",p:"xīguā",m:"watermelon",b:"তরমুজ",l:2,r:"西",pos:"n"},{h:"希望",p:"xīwàng",m:"hope",b:"আশা",l:2,r:"望",pos:"v"},{h:"洗",p:"xǐ",m:"wash",b:"ধোয়া",l:2,r:"洗",pos:"v"},
+{h:"小时",p:"xiǎoshí",m:"hour",b:"ঘণ্টা",l:2,r:"时",pos:"n"},{h:"笑",p:"xiào",m:"laugh",b:"হাসা",l:2,r:"笑",pos:"v"},{h:"新",p:"xīn",m:"new",b:"নতুন",l:2,r:"新",pos:"adj"},{h:"姓",p:"xìng",m:"surname",b:"পদবি",l:2,r:"—",pos:"v"},{h:"休息",p:"xiūxi",m:"rest",b:"বিশ্রাম",l:2,r:"息",pos:"v"},
+{h:"雪",p:"xuě",m:"snow",b:"তুষার",l:2,r:"—",pos:"n"},{h:"颜色",p:"yánsè",m:"color",b:"রং",l:2,r:"色",pos:"n"},{h:"眼睛",p:"yǎnjing",m:"eye",b:"চোখ",l:2,r:"眼",pos:"n"},{h:"羊肉",p:"yángròu",m:"mutton",b:"মাটন",l:2,r:"—",pos:"n"},{h:"药",p:"yào",m:"medicine",b:"ওষুধ",l:2,r:"—",pos:"n"},
+{h:"要",p:"yào",m:"want; need",b:"চাওয়া",l:2,r:"要",pos:"v"},{h:"也",p:"yě",m:"also",b:"ও",l:2,r:"—",pos:"adv"},{h:"已经",p:"yǐjīng",m:"already",b:"ইতিমধ্যে",l:2,r:"经",pos:"adv"},{h:"一起",p:"yīqǐ",m:"together",b:"একসাথে",l:2,r:"一",pos:"adv"},{h:"意思",p:"yìsi",m:"meaning",b:"অর্থ",l:2,r:"意",pos:"n"},
+{h:"因为",p:"yīnwèi",m:"because",b:"কারণ",l:2,r:"为",pos:"conj"},{h:"阴",p:"yīn",m:"cloudy",b:"মেঘলা",l:2,r:"—",pos:"adj"},{h:"游泳",p:"yóuyǒng",m:"swim",b:"সাঁতার",l:2,r:"游",pos:"v"},{h:"右边",p:"yòubiān",m:"right side",b:"ডান দিক",l:2,r:"边",pos:"n"},{h:"鱼",p:"yú",m:"fish",b:"মাছ",l:2,r:"—",pos:"n"},
+{h:"远",p:"yuǎn",m:"far",b:"দূর",l:2,r:"远",pos:"adj"},{h:"运动",p:"yùndòng",m:"sport",b:"খেলাধুলা",l:2,r:"动",pos:"v"},{h:"再",p:"zài",m:"again",b:"আবার",l:2,r:"再",pos:"adv"},{h:"早上",p:"zǎoshang",m:"morning",b:"সকাল",l:2,r:"上",pos:"n"},{h:"丈夫",p:"zhàngfu",m:"husband",b:"স্বামী",l:2,r:"夫",pos:"n"},
+{h:"找",p:"zhǎo",m:"find",b:"খোঁজা",l:2,r:"找",pos:"v"},{h:"着",p:"zhe",m:"(ongoing)",b:"চলমান কণা",l:2,r:"—",pos:"other"},{h:"真",p:"zhēn",m:"really",b:"সত্যিই",l:2,r:"真",pos:"adv"},{h:"正在",p:"zhèngzài",m:"in progress",b:"চলছে",l:2,r:"在",pos:"adv"},{h:"知道",p:"zhīdào",m:"know",b:"জানা",l:2,r:"知",pos:"v"},
+{h:"准备",p:"zhǔnbèi",m:"prepare",b:"প্রস্তুতি",l:2,r:"备",pos:"v"},{h:"自行车",p:"zìxíngchē",m:"bicycle",b:"সাইকেল",l:2,r:"车",pos:"n"},{h:"走",p:"zǒu",m:"walk",b:"হাঁটা",l:2,r:"走",pos:"v"},{h:"最",p:"zuì",m:"most",b:"সবচেয়ে",l:2,r:"最",pos:"adv"},{h:"左边",p:"zuǒbiān",m:"left side",b:"বাম দিক",l:2,r:"边",pos:"n"},
+{h:"啊",p:"a",m:"(exclamation)",b:"বিস্ময়",l:3,r:"—",pos:"other"},{h:"矮",p:"ǎi",m:"short (height)",b:"বেঁটে",l:3,r:"—",pos:"adj"},{h:"爱好",p:"àihào",m:"hobby",b:"শখ",l:3,r:"爱",pos:"n"},{h:"安静",p:"ānjìng",m:"quiet",b:"শান্ত",l:3,r:"安",pos:"adj"},{h:"把",p:"bǎ",m:"(disposal)",b:"নিষ্পত্তি কণা",l:3,r:"—",pos:"other"},
+{h:"搬",p:"bān",m:"move",b:"সরানো",l:3,r:"—",pos:"v"},{h:"办法",p:"bànfǎ",m:"method",b:"পদ্ধতি",l:3,r:"法",pos:"n"},{h:"办公室",p:"bàngōngshì",m:"office",b:"অফিস",l:3,r:"办",pos:"n"},{h:"半",p:"bàn",m:"half",b:"অর্ধেক",l:3,r:"半",pos:"num"},{h:"包",p:"bāo",m:"bag",b:"ব্যাগ",l:3,r:"包",pos:"n"},
+{h:"饱",p:"bǎo",m:"full (stomach)",b:"পেট ভরা",l:3,r:"—",pos:"adj"},{h:"北方",p:"běifāng",m:"north",b:"উত্তর",l:3,r:"北",pos:"n"},{h:"被",p:"bèi",m:"(passive)",b:"কর্মবাচ্য",l:3,r:"被",pos:"other"},{h:"鼻子",p:"bízi",m:"nose",b:"নাক",l:3,r:"鼻",pos:"n"},{h:"比较",p:"bǐjiào",m:"relatively",b:"তুলনামূলক",l:3,r:"比",pos:"adv"},
+{h:"比赛",p:"bǐsài",m:"competition",b:"প্রতিযোগিতা",l:3,r:"比",pos:"n"},{h:"必须",p:"bìxū",m:"must",b:"অবশ্যই",l:3,r:"必",pos:"adv"},{h:"变化",p:"biànhuà",m:"change",b:"পরিবর্তন",l:3,r:"变",pos:"n"},{h:"别人",p:"biérén",m:"others",b:"অন্যরা",l:3,r:"别",pos:"n"},{h:"冰箱",p:"bīngxiāng",m:"fridge",b:"ফ্রিজ",l:3,r:"冰",pos:"n"},
+{h:"不但",p:"búdàn",m:"not only",b:"শুধু নয়",l:3,r:"不",pos:"conj"},{h:"才",p:"cái",m:"only then",b:"তবেই",l:3,r:"才",pos:"adv"},{h:"菜单",p:"càidān",m:"menu",b:"মেনু",l:3,r:"菜",pos:"n"},{h:"参加",p:"cānjiā",m:"participate",b:"অংশ নেওয়া",l:3,r:"参",pos:"v"},{h:"草",p:"cǎo",m:"grass",b:"ঘাস",l:3,r:"草",pos:"n"},
+{h:"层",p:"céng",m:"floor; layer",b:"তলা",l:3,r:"—",pos:"mw"},{h:"差",p:"chà",m:"lacking",b:"কম",l:3,r:"差",pos:"adj"},{h:"超市",p:"chāoshì",m:"supermarket",b:"সুপারমার্কেট",l:3,r:"超",pos:"n"},{h:"衬衫",p:"chènshān",m:"shirt",b:"শার্ট",l:3,r:"衫",pos:"n"},{h:"成绩",p:"chéngjì",m:"grades",b:"ফলাফল",l:3,r:"成",pos:"n"},
+{h:"城市",p:"chéngshì",m:"city",b:"শহর",l:3,r:"城",pos:"n"},{h:"迟到",p:"chídào",m:"be late",b:"দেরি",l:3,r:"迟",pos:"v"},{h:"除了",p:"chúle",m:"except",b:"ছাড়া",l:3,r:"除",pos:"other"},{h:"厨房",p:"chúfáng",m:"kitchen",b:"রান্নাঘর",l:3,r:"厨",pos:"n"},{h:"出现",p:"chūxiàn",m:"appear",b:"দেখা দেওয়া",l:3,r:"出",pos:"v"},
+{h:"春",p:"chūn",m:"spring",b:"বসন্ত",l:3,r:"春",pos:"n"},{h:"词典",p:"cídiǎn",m:"dictionary",b:"অভিধান",l:3,r:"词",pos:"n"},{h:"聪明",p:"cōngming",m:"clever",b:"বুদ্ধিমান",l:3,r:"聪",pos:"adj"},{h:"打扫",p:"dǎsǎo",m:"clean",b:"পরিষ্কার করা",l:3,r:"打",pos:"v"},{h:"打算",p:"dǎsuàn",m:"plan",b:"পরিকল্পনা",l:3,r:"打",pos:"v"},
+{h:"带",p:"dài",m:"bring; wear",b:"আনা",l:3,r:"带",pos:"v"},{h:"担心",p:"dānxīn",m:"worry",b:"চিন্তা",l:3,r:"心",pos:"v"},{h:"蛋糕",p:"dàngāo",m:"cake",b:"কেক",l:3,r:"蛋",pos:"n"},{h:"当然",p:"dāngrán",m:"of course",b:"অবশ্যই",l:3,r:"然",pos:"adv"},{h:"地",p:"de",m:"(adverbial)",b:"ক্রিয়া বিশেষণ কণা",l:3,r:"地",pos:"other"},
+{h:"灯",p:"dēng",m:"lamp",b:"বাতি",l:3,r:"灯",pos:"n"},{h:"地方",p:"dìfang",m:"place",b:"জায়গা",l:3,r:"地",pos:"n"},{h:"地铁",p:"dìtiě",m:"subway",b:"মেট্রো",l:3,r:"地",pos:"n"},{h:"地图",p:"dìtú",m:"map",b:"মানচিত্র",l:3,r:"地",pos:"n"},{h:"电梯",p:"diàntī",m:"elevator",b:"লিফট",l:3,r:"电",pos:"n"},
+{h:"电子邮件",p:"diànzǐ yóujiàn",m:"email",b:"ইমেইল",l:3,r:"电",pos:"n"},{h:"东",p:"dōng",m:"east",b:"পূর্ব",l:3,r:"东",pos:"n"},{h:"冬",p:"dōng",m:"winter",b:"শীত",l:3,r:"冬",pos:"n"},{h:"动物",p:"dòngwù",m:"animal",b:"প্রাণী",l:3,r:"动",pos:"n"},{h:"短",p:"duǎn",m:"short",b:"ছোট",l:3,r:"短",pos:"adj"},
+{h:"段",p:"duàn",m:"paragraph",b:"অনুচ্ছেদ",l:3,r:"段",pos:"mw"},{h:"锻炼",p:"duànliàn",m:"exercise",b:"ব্যায়াম",l:3,r:"练",pos:"v"},{h:"多么",p:"duōme",m:"how (degree)",b:"কতই না",l:3,r:"多",pos:"adv"},{h:"饿",p:"è",m:"hungry",b:"ক্ষুধার্ত",l:3,r:"—",pos:"adj"},{h:"耳朵",p:"ěrduo",m:"ear",b:"কান",l:3,r:"耳",pos:"n"},
+{h:"发",p:"fā",m:"send",b:"পাঠানো",l:3,r:"发",pos:"v"},{h:"发烧",p:"fāshāo",m:"fever",b:"জ্বর",l:3,r:"发",pos:"v"},{h:"发现",p:"fāxiàn",m:"discover",b:"আবিষ্কার",l:3,r:"发",pos:"v"},{h:"方便",p:"fāngbiàn",m:"convenient",b:"সুবিধাজনক",l:3,r:"便",pos:"adj"},{h:"放",p:"fàng",m:"put",b:"রাখা",l:3,r:"放",pos:"v"},
+{h:"放心",p:"fàngxīn",m:"relax",b:"নিশ্চিন্ত",l:3,r:"心",pos:"v"},{h:"分",p:"fēn",m:"divide",b:"ভাগ",l:3,r:"分",pos:"v"},{h:"附近",p:"fùjìn",m:"nearby",b:"কাছাকাছি",l:3,r:"近",pos:"n"},{h:"复习",p:"fùxí",m:"review",b:"পুনরালোচনা",l:3,r:"习",pos:"v"},{h:"干净",p:"gānjìng",m:"clean",b:"পরিষ্কার",l:3,r:"净",pos:"adj"},
+{h:"感冒",p:"gǎnmào",m:"cold (illness)",b:"সর্দি",l:3,r:"感",pos:"n"},{h:"感兴趣",p:"gǎn xìngqù",m:"interested",b:"আগ্রহী",l:3,r:"趣",pos:"v"},{h:"刚才",p:"gāngcái",m:"just now",b:"এইমাত্র",l:3,r:"刚",pos:"adv"},{h:"个子",p:"gèzi",m:"height",b:"উচ্চতা",l:3,r:"个",pos:"n"},{h:"根据",p:"gēnjù",m:"according to",b:"অনুসারে",l:3,r:"根",pos:"other"},
+{h:"更",p:"gèng",m:"even more",b:"আরও বেশি",l:3,r:"—",pos:"adv"},{h:"公园",p:"gōngyuán",m:"park",b:"পার্ক",l:3,r:"公",pos:"n"},{h:"故事",p:"gùshi",m:"story",b:"গল্প",l:3,r:"故",pos:"n"},{h:"刮风",p:"guā fēng",m:"windy",b:"বাতাস",l:3,r:"风",pos:"v"},{h:"关",p:"guān",m:"close",b:"বন্ধ করা",l:3,r:"关",pos:"v"},
+{h:"关系",p:"guānxi",m:"relationship",b:"সম্পর্ক",l:3,r:"关",pos:"n"},{h:"关心",p:"guānxīn",m:"care about",b:"যত্ন নেওয়া",l:3,r:"心",pos:"v"},{h:"关于",p:"guānyú",m:"about",b:"সম্পর্কে",l:3,r:"关",pos:"other"},{h:"国家",p:"guójiā",m:"country",b:"দেশ",l:3,r:"国",pos:"n"},{h:"果汁",p:"guǒzhī",m:"juice",b:"রস",l:3,r:"果",pos:"n"},
+{h:"过去",p:"guòqù",m:"past",b:"অতীত",l:3,r:"过",pos:"n"},{h:"害怕",p:"hàipà",m:"afraid",b:"ভয় পাওয়া",l:3,r:"怕",pos:"v"},{h:"河",p:"hé",m:"river",b:"নদী",l:3,r:"河",pos:"n"},{h:"黑板",p:"hēibǎn",m:"blackboard",b:"ব্ল্যাকবোর্ড",l:3,r:"黑",pos:"n"},{h:"后来",p:"hòulái",m:"later",b:"পরে",l:3,r:"后",pos:"adv"},
+{h:"花",p:"huā",m:"flower; spend",b:"ফুল; খরচ",l:3,r:"花",pos:"n"},{h:"花园",p:"huāyuán",m:"garden",b:"বাগান",l:3,r:"花",pos:"n"},{h:"画",p:"huà",m:"draw",b:"আঁকা",l:3,r:"画",pos:"v"},{h:"坏",p:"huài",m:"bad",b:"খারাপ",l:3,r:"坏",pos:"adj"},{h:"环境",p:"huánjìng",m:"environment",b:"পরিবেশ",l:3,r:"环",pos:"n"},
+{h:"换",p:"huàn",m:"change",b:"বদলানো",l:3,r:"换",pos:"v"},{h:"黄",p:"huáng",m:"yellow",b:"হলুদ",l:3,r:"黄",pos:"adj"},{h:"回忆",p:"huíyì",m:"recall",b:"স্মরণ",l:3,r:"回",pos:"v"},{h:"护照",p:"hùzhào",m:"passport",b:"পাসপোর্ট",l:3,r:"照",pos:"n"},{h:"或者",p:"huòzhě",m:"or",b:"অথবা",l:3,r:"或",pos:"conj"},
+{h:"几乎",p:"jīhū",m:"almost",b:"প্রায়",l:3,r:"几",pos:"adv"},{h:"极",p:"jí",m:"extremely",b:"চরম",l:3,r:"极",pos:"adv"},{h:"季节",p:"jìjié",m:"season",b:"ঋতু",l:3,r:"季",pos:"n"},{h:"记得",p:"jìde",m:"remember",b:"মনে আছে",l:3,r:"记",pos:"v"},{h:"检查",p:"jiǎnchá",m:"check",b:"পরীক্ষা",l:3,r:"检",pos:"v"},
+{h:"简单",p:"jiǎndān",m:"simple",b:"সহজ",l:3,r:"简",pos:"adj"},{h:"健康",p:"jiànkāng",m:"healthy",b:"স্বাস্থ্য",l:3,r:"健",pos:"adj"},{h:"见面",p:"jiànmiàn",m:"meet",b:"দেখা করা",l:3,r:"见",pos:"v"},{h:"讲",p:"jiǎng",m:"speak",b:"বলা",l:3,r:"讲",pos:"v"},{h:"教",p:"jiāo",m:"teach",b:"শেখানো",l:3,r:"教",pos:"v"},
+{h:"角",p:"jiǎo",m:"corner; dime",b:"কোণ",l:3,r:"角",pos:"n"},{h:"脚",p:"jiǎo",m:"foot",b:"পা",l:3,r:"脚",pos:"n"},{h:"接",p:"jiē",m:"receive",b:"গ্রহণ করা",l:3,r:"接",pos:"v"},{h:"街道",p:"jiēdào",m:"street",b:"রাস্তা",l:3,r:"街",pos:"n"},{h:"节目",p:"jiémù",m:"program",b:"অনুষ্ঠান",l:3,r:"节",pos:"n"},
+{h:"节日",p:"jiérì",m:"holiday",b:"উৎসব",l:3,r:"节",pos:"n"},{h:"结婚",p:"jiéhūn",m:"marry",b:"বিয়ে করা",l:3,r:"结",pos:"v"},{h:"结束",p:"jiéshù",m:"end",b:"শেষ হওয়া",l:3,r:"结",pos:"v"},{h:"解决",p:"jiějué",m:"solve",b:"সমাধান",l:3,r:"解",pos:"v"},{h:"借",p:"jiè",m:"borrow",b:"ধার",l:3,r:"借",pos:"v"},
+{h:"经常",p:"jīngcháng",m:"often",b:"প্রায়ই",l:3,r:"经",pos:"adv"},{h:"经过",p:"jīngguò",m:"pass through",b:"যাওয়া",l:3,r:"经",pos:"v"},{h:"经理",p:"jīnglǐ",m:"manager",b:"ম্যানেজার",l:3,r:"经",pos:"n"},{h:"久",p:"jiǔ",m:"long time",b:"অনেকক্ষণ",l:3,r:"久",pos:"adj"},{h:"旧",p:"jiù",m:"old (things)",b:"পুরনো",l:3,r:"旧",pos:"adj"},
+{h:"举办",p:"jǔbàn",m:"hold (event)",b:"আয়োজন",l:3,r:"办",pos:"v"},{h:"句子",p:"jùzi",m:"sentence",b:"বাক্য",l:3,r:"句",pos:"n"},{h:"决定",p:"juédìng",m:"decide",b:"সিদ্ধান্ত",l:3,r:"决",pos:"v"},{h:"渴",p:"kě",m:"thirsty",b:"তৃষ্ণার্ত",l:3,r:"—",pos:"adj"},{h:"客人",p:"kèrén",m:"guest",b:"অতিথি",l:3,r:"客",pos:"n"},
+{h:"空调",p:"kōngtiáo",m:"AC",b:"এসি",l:3,r:"空",pos:"n"},{h:"口",p:"kǒu",m:"mouth",b:"মুখ",l:3,r:"口",pos:"n"},{h:"哭",p:"kū",m:"cry",b:"কাঁদা",l:3,r:"—",pos:"v"},{h:"裤子",p:"kùzi",m:"pants",b:"প্যান্ট",l:3,r:"子",pos:"n"},{h:"筷子",p:"kuàizi",m:"chopsticks",b:"চপস্টিক",l:3,r:"子",pos:"n"},
+{h:"蓝",p:"lán",m:"blue",b:"নীল",l:3,r:"蓝",pos:"adj"},{h:"老",p:"lǎo",m:"old",b:"বৃদ্ধ",l:3,r:"老",pos:"adj"},{h:"离开",p:"líkāi",m:"leave",b:"ত্যাগ করা",l:3,r:"离",pos:"v"},{h:"礼物",p:"lǐwù",m:"gift",b:"উপহার",l:3,r:"礼",pos:"n"},{h:"历史",p:"lìshǐ",m:"history",b:"ইতিহাস",l:3,r:"历",pos:"n"},
+{h:"脸",p:"liǎn",m:"face",b:"মুখ",l:3,r:"脸",pos:"n"},{h:"练习",p:"liànxí",m:"practice",b:"অনুশীলন",l:3,r:"练",pos:"v"},{h:"辆",p:"liàng",m:"(MW vehicles)",b:"গাড়ি গণনা",l:3,r:"—",pos:"mw"},{h:"了解",p:"liǎojiě",m:"understand",b:"বোঝা",l:3,r:"解",pos:"v"},{h:"邻居",p:"línjū",m:"neighbor",b:"প্রতিবেশী",l:3,r:"邻",pos:"n"},
+{h:"楼",p:"lóu",m:"building",b:"ভবন",l:3,r:"楼",pos:"n"},{h:"绿",p:"lǜ",m:"green",b:"সবুজ",l:3,r:"绿",pos:"adj"},{h:"马",p:"mǎ",m:"horse",b:"ঘোড়া",l:3,r:"马",pos:"n"},{h:"马上",p:"mǎshàng",m:"immediately",b:"এখনই",l:3,r:"马",pos:"adv"},{h:"满意",p:"mǎnyì",m:"satisfied",b:"সন্তুষ্ট",l:3,r:"满",pos:"adj"},
+{h:"帽子",p:"màozi",m:"hat",b:"টুপি",l:3,r:"帽",pos:"n"},{h:"米",p:"mǐ",m:"meter",b:"মিটার",l:3,r:"米",pos:"mw"},{h:"面包",p:"miànbāo",m:"bread",b:"রুটি",l:3,r:"面",pos:"n"},{h:"明白",p:"míngbai",m:"understand",b:"বোঝা",l:3,r:"明",pos:"v"},{h:"拿",p:"ná",m:"take",b:"নেওয়া",l:3,r:"拿",pos:"v"},
+{h:"奶奶",p:"nǎinai",m:"grandma",b:"দাদি",l:3,r:"奶",pos:"n"},{h:"南",p:"nán",m:"south",b:"দক্ষিণ",l:3,r:"南",pos:"n"},{h:"难",p:"nán",m:"difficult",b:"কঠিন",l:3,r:"难",pos:"adj"},{h:"难过",p:"nánguò",m:"sad",b:"দুঃখিত",l:3,r:"难",pos:"adj"},{h:"年级",p:"niánjí",m:"grade",b:"শ্রেণী",l:3,r:"年",pos:"n"},
+{h:"年轻",p:"niánqīng",m:"young",b:"তরুণ",l:3,r:"年",pos:"adj"},{h:"鸟",p:"niǎo",m:"bird",b:"পাখি",l:3,r:"鸟",pos:"n"},{h:"努力",p:"nǔlì",m:"hardworking",b:"পরিশ্রমী",l:3,r:"力",pos:"adj"},{h:"爬山",p:"páshān",m:"climb mountain",b:"পাহাড়ে ওঠা",l:3,r:"山",pos:"v"},{h:"盘子",p:"pánzi",m:"plate",b:"প্লেট",l:3,r:"盘",pos:"n"},
+{h:"胖",p:"pàng",m:"fat",b:"মোটা",l:3,r:"—",pos:"adj"},{h:"啤酒",p:"píjiǔ",m:"beer",b:"বিয়ার",l:3,r:"酒",pos:"n"},{h:"皮鞋",p:"píxié",m:"leather shoes",b:"চামড়ার জুতা",l:3,r:"鞋",pos:"n"},{h:"瓶子",p:"píngzi",m:"bottle",b:"বোতল",l:3,r:"瓶",pos:"n"},{h:"其他",p:"qítā",m:"other",b:"অন্যান্য",l:3,r:"其",pos:"other"},
+{h:"其实",p:"qíshí",m:"actually",b:"আসলে",l:3,r:"其",pos:"adv"},{h:"奇怪",p:"qíguài",m:"strange",b:"অদ্ভুত",l:3,r:"奇",pos:"adj"},{h:"骑",p:"qí",m:"ride",b:"চড়া",l:3,r:"骑",pos:"v"},{h:"起来",p:"qǐlai",m:"get up",b:"উঠা",l:3,r:"起",pos:"v"},{h:"清楚",p:"qīngchu",m:"clear",b:"স্পষ্ট",l:3,r:"清",pos:"adj"},
+{h:"请假",p:"qǐngjià",m:"ask for leave",b:"ছুটি নেওয়া",l:3,r:"请",pos:"v"},{h:"秋",p:"qiū",m:"autumn",b:"শরৎ",l:3,r:"秋",pos:"n"},{h:"裙子",p:"qúnzi",m:"skirt",b:"স্কার্ট",l:3,r:"裙",pos:"n"},{h:"然后",p:"ránhòu",m:"then",b:"তারপর",l:3,r:"然",pos:"conj"},{h:"热情",p:"rèqíng",m:"enthusiastic",b:"উৎসাহী",l:3,r:"热",pos:"adj"},
+{h:"认为",p:"rènwéi",m:"think",b:"মনে করা",l:3,r:"认",pos:"v"},{h:"认真",p:"rènzhēn",m:"serious",b:"গুরুতর",l:3,r:"认",pos:"adj"},{h:"容易",p:"róngyì",m:"easy",b:"সহজ",l:3,r:"容",pos:"adj"},{h:"如果",p:"rúguǒ",m:"if",b:"যদি",l:3,r:"如",pos:"conj"},{h:"伞",p:"sǎn",m:"umbrella",b:"ছাতা",l:3,r:"—",pos:"n"},
+{h:"上网",p:"shàng wǎng",m:"go online",b:"ইন্টারনেট",l:3,r:"网",pos:"v"},{h:"生气",p:"shēngqì",m:"angry",b:"রাগ",l:3,r:"生",pos:"adj"},{h:"声音",p:"shēngyīn",m:"sound",b:"শব্দ",l:3,r:"声",pos:"n"},{h:"世界",p:"shìjiè",m:"world",b:"পৃথিবী",l:3,r:"世",pos:"n"},{h:"试",p:"shì",m:"try",b:"চেষ্টা",l:3,r:"试",pos:"v"},
+{h:"瘦",p:"shòu",m:"thin",b:"পাতলা",l:3,r:"—",pos:"adj"},{h:"叔叔",p:"shūshu",m:"uncle",b:"চাচা",l:3,r:"叔",pos:"n"},{h:"舒服",p:"shūfu",m:"comfortable",b:"আরামদায়ক",l:3,r:"舒",pos:"adj"},{h:"树",p:"shù",m:"tree",b:"গাছ",l:3,r:"树",pos:"n"},{h:"数学",p:"shùxué",m:"math",b:"গণিত",l:3,r:"数",pos:"n"},
+{h:"刷牙",p:"shuā yá",m:"brush teeth",b:"দাঁত মাজা",l:3,r:"牙",pos:"v"},{h:"双",p:"shuāng",m:"pair",b:"জোড়া",l:3,r:"双",pos:"mw"},{h:"水平",p:"shuǐpíng",m:"level",b:"স্তর",l:3,r:"水",pos:"n"},{h:"司机",p:"sījī",m:"driver",b:"ড্রাইভার",l:3,r:"机",pos:"n"},{h:"太阳",p:"tàiyáng",m:"sun",b:"সূর্য",l:3,r:"太",pos:"n"},
+{h:"特别",p:"tèbié",m:"special",b:"বিশেষ",l:3,r:"特",pos:"adv"},{h:"疼",p:"téng",m:"pain",b:"ব্যথা",l:3,r:"—",pos:"adj"},{h:"提高",p:"tígāo",m:"improve",b:"উন্নতি",l:3,r:"高",pos:"v"},{h:"体育",p:"tǐyù",m:"sports",b:"ক্রীড়া",l:3,r:"体",pos:"n"},{h:"甜",p:"tián",m:"sweet",b:"মিষ্টি",l:3,r:"甜",pos:"adj"},
+{h:"条",p:"tiáo",m:"(MW long)",b:"লম্বা গণনা",l:3,r:"条",pos:"mw"},{h:"同事",p:"tóngshì",m:"colleague",b:"সহকর্মী",l:3,r:"同",pos:"n"},{h:"同意",p:"tóngyì",m:"agree",b:"রাজি",l:3,r:"同",pos:"v"},{h:"头发",p:"tóufa",m:"hair",b:"চুল",l:3,r:"头",pos:"n"},{h:"突然",p:"tūrán",m:"suddenly",b:"হঠাৎ",l:3,r:"突",pos:"adv"},
+{h:"图书馆",p:"túshūguǎn",m:"library",b:"লাইব্রেরি",l:3,r:"图",pos:"n"},{h:"腿",p:"tuǐ",m:"leg",b:"পা",l:3,r:"—",pos:"n"},{h:"完成",p:"wánchéng",m:"complete",b:"সম্পন্ন",l:3,r:"完",pos:"v"},{h:"万",p:"wàn",m:"ten thousand",b:"দশ হাজার",l:3,r:"万",pos:"num"},{h:"忘记",p:"wàngjì",m:"forget",b:"ভুলে যাওয়া",l:3,r:"忘",pos:"v"},
+{h:"位",p:"wèi",m:"(MW polite)",b:"ব্যক্তি গণনা",l:3,r:"位",pos:"mw"},{h:"为",p:"wèi",m:"for",b:"জন্য",l:3,r:"为",pos:"other"},{h:"为了",p:"wèile",m:"in order to",b:"জন্য",l:3,r:"为",pos:"other"},{h:"文化",p:"wénhuà",m:"culture",b:"সংস্কৃতি",l:3,r:"文",pos:"n"},{h:"西",p:"xī",m:"west",b:"পশ্চিম",l:3,r:"西",pos:"n"},
+{h:"习惯",p:"xíguàn",m:"habit",b:"অভ্যাস",l:3,r:"习",pos:"n"},{h:"洗手间",p:"xǐshǒujiān",m:"bathroom",b:"বাথরুম",l:3,r:"洗",pos:"n"},{h:"洗澡",p:"xǐzǎo",m:"bathe",b:"স্নান",l:3,r:"洗",pos:"v"},{h:"夏",p:"xià",m:"summer",b:"গ্রীষ্ম",l:3,r:"夏",pos:"n"},{h:"先",p:"xiān",m:"first",b:"আগে",l:3,r:"先",pos:"adv"},
+{h:"相信",p:"xiāngxìn",m:"believe",b:"বিশ্বাস",l:3,r:"信",pos:"v"},{h:"香蕉",p:"xiāngjiāo",m:"banana",b:"কলা",l:3,r:"蕉",pos:"n"},{h:"像",p:"xiàng",m:"like",b:"মতো",l:3,r:"像",pos:"v"},{h:"向",p:"xiàng",m:"toward",b:"দিকে",l:3,r:"向",pos:"other"},{h:"小心",p:"xiǎoxīn",m:"careful",b:"সাবধান",l:3,r:"心",pos:"adj"},
+{h:"校长",p:"xiàozhǎng",m:"principal",b:"অধ্যক্ষ",l:3,r:"校",pos:"n"},{h:"新闻",p:"xīnwén",m:"news",b:"সংবাদ",l:3,r:"新",pos:"n"},{h:"新鲜",p:"xīnxiān",m:"fresh",b:"তাজা",l:3,r:"新",pos:"adj"},{h:"信用卡",p:"xìnyòngkǎ",m:"credit card",b:"ক্রেডিট কার্ড",l:3,r:"信",pos:"n"},{h:"行李箱",p:"xínglixiāng",m:"suitcase",b:"স্যুটকেস",l:3,r:"行",pos:"n"},
+{h:"醒",p:"xǐng",m:"wake up",b:"জাগা",l:3,r:"醒",pos:"v"},{h:"兴趣",p:"xìngqù",m:"interest",b:"আগ্রহ",l:3,r:"趣",pos:"n"},{h:"姓名",p:"xìngmíng",m:"full name",b:"পুরো নাম",l:3,r:"名",pos:"n"},{h:"熊猫",p:"xióngmāo",m:"panda",b:"পান্ডা",l:3,r:"猫",pos:"n"},{h:"需要",p:"xūyào",m:"need",b:"প্রয়োজন",l:3,r:"需",pos:"v"},
+{h:"选择",p:"xuǎnzé",m:"choose",b:"বেছে নেওয়া",l:3,r:"选",pos:"v"},{h:"要求",p:"yāoqiú",m:"require",b:"চাহিদা",l:3,r:"要",pos:"v"},{h:"爷爷",p:"yéye",m:"grandpa",b:"দাদা",l:3,r:"爷",pos:"n"},{h:"一般",p:"yībān",m:"generally",b:"সাধারণত",l:3,r:"般",pos:"adj"},{h:"一边",p:"yībiān",m:"while",b:"একই সাথে",l:3,r:"边",pos:"adv"},
+{h:"一定",p:"yīdìng",m:"definitely",b:"অবশ্যই",l:3,r:"定",pos:"adv"},{h:"一共",p:"yīgòng",m:"altogether",b:"মোট",l:3,r:"共",pos:"adv"},{h:"一会儿",p:"yīhuìr",m:"a moment",b:"একটু পরে",l:3,r:"会",pos:"n"},{h:"一样",p:"yīyàng",m:"same",b:"একই রকম",l:3,r:"样",pos:"adj"},{h:"一直",p:"yīzhí",m:"always",b:"সবসময়",l:3,r:"直",pos:"adv"},
+{h:"以前",p:"yǐqián",m:"before",b:"আগে",l:3,r:"前",pos:"n"},{h:"以为",p:"yǐwéi",m:"thought that",b:"মনে করেছিলাম",l:3,r:"为",pos:"v"},{h:"音乐",p:"yīnyuè",m:"music",b:"সংগীত",l:3,r:"音",pos:"n"},{h:"银行",p:"yínháng",m:"bank",b:"ব্যাংক",l:3,r:"银",pos:"n"},{h:"饮料",p:"yǐnliào",m:"drink",b:"পানীয়",l:3,r:"饮",pos:"n"},
+{h:"应该",p:"yīnggāi",m:"should",b:"উচিত",l:3,r:"应",pos:"v"},{h:"影响",p:"yǐngxiǎng",m:"influence",b:"প্রভাব",l:3,r:"影",pos:"v"},{h:"用",p:"yòng",m:"use",b:"ব্যবহার",l:3,r:"用",pos:"v"},{h:"游戏",p:"yóuxì",m:"game",b:"গেম",l:3,r:"游",pos:"n"},{h:"有名",p:"yǒumíng",m:"famous",b:"বিখ্যাত",l:3,r:"名",pos:"adj"},
+{h:"又",p:"yòu",m:"again",b:"আবার",l:3,r:"又",pos:"adv"},{h:"遇到",p:"yùdào",m:"encounter",b:"দেখা হওয়া",l:3,r:"遇",pos:"v"},{h:"愿意",p:"yuànyì",m:"willing",b:"ইচ্ছুক",l:3,r:"愿",pos:"v"},{h:"月亮",p:"yuèliang",m:"moon",b:"চাঁদ",l:3,r:"月",pos:"n"},{h:"越",p:"yuè",m:"more and more",b:"ক্রমশ",l:3,r:"越",pos:"adv"},
+{h:"站",p:"zhàn",m:"stand; station",b:"দাঁড়ানো",l:3,r:"站",pos:"v"},{h:"张",p:"zhāng",m:"(MW flat)",b:"চ্যাপ্টা গণনা",l:3,r:"张",pos:"mw"},{h:"长",p:"zhǎng",m:"grow",b:"বাড়া",l:3,r:"长",pos:"v"},{h:"着急",p:"zháojí",m:"anxious",b:"উদ্বিগ্ন",l:3,r:"急",pos:"adj"},{h:"照顾",p:"zhàogù",m:"take care",b:"যত্ন নেওয়া",l:3,r:"照",pos:"v"},
+{h:"照片",p:"zhàopiàn",m:"photo",b:"ছবি",l:3,r:"照",pos:"n"},{h:"照相机",p:"zhàoxiàngjī",m:"camera",b:"ক্যামেরা",l:3,r:"照",pos:"n"},{h:"只",p:"zhǐ",m:"only",b:"শুধু",l:3,r:"只",pos:"adv"},{h:"中间",p:"zhōngjiān",m:"middle",b:"মাঝখানে",l:3,r:"中",pos:"n"},{h:"中文",p:"Zhōngwén",m:"Chinese",b:"চীনা",l:3,r:"中",pos:"n"},
+{h:"种",p:"zhǒng",m:"kind",b:"ধরন",l:3,r:"种",pos:"mw"},{h:"重要",p:"zhòngyào",m:"important",b:"গুরুত্বপূর্ণ",l:3,r:"重",pos:"adj"},{h:"周末",p:"zhōumò",m:"weekend",b:"সাপ্তাহিক ছুটি",l:3,r:"周",pos:"n"},{h:"主要",p:"zhǔyào",m:"main",b:"প্রধান",l:3,r:"主",pos:"adj"},{h:"注意",p:"zhùyì",m:"pay attention",b:"মনোযোগ",l:3,r:"注",pos:"v"},
+{h:"自己",p:"zìjǐ",m:"oneself",b:"নিজে",l:3,r:"自",pos:"other"},{h:"总是",p:"zǒngshì",m:"always",b:"সবসময়",l:3,r:"总",pos:"adv"},{h:"嘴",p:"zuǐ",m:"mouth",b:"মুখ",l:3,r:"嘴",pos:"n"},{h:"最后",p:"zuìhòu",m:"finally",b:"শেষ পর্যন্ত",l:3,r:"最",pos:"adv"},{h:"最近",p:"zuìjìn",m:"recently",b:"সম্প্রতি",l:3,r:"最",pos:"adv"},
+{h:"作业",p:"zuòyè",m:"homework",b:"বাড়ির কাজ",l:3,r:"作",pos:"n"},{h:"按时",p:"ànshí",m:"on time",b:"সময়মতো",l:4,r:"时",pos:"adv"},{h:"按照",p:"ànzhào",m:"according to",b:"অনুযায়ী",l:4,r:"按",pos:"other"},{h:"安排",p:"ānpái",m:"arrange",b:"ব্যবস্থা",l:4,r:"安",pos:"v"},{h:"安全",p:"ānquán",m:"safe",b:"নিরাপদ",l:4,r:"安",pos:"adj"},
+{h:"百分之",p:"bǎifēnzhī",m:"percent",b:"শতকরা",l:4,r:"百",pos:"other"},{h:"棒",p:"bàng",m:"great",b:"দারুণ",l:4,r:"—",pos:"adj"},{h:"包括",p:"bāokuò",m:"include",b:"অন্তর্ভুক্ত",l:4,r:"包",pos:"v"},{h:"保护",p:"bǎohù",m:"protect",b:"রক্ষা",l:4,r:"保",pos:"v"},{h:"保证",p:"bǎozhèng",m:"guarantee",b:"নিশ্চিত",l:4,r:"保",pos:"v"},
+{h:"抱歉",p:"bàoqiàn",m:"sorry",b:"ক্ষমা",l:4,r:"歉",pos:"v"},{h:"报名",p:"bàomíng",m:"register",b:"নিবন্ধন",l:4,r:"报",pos:"v"},{h:"倍",p:"bèi",m:"times (mult.)",b:"গুণ",l:4,r:"倍",pos:"mw"},{h:"本来",p:"běnlái",m:"originally",b:"মূলত",l:4,r:"本",pos:"adv"},{h:"笨",p:"bèn",m:"stupid",b:"বোকা",l:4,r:"—",pos:"adj"},
+{h:"比如",p:"bǐrú",m:"for example",b:"যেমন",l:4,r:"比",pos:"other"},{h:"毕业",p:"bìyè",m:"graduate",b:"স্নাতক",l:4,r:"毕",pos:"v"},{h:"遍",p:"biàn",m:"time (through)",b:"বার",l:4,r:"遍",pos:"mw"},{h:"标准",p:"biāozhǔn",m:"standard",b:"মান",l:4,r:"标",pos:"n"},{h:"表达",p:"biǎodá",m:"express",b:"প্রকাশ",l:4,r:"表",pos:"v"},
+{h:"表演",p:"biǎoyǎn",m:"perform",b:"পরিবেশন",l:4,r:"表",pos:"v"},{h:"表示",p:"biǎoshì",m:"indicate",b:"নির্দেশ",l:4,r:"表",pos:"v"},{h:"饼干",p:"bǐnggān",m:"cookie",b:"বিস্কুট",l:4,r:"饼",pos:"n"},{h:"并且",p:"bìngqiě",m:"moreover",b:"এবং",l:4,r:"并",pos:"conj"},{h:"博士",p:"bóshì",m:"doctorate",b:"ডক্টরেট",l:4,r:"博",pos:"n"},
+{h:"不过",p:"búguò",m:"however",b:"তবে",l:4,r:"不",pos:"conj"},{h:"不管",p:"bùguǎn",m:"no matter",b:"যাই হোক",l:4,r:"不",pos:"conj"},{h:"不仅",p:"bùjǐn",m:"not only",b:"শুধু নয়",l:4,r:"不",pos:"conj"},{h:"部分",p:"bùfen",m:"part",b:"অংশ",l:4,r:"部",pos:"n"},{h:"猜",p:"cāi",m:"guess",b:"অনুমান",l:4,r:"—",pos:"v"},
+{h:"材料",p:"cáiliào",m:"material",b:"উপকরণ",l:4,r:"材",pos:"n"},{h:"参观",p:"cānguān",m:"visit",b:"পরিদর্শন",l:4,r:"参",pos:"v"},{h:"餐厅",p:"cāntīng",m:"restaurant",b:"রেস্তোরাঁ",l:4,r:"餐",pos:"n"},{h:"厕所",p:"cèsuǒ",m:"toilet",b:"টয়লেট",l:4,r:"厕",pos:"n"},{h:"差不多",p:"chàbuduō",m:"almost",b:"প্রায়",l:4,r:"差",pos:"adv"},
+{h:"尝",p:"cháng",m:"taste",b:"স্বাদ নেওয়া",l:4,r:"—",pos:"v"},{h:"长城",p:"Chángchéng",m:"Great Wall",b:"মহাপ্রাচীর",l:4,r:"城",pos:"n"},{h:"长江",p:"Chángjiāng",m:"Yangtze",b:"ইয়াংজি",l:4,r:"长",pos:"n"},{h:"超过",p:"chāoguò",m:"exceed",b:"অতিক্রম",l:4,r:"超",pos:"v"},{h:"吵",p:"chǎo",m:"noisy",b:"কোলাহল",l:4,r:"—",pos:"adj"},
+{h:"成功",p:"chénggōng",m:"succeed",b:"সাফল্য",l:4,r:"成",pos:"v"},{h:"成为",p:"chéngwéi",m:"become",b:"হয়ে যাওয়া",l:4,r:"成",pos:"v"},{h:"诚实",p:"chéngshí",m:"honest",b:"সৎ",l:4,r:"诚",pos:"adj"},{h:"乘坐",p:"chéngzuò",m:"ride",b:"আরোহণ",l:4,r:"乘",pos:"v"},{h:"吃惊",p:"chījīng",m:"surprised",b:"অবাক",l:4,r:"吃",pos:"v"},
+{h:"重新",p:"chóngxīn",m:"again",b:"নতুন করে",l:4,r:"重",pos:"adv"},{h:"抽烟",p:"chōuyān",m:"smoke",b:"ধূমপান",l:4,r:"烟",pos:"v"},{h:"出差",p:"chūchāi",m:"business trip",b:"অফিসিয়াল সফর",l:4,r:"出",pos:"v"},{h:"出发",p:"chūfā",m:"set out",b:"রওনা",l:4,r:"出",pos:"v"},{h:"出生",p:"chūshēng",m:"born",b:"জন্ম",l:4,r:"生",pos:"v"},
+{h:"传真",p:"chuánzhēn",m:"fax",b:"ফ্যাক্স",l:4,r:"传",pos:"n"},{h:"窗户",p:"chuānghù",m:"window",b:"জানালা",l:4,r:"窗",pos:"n"},{h:"词语",p:"cíyǔ",m:"words",b:"শব্দ",l:4,r:"词",pos:"n"},{h:"从来",p:"cónglái",m:"never (before)",b:"কখনই না",l:4,r:"从",pos:"adv"},{h:"粗心",p:"cūxīn",m:"careless",b:"অসাবধান",l:4,r:"心",pos:"adj"},
+{h:"存",p:"cún",m:"save; deposit",b:"জমা",l:4,r:"存",pos:"v"},{h:"答案",p:"dá'àn",m:"answer",b:"উত্তর",l:4,r:"答",pos:"n"},{h:"打扮",p:"dǎban",m:"dress up",b:"সাজা",l:4,r:"打",pos:"v"},{h:"打折",p:"dǎzhé",m:"discount",b:"ছাড়",l:4,r:"打",pos:"v"},{h:"打印",p:"dǎyìn",m:"print",b:"প্রিন্ট",l:4,r:"打",pos:"v"},
+{h:"打针",p:"dǎzhēn",m:"injection",b:"ইনজেকশন",l:4,r:"打",pos:"v"},{h:"大概",p:"dàgài",m:"probably",b:"সম্ভবত",l:4,r:"大",pos:"adv"},{h:"大使馆",p:"dàshǐguǎn",m:"embassy",b:"দূতাবাস",l:4,r:"馆",pos:"n"},{h:"大约",p:"dàyuē",m:"about",b:"প্রায়",l:4,r:"大",pos:"adv"},{h:"代替",p:"dàitì",m:"replace",b:"প্রতিস্থাপন",l:4,r:"代",pos:"v"},
+{h:"代表",p:"dàibiǎo",m:"represent",b:"প্রতিনিধি",l:4,r:"代",pos:"v"},{h:"戴",p:"dài",m:"wear (acc.)",b:"পরা",l:4,r:"戴",pos:"v"},{h:"当",p:"dāng",m:"when",b:"যখন",l:4,r:"当",pos:"other"},{h:"当时",p:"dāngshí",m:"at that time",b:"তখন",l:4,r:"当",pos:"n"},{h:"导游",p:"dǎoyóu",m:"tour guide",b:"ট্যুর গাইড",l:4,r:"导",pos:"n"},
+{h:"到处",p:"dàochù",m:"everywhere",b:"সর্বত্র",l:4,r:"到",pos:"adv"},{h:"到底",p:"dàodǐ",m:"after all",b:"আসলে",l:4,r:"到",pos:"adv"},{h:"道歉",p:"dàoqiàn",m:"apologize",b:"ক্ষমা চাওয়া",l:4,r:"道",pos:"v"},{h:"得意",p:"déyì",m:"proud",b:"গর্বিত",l:4,r:"得",pos:"adj"},{h:"得",p:"děi",m:"must",b:"লাগবে",l:4,r:"得",pos:"v"},
+{h:"登机牌",p:"dēngjīpái",m:"boarding pass",b:"বোর্ডিং পাস",l:4,r:"登",pos:"n"},{h:"低",p:"dī",m:"low",b:"নিচু",l:4,r:"低",pos:"adj"},{h:"底",p:"dǐ",m:"bottom",b:"তলা",l:4,r:"底",pos:"n"},{h:"地址",p:"dìzhǐ",m:"address",b:"ঠিকানা",l:4,r:"地",pos:"n"},{h:"地球",p:"dìqiú",m:"earth",b:"পৃথিবী",l:4,r:"地",pos:"n"},
+{h:"调查",p:"diàochá",m:"investigate",b:"তদন্ত",l:4,r:"调",pos:"v"},{h:"掉",p:"diào",m:"fall; drop",b:"পড়া",l:4,r:"—",pos:"v"},{h:"丢",p:"diū",m:"lose",b:"হারানো",l:4,r:"丢",pos:"v"},{h:"动作",p:"dòngzuò",m:"action",b:"কাজ",l:4,r:"动",pos:"n"},{h:"读者",p:"dúzhě",m:"reader",b:"পাঠক",l:4,r:"读",pos:"n"},
+{h:"堵车",p:"dǔchē",m:"traffic jam",b:"জ্যাম",l:4,r:"车",pos:"v"},{h:"肚子",p:"dùzi",m:"stomach",b:"পেট",l:4,r:"肚",pos:"n"},{h:"对话",p:"duìhuà",m:"dialogue",b:"সংলাপ",l:4,r:"对",pos:"n"},{h:"对面",p:"duìmiàn",m:"opposite",b:"বিপরীতে",l:4,r:"对",pos:"n"},{h:"对于",p:"duìyú",m:"regarding",b:"সম্পর্কে",l:4,r:"对",pos:"other"},
+{h:"儿童",p:"értóng",m:"children",b:"শিশু",l:4,r:"儿",pos:"n"},{h:"而",p:"ér",m:"and; but",b:"এবং; কিন্তু",l:4,r:"而",pos:"conj"},{h:"发展",p:"fāzhǎn",m:"develop",b:"উন্নয়ন",l:4,r:"发",pos:"v"},{h:"法律",p:"fǎlǜ",m:"law",b:"আইন",l:4,r:"法",pos:"n"},{h:"翻译",p:"fānyì",m:"translate",b:"অনুবাদ",l:4,r:"翻",pos:"v"},
+{h:"烦恼",p:"fánnǎo",m:"worry",b:"দুশ্চিন্তা",l:4,r:"烦",pos:"n"},{h:"反对",p:"fǎnduì",m:"oppose",b:"বিরোধিতা",l:4,r:"反",pos:"v"},{h:"方法",p:"fāngfǎ",m:"method",b:"পদ্ধতি",l:4,r:"方",pos:"n"},{h:"方面",p:"fāngmiàn",m:"aspect",b:"দিক",l:4,r:"方",pos:"n"},{h:"方向",p:"fāngxiàng",m:"direction",b:"দিক",l:4,r:"方",pos:"n"},
+{h:"房东",p:"fángdōng",m:"landlord",b:"বাড়িওয়ালা",l:4,r:"房",pos:"n"},{h:"放弃",p:"fàngqì",m:"give up",b:"ছেড়ে দেওয়া",l:4,r:"放",pos:"v"},{h:"放暑假",p:"fàng shǔjià",m:"summer break",b:"গ্রীষ্মের ছুটি",l:4,r:"放",pos:"v"},{h:"份",p:"fèn",m:"(MW portions)",b:"অংশ গণনা",l:4,r:"份",pos:"mw"},{h:"丰富",p:"fēngfù",m:"rich",b:"সমৃদ্ধ",l:4,r:"丰",pos:"adj"},
+{h:"否则",p:"fǒuzé",m:"otherwise",b:"নাহলে",l:4,r:"否",pos:"conj"},{h:"符合",p:"fúhé",m:"conform",b:"মানানসই",l:4,r:"符",pos:"v"},{h:"付款",p:"fùkuǎn",m:"pay",b:"পরিশোধ",l:4,r:"付",pos:"v"},{h:"复杂",p:"fùzá",m:"complex",b:"জটিল",l:4,r:"复",pos:"adj"},{h:"富",p:"fù",m:"rich",b:"ধনী",l:4,r:"富",pos:"adj"},
+{h:"父亲",p:"fùqīn",m:"father",b:"বাবা",l:4,r:"父",pos:"n"},{h:"改变",p:"gǎibiàn",m:"change",b:"পরিবর্তন",l:4,r:"改",pos:"v"},{h:"干",p:"gàn",m:"do",b:"করা",l:4,r:"干",pos:"v"},{h:"感动",p:"gǎndòng",m:"moved",b:"আবেগতাড়িত",l:4,r:"感",pos:"v"},{h:"感觉",p:"gǎnjué",m:"feeling",b:"অনুভূতি",l:4,r:"感",pos:"v"},
+{h:"感谢",p:"gǎnxiè",m:"thank",b:"কৃতজ্ঞ",l:4,r:"感",pos:"v"},{h:"赶",p:"gǎn",m:"hurry",b:"তাড়াহুড়ো",l:4,r:"赶",pos:"v"},{h:"刚",p:"gāng",m:"just",b:"এইমাত্র",l:4,r:"刚",pos:"adv"},{h:"各",p:"gè",m:"each",b:"প্রত্যেক",l:4,r:"各",pos:"other"},{h:"功夫",p:"gōngfu",m:"kung fu",b:"কুংফু",l:4,r:"功",pos:"n"},
+{h:"工资",p:"gōngzī",m:"salary",b:"বেতন",l:4,r:"工",pos:"n"},{h:"公里",p:"gōnglǐ",m:"kilometer",b:"কিলোমিটার",l:4,r:"公",pos:"mw"},{h:"共同",p:"gòngtóng",m:"common",b:"সাধারণ",l:4,r:"共",pos:"adj"},{h:"够",p:"gòu",m:"enough",b:"যথেষ্ট",l:4,r:"够",pos:"adj"},{h:"购物",p:"gòuwù",m:"shopping",b:"কেনাকাটা",l:4,r:"购",pos:"v"},
+{h:"估计",p:"gūjì",m:"estimate",b:"অনুমান",l:4,r:"估",pos:"v"},{h:"鼓励",p:"gǔlì",m:"encourage",b:"উৎসাহ",l:4,r:"鼓",pos:"v"},{h:"故意",p:"gùyì",m:"on purpose",b:"ইচ্ছাকৃত",l:4,r:"故",pos:"adv"},{h:"顾客",p:"gùkè",m:"customer",b:"গ্রাহক",l:4,r:"客",pos:"n"},{h:"挂",p:"guà",m:"hang",b:"ঝুলানো",l:4,r:"挂",pos:"v"},
+{h:"管理",p:"guǎnlǐ",m:"manage",b:"পরিচালনা",l:4,r:"管",pos:"v"},{h:"光",p:"guāng",m:"light",b:"আলো",l:4,r:"光",pos:"n"},{h:"广播",p:"guǎngbō",m:"broadcast",b:"সম্প্রচার",l:4,r:"广",pos:"n"},{h:"广告",p:"guǎnggào",m:"ad",b:"বিজ্ঞাপন",l:4,r:"广",pos:"n"},{h:"逛",p:"guàng",m:"stroll",b:"ঘোরা",l:4,r:"—",pos:"v"},
+{h:"规定",p:"guīdìng",m:"regulation",b:"নিয়ম",l:4,r:"规",pos:"n"},{h:"国际",p:"guójì",m:"international",b:"আন্তর্জাতিক",l:4,r:"国",pos:"adj"},{h:"果然",p:"guǒrán",m:"as expected",b:"যেমনটি ভাবা",l:4,r:"然",pos:"adv"},{h:"过程",p:"guòchéng",m:"process",b:"প্রক্রিয়া",l:4,r:"过",pos:"n"},{h:"海洋",p:"hǎiyáng",m:"ocean",b:"সমুদ্র",l:4,r:"海",pos:"n"},
+{h:"害羞",p:"hàixiū",m:"shy",b:"লজ্জিত",l:4,r:"害",pos:"adj"},{h:"寒假",p:"hánjià",m:"winter break",b:"শীতের ছুটি",l:4,r:"寒",pos:"n"},{h:"汗",p:"hàn",m:"sweat",b:"ঘাম",l:4,r:"汗",pos:"n"},{h:"航班",p:"hángbān",m:"flight",b:"ফ্লাইট",l:4,r:"航",pos:"n"},{h:"好处",p:"hǎochu",m:"benefit",b:"সুবিধা",l:4,r:"好",pos:"n"},
+{h:"好像",p:"hǎoxiàng",m:"seem",b:"মনে হয়",l:4,r:"好",pos:"adv"},{h:"合格",p:"hégé",m:"qualified",b:"যোগ্য",l:4,r:"合",pos:"adj"},{h:"合适",p:"héshì",m:"suitable",b:"উপযুক্ত",l:4,r:"合",pos:"adj"},{h:"盒子",p:"hézi",m:"box",b:"বাক্স",l:4,r:"盒",pos:"n"},{h:"后悔",p:"hòuhuǐ",m:"regret",b:"অনুতাপ",l:4,r:"后",pos:"v"},
+{h:"厚",p:"hòu",m:"thick",b:"মোটা",l:4,r:"厚",pos:"adj"},{h:"互联网",p:"hùliánwǎng",m:"internet",b:"ইন্টারনেট",l:4,r:"网",pos:"n"},{h:"互相",p:"hùxiāng",m:"mutual",b:"পারস্পরিক",l:4,r:"互",pos:"adv"},{h:"护士",p:"hùshi",m:"nurse",b:"নার্স",l:4,r:"护",pos:"n"},{h:"怀疑",p:"huáiyí",m:"doubt",b:"সন্দেহ",l:4,r:"疑",pos:"v"},
+{h:"回忆",p:"huíyì",m:"memory",b:"স্মৃতি",l:4,r:"回",pos:"n"},{h:"活动",p:"huódòng",m:"activity",b:"কার্যক্রম",l:4,r:"活",pos:"n"},{h:"活泼",p:"huópō",m:"lively",b:"প্রাণবন্ত",l:4,r:"活",pos:"adj"},{h:"火",p:"huǒ",m:"fire",b:"আগুন",l:4,r:"火",pos:"n"},{h:"获得",p:"huòdé",m:"obtain",b:"অর্জন",l:4,r:"获",pos:"v"},
+{h:"积极",p:"jījí",m:"positive",b:"ইতিবাচক",l:4,r:"积",pos:"adj"},{h:"积累",p:"jīlěi",m:"accumulate",b:"সঞ্চয়",l:4,r:"积",pos:"v"},{h:"基础",p:"jīchǔ",m:"foundation",b:"ভিত্তি",l:4,r:"基",pos:"n"},{h:"激动",p:"jīdòng",m:"excited",b:"উত্তেজিত",l:4,r:"激",pos:"adj"},{h:"及时",p:"jíshí",m:"timely",b:"সময়মতো",l:4,r:"及",pos:"adj"},
+{h:"即使",p:"jíshǐ",m:"even if",b:"এমনকি",l:4,r:"即",pos:"conj"},{h:"计划",p:"jìhuà",m:"plan",b:"পরিকল্পনা",l:4,r:"计",pos:"n"},{h:"技术",p:"jìshù",m:"technology",b:"প্রযুক্তি",l:4,r:"技",pos:"n"},{h:"既然",p:"jìrán",m:"since",b:"যেহেতু",l:4,r:"既",pos:"conj"},{h:"继续",p:"jìxù",m:"continue",b:"চালিয়ে যাওয়া",l:4,r:"继",pos:"v"},
+{h:"加班",p:"jiābān",m:"overtime",b:"অতিরিক্ত সময়",l:4,r:"加",pos:"v"},{h:"加油站",p:"jiāyóuzhàn",m:"gas station",b:"পেট্রোল পাম্প",l:4,r:"站",pos:"n"},{h:"家具",p:"jiājù",m:"furniture",b:"আসবাবপত্র",l:4,r:"家",pos:"n"},{h:"假",p:"jiǎ",m:"false",b:"মিথ্যা",l:4,r:"假",pos:"adj"},{h:"价格",p:"jiàgé",m:"price",b:"মূল্য",l:4,r:"价",pos:"n"},
+{h:"坚持",p:"jiānchí",m:"insist",b:"অটল",l:4,r:"坚",pos:"v"},{h:"减肥",p:"jiǎnféi",m:"lose weight",b:"ওজন কমানো",l:4,r:"减",pos:"v"},{h:"减少",p:"jiǎnshǎo",m:"reduce",b:"কমানো",l:4,r:"减",pos:"v"},{h:"建议",p:"jiànyì",m:"suggest",b:"পরামর্শ",l:4,r:"建",pos:"v"},{h:"将来",p:"jiānglái",m:"future",b:"ভবিষ্যৎ",l:4,r:"将",pos:"n"},
+{h:"奖金",p:"jiǎngjīn",m:"bonus",b:"বোনাস",l:4,r:"奖",pos:"n"},{h:"降低",p:"jiàngdī",m:"lower",b:"কমানো",l:4,r:"降",pos:"v"},{h:"交",p:"jiāo",m:"hand over",b:"জমা দেওয়া",l:4,r:"交",pos:"v"},{h:"交流",p:"jiāoliú",m:"exchange",b:"বিনিময়",l:4,r:"交",pos:"v"},{h:"交通",p:"jiāotōng",m:"traffic",b:"যাতায়াত",l:4,r:"交",pos:"n"},
+{h:"骄傲",p:"jiāo'ào",m:"proud",b:"গর্বিত",l:4,r:"骄",pos:"adj"},{h:"饺子",p:"jiǎozi",m:"dumpling",b:"ডাম্পলিং",l:4,r:"饺",pos:"n"},{h:"教育",p:"jiàoyù",m:"education",b:"শিক্ষা",l:4,r:"教",pos:"n"},{h:"接受",p:"jiēshòu",m:"accept",b:"গ্রহণ",l:4,r:"接",pos:"v"},{h:"结果",p:"jiéguǒ",m:"result",b:"ফলাফল",l:4,r:"结",pos:"n"},
+{h:"节约",p:"jiéyuē",m:"save",b:"সাশ্রয়",l:4,r:"节",pos:"v"},{h:"尽管",p:"jǐnguǎn",m:"although",b:"যদিও",l:4,r:"尽",pos:"conj"},{h:"进行",p:"jìnxíng",m:"carry out",b:"পরিচালনা",l:4,r:"进",pos:"v"},{h:"禁止",p:"jìnzhǐ",m:"prohibit",b:"নিষিদ্ধ",l:4,r:"禁",pos:"v"},{h:"京剧",p:"jīngjù",m:"Peking opera",b:"পিকিং অপেরা",l:4,r:"京",pos:"n"},
+{h:"经济",p:"jīngjì",m:"economy",b:"অর্থনীতি",l:4,r:"经",pos:"n"},{h:"经历",p:"jīnglì",m:"experience",b:"অভিজ্ঞতা",l:4,r:"经",pos:"n"},{h:"经验",p:"jīngyàn",m:"experience",b:"অভিজ্ঞতা",l:4,r:"经",pos:"n"},{h:"精彩",p:"jīngcǎi",m:"wonderful",b:"দারুণ",l:4,r:"精",pos:"adj"},{h:"景色",p:"jǐngsè",m:"scenery",b:"দৃশ্য",l:4,r:"景",pos:"n"},
+{h:"警察",p:"jǐngchá",m:"police",b:"পুলিশ",l:4,r:"警",pos:"n"},{h:"竞争",p:"jìngzhēng",m:"compete",b:"প্রতিযোগিতা",l:4,r:"竞",pos:"v"},{h:"镜子",p:"jìngzi",m:"mirror",b:"আয়না",l:4,r:"镜",pos:"n"},{h:"究竟",p:"jiūjìng",m:"after all",b:"আসলে",l:4,r:"究",pos:"adv"},{h:"举",p:"jǔ",m:"raise",b:"তোলা",l:4,r:"举",pos:"v"},
+{h:"拒绝",p:"jùjué",m:"refuse",b:"প্রত্যাখ্যান",l:4,r:"拒",pos:"v"},{h:"距离",p:"jùlí",m:"distance",b:"দূরত্ব",l:4,r:"距",pos:"n"},{h:"聚会",p:"jùhuì",m:"gathering",b:"আড্ডা",l:4,r:"聚",pos:"n"},{h:"开玩笑",p:"kāi wánxiào",m:"joke",b:"রসিকতা",l:4,r:"笑",pos:"v"},{h:"看法",p:"kànfǎ",m:"opinion",b:"মতামত",l:4,r:"看",pos:"n"},
+{h:"考虑",p:"kǎolǜ",m:"consider",b:"বিবেচনা",l:4,r:"考",pos:"v"},{h:"科学",p:"kēxué",m:"science",b:"বিজ্ঞান",l:4,r:"科",pos:"n"},{h:"可怜",p:"kělián",m:"pitiful",b:"করুণ",l:4,r:"可",pos:"adj"},{h:"可是",p:"kěshì",m:"but",b:"কিন্তু",l:4,r:"可",pos:"conj"},{h:"客厅",p:"kètīng",m:"living room",b:"বসার ঘর",l:4,r:"客",pos:"n"},
+{h:"肯定",p:"kěndìng",m:"certain",b:"নিশ্চিত",l:4,r:"肯",pos:"adv"},{h:"空",p:"kōng",m:"empty",b:"খালি",l:4,r:"空",pos:"adj"},{h:"恐怕",p:"kǒngpà",m:"afraid",b:"আশংকা",l:4,r:"恐",pos:"adv"},{h:"苦",p:"kǔ",m:"bitter",b:"তিক্ত",l:4,r:"苦",pos:"adj"},{h:"矿泉水",p:"kuàngquánshuǐ",m:"mineral water",b:"খনিজ পানি",l:4,r:"水",pos:"n"},
+{h:"困",p:"kùn",m:"sleepy",b:"তন্দ্রাচ্ছন্ন",l:4,r:"困",pos:"adj"},{h:"困难",p:"kùnnan",m:"difficulty",b:"কষ্ট",l:4,r:"困",pos:"adj"},{h:"垃圾桶",p:"lājītǒng",m:"trash can",b:"আবর্জনার পাত্র",l:4,r:"桶",pos:"n"},{h:"来不及",p:"láibují",m:"too late",b:"সময় নেই",l:4,r:"来",pos:"v"},{h:"来得及",p:"láidejí",m:"still time",b:"সময় আছে",l:4,r:"来",pos:"v"},
+{h:"浪费",p:"làngfèi",m:"waste",b:"অপচয়",l:4,r:"浪",pos:"v"},{h:"浪漫",p:"làngmàn",m:"romantic",b:"রোমান্টিক",l:4,r:"浪",pos:"adj"},{h:"老虎",p:"lǎohǔ",m:"tiger",b:"বাঘ",l:4,r:"虎",pos:"n"},{h:"冷静",p:"lěngjìng",m:"calm",b:"শান্ত",l:4,r:"冷",pos:"adj"},{h:"理发",p:"lǐfà",m:"haircut",b:"চুল কাটা",l:4,r:"理",pos:"v"},
+{h:"理解",p:"lǐjiě",m:"understand",b:"বোঝা",l:4,r:"理",pos:"v"},{h:"理想",p:"lǐxiǎng",m:"ideal",b:"আদর্শ",l:4,r:"理",pos:"n"},{h:"力气",p:"lìqi",m:"strength",b:"শক্তি",l:4,r:"力",pos:"n"},{h:"厉害",p:"lìhai",m:"awesome",b:"দারুণ",l:4,r:"害",pos:"adj"},{h:"例如",p:"lìrú",m:"for example",b:"যেমন",l:4,r:"例",pos:"other"},
+{h:"俩",p:"liǎ",m:"two (people)",b:"দুজন",l:4,r:"—",pos:"num"},{h:"联系",p:"liánxì",m:"contact",b:"যোগাযোগ",l:4,r:"联",pos:"v"},{h:"凉快",p:"liángkuai",m:"cool",b:"ঠান্ডা",l:4,r:"凉",pos:"adj"},{h:"亮",p:"liàng",m:"bright",b:"উজ্জ্বল",l:4,r:"亮",pos:"adj"},{h:"另外",p:"lìngwài",m:"other",b:"অন্য",l:4,r:"另",pos:"other"},
+{h:"流利",p:"liúlì",m:"fluent",b:"সাবলীল",l:4,r:"流",pos:"adj"},{h:"流行",p:"liúxíng",m:"popular",b:"জনপ্রিয়",l:4,r:"流",pos:"adj"},{h:"留",p:"liú",m:"stay",b:"থাকা",l:4,r:"留",pos:"v"},{h:"留学",p:"liúxué",m:"study abroad",b:"বিদেশে পড়া",l:4,r:"留",pos:"v"},{h:"律师",p:"lǜshī",m:"lawyer",b:"আইনজীবী",l:4,r:"律",pos:"n"},
+{h:"乱",p:"luàn",m:"messy",b:"এলোমেলো",l:4,r:"—",pos:"adj"},{h:"麻烦",p:"máfan",m:"trouble",b:"ঝামেলা",l:4,r:"烦",pos:"adj"},{h:"马虎",p:"mǎhu",m:"careless",b:"অসাবধান",l:4,r:"马",pos:"adj"},{h:"满",p:"mǎn",m:"full",b:"পূর্ণ",l:4,r:"满",pos:"adj"},{h:"毛",p:"máo",m:"hair; dime",b:"লোম",l:4,r:"毛",pos:"n"},
+{h:"美丽",p:"měilì",m:"beautiful",b:"সুন্দর",l:4,r:"美",pos:"adj"},{h:"梦",p:"mèng",m:"dream",b:"স্বপ্ন",l:4,r:"梦",pos:"n"},{h:"密码",p:"mìmǎ",m:"password",b:"পাসওয়ার্ড",l:4,r:"密",pos:"n"},{h:"免费",p:"miǎnfèi",m:"free",b:"বিনামূল্যে",l:4,r:"免",pos:"adj"},{h:"民族",p:"mínzú",m:"nationality",b:"জাতি",l:4,r:"民",pos:"n"},
+{h:"母亲",p:"mǔqīn",m:"mother",b:"মা",l:4,r:"母",pos:"n"},{h:"目的",p:"mùdì",m:"purpose",b:"উদ্দেশ্য",l:4,r:"目",pos:"n"},{h:"耐心",p:"nàixīn",m:"patient",b:"ধৈর্যশীল",l:4,r:"心",pos:"adj"},{h:"难道",p:"nándào",m:"could it be",b:"সত্যিই কি",l:4,r:"难",pos:"adv"},{h:"难受",p:"nánshòu",m:"uncomfortable",b:"অস্বস্তি",l:4,r:"难",pos:"adj"},
+{h:"内",p:"nèi",m:"inside",b:"ভেতরে",l:4,r:"内",pos:"n"},{h:"内容",p:"nèiróng",m:"content",b:"বিষয়বস্তু",l:4,r:"内",pos:"n"},{h:"能力",p:"nénglì",m:"ability",b:"সামর্থ্য",l:4,r:"能",pos:"n"},{h:"年龄",p:"niánlíng",m:"age",b:"বয়স",l:4,r:"年",pos:"n"},{h:"农村",p:"nóngcūn",m:"village",b:"গ্রাম",l:4,r:"农",pos:"n"},
+{h:"弄",p:"nòng",m:"do; handle",b:"করা",l:4,r:"—",pos:"v"},{h:"暖和",p:"nuǎnhuo",m:"warm",b:"উষ্ণ",l:4,r:"暖",pos:"adj"},{h:"偶尔",p:"ǒu'ěr",m:"occasionally",b:"মাঝে মাঝে",l:4,r:"偶",pos:"adv"},{h:"排列",p:"páiliè",m:"arrange",b:"সাজানো",l:4,r:"排",pos:"v"},{h:"判断",p:"pànduàn",m:"judge",b:"বিচার",l:4,r:"判",pos:"v"},
+{h:"陪",p:"péi",m:"accompany",b:"সঙ্গ দেওয়া",l:4,r:"陪",pos:"v"},{h:"批评",p:"pīpíng",m:"criticize",b:"সমালোচনা",l:4,r:"批",pos:"v"},{h:"皮肤",p:"pífū",m:"skin",b:"ত্বক",l:4,r:"皮",pos:"n"},{h:"脾气",p:"píqi",m:"temper",b:"মেজাজ",l:4,r:"气",pos:"n"},{h:"篇",p:"piān",m:"(MW articles)",b:"প্রবন্ধ গণনা",l:4,r:"篇",pos:"mw"},
+{h:"骗",p:"piàn",m:"deceive",b:"ঠকানো",l:4,r:"骗",pos:"v"},{h:"乒乓球",p:"pīngpāngqiú",m:"ping pong",b:"পিংপং",l:4,r:"球",pos:"n"},{h:"平时",p:"píngshí",m:"usually",b:"সাধারণত",l:4,r:"平",pos:"adv"},{h:"破",p:"pò",m:"broken",b:"ভাঙা",l:4,r:"破",pos:"adj"},{h:"普遍",p:"pǔbiàn",m:"common",b:"সাধারণ",l:4,r:"普",pos:"adj"},
+{h:"普通话",p:"pǔtōnghuà",m:"Mandarin",b:"ম্যান্ডারিন",l:4,r:"普",pos:"n"},{h:"其中",p:"qízhōng",m:"among",b:"মধ্যে",l:4,r:"其",pos:"other"},{h:"气候",p:"qìhòu",m:"climate",b:"জলবায়ু",l:4,r:"气",pos:"n"},{h:"千万",p:"qiānwàn",m:"must (emph.)",b:"অবশ্যই",l:4,r:"千",pos:"adv"},{h:"签证",p:"qiānzhèng",m:"visa",b:"ভিসা",l:4,r:"签",pos:"n"},
+{h:"敲",p:"qiāo",m:"knock",b:"টোকা দেওয়া",l:4,r:"敲",pos:"v"},{h:"桥",p:"qiáo",m:"bridge",b:"সেতু",l:4,r:"桥",pos:"n"},{h:"巧克力",p:"qiǎokèlì",m:"chocolate",b:"চকলেট",l:4,r:"巧",pos:"n"},{h:"亲戚",p:"qīnqi",m:"relative",b:"আত্মীয়",l:4,r:"亲",pos:"n"},{h:"轻",p:"qīng",m:"light (weight)",b:"হালকা",l:4,r:"轻",pos:"adj"},
+{h:"情况",p:"qíngkuàng",m:"situation",b:"অবস্থা",l:4,r:"情",pos:"n"},{h:"穷",p:"qióng",m:"poor",b:"দরিদ্র",l:4,r:"穷",pos:"adj"},{h:"区别",p:"qūbié",m:"difference",b:"পার্থক্য",l:4,r:"区",pos:"n"},{h:"取",p:"qǔ",m:"take",b:"নেওয়া",l:4,r:"取",pos:"v"},{h:"全部",p:"quánbù",m:"all",b:"সমস্ত",l:4,r:"全",pos:"other"},
+{h:"缺点",p:"quēdiǎn",m:"weakness",b:"দুর্বলতা",l:4,r:"缺",pos:"n"},{h:"缺少",p:"quēshǎo",m:"lack",b:"অভাব",l:4,r:"缺",pos:"v"},{h:"却",p:"què",m:"but",b:"কিন্তু",l:4,r:"却",pos:"adv"},{h:"确实",p:"quèshí",m:"indeed",b:"প্রকৃতপক্ষে",l:4,r:"确",pos:"adv"},{h:"然而",p:"rán'ér",m:"however",b:"তবে",l:4,r:"然",pos:"conj"},
+{h:"热闹",p:"rènao",m:"lively",b:"জমজমাট",l:4,r:"热",pos:"adj"},{h:"任何",p:"rènhé",m:"any",b:"যেকোনো",l:4,r:"任",pos:"other"},{h:"任务",p:"rènwu",m:"task",b:"কাজ",l:4,r:"任",pos:"n"},{h:"仍然",p:"réngrán",m:"still",b:"এখনও",l:4,r:"仍",pos:"adv"},{h:"日记",p:"rìjì",m:"diary",b:"ডায়েরি",l:4,r:"日",pos:"n"},
+{h:"入口",p:"rùkǒu",m:"entrance",b:"প্রবেশদ্বার",l:4,r:"入",pos:"n"},{h:"散步",p:"sànbù",m:"take a walk",b:"হাঁটা",l:4,r:"散",pos:"v"},{h:"森林",p:"sēnlín",m:"forest",b:"বন",l:4,r:"森",pos:"n"},{h:"沙发",p:"shāfā",m:"sofa",b:"সোফা",l:4,r:"沙",pos:"n"},{h:"商量",p:"shāngliang",m:"discuss",b:"আলোচনা",l:4,r:"商",pos:"v"},
+{h:"伤心",p:"shāngxīn",m:"sad",b:"দুঃখিত",l:4,r:"心",pos:"adj"},{h:"稍微",p:"shāowēi",m:"slightly",b:"সামান্য",l:4,r:"稍",pos:"adv"},{h:"社会",p:"shèhuì",m:"society",b:"সমাজ",l:4,r:"社",pos:"n"},{h:"申请",p:"shēnqǐng",m:"apply",b:"আবেদন",l:4,r:"申",pos:"v"},{h:"深",p:"shēn",m:"deep",b:"গভীর",l:4,r:"深",pos:"adj"},
+{h:"甚至",p:"shènzhì",m:"even",b:"এমনকি",l:4,r:"甚",pos:"adv"},{h:"生活",p:"shēnghuó",m:"life",b:"জীবন",l:4,r:"生",pos:"n"},{h:"生命",p:"shēngmìng",m:"life",b:"জীবন",l:4,r:"生",pos:"n"},{h:"生意",p:"shēngyi",m:"business",b:"ব্যবসা",l:4,r:"生",pos:"n"},{h:"省",p:"shěng",m:"province",b:"প্রদেশ",l:4,r:"省",pos:"n"},
+{h:"剩",p:"shèng",m:"remain",b:"বাকি",l:4,r:"剩",pos:"v"},{h:"失败",p:"shībài",m:"fail",b:"ব্যর্থ",l:4,r:"失",pos:"v"},{h:"失望",p:"shīwàng",m:"disappoint",b:"হতাশ",l:4,r:"失",pos:"v"},{h:"师傅",p:"shīfu",m:"master",b:"ওস্তাদ",l:4,r:"师",pos:"n"},{h:"十分",p:"shífēn",m:"very",b:"অত্যন্ত",l:4,r:"十",pos:"adv"},
+{h:"实际",p:"shíjì",m:"actual",b:"বাস্তব",l:4,r:"实",pos:"adj"},{h:"实在",p:"shízài",m:"really",b:"সত্যিই",l:4,r:"实",pos:"adv"},{h:"食品",p:"shípǐn",m:"food",b:"খাদ্য",l:4,r:"食",pos:"n"},{h:"使",p:"shǐ",m:"make; cause",b:"করানো",l:4,r:"使",pos:"v"},{h:"世纪",p:"shìjì",m:"century",b:"শতাব্দী",l:4,r:"世",pos:"n"},
+{h:"适合",p:"shìhé",m:"suit",b:"মানানসই",l:4,r:"适",pos:"v"},{h:"适应",p:"shìyìng",m:"adapt",b:"অভিযোজন",l:4,r:"适",pos:"v"},{h:"收",p:"shōu",m:"receive",b:"গ্রহণ",l:4,r:"收",pos:"v"},{h:"收入",p:"shōurù",m:"income",b:"আয়",l:4,r:"收",pos:"n"},{h:"首都",p:"shǒudū",m:"capital",b:"রাজধানী",l:4,r:"首",pos:"n"},
+{h:"首先",p:"shǒuxiān",m:"first",b:"প্রথমে",l:4,r:"首",pos:"adv"},{h:"受不了",p:"shòubuliǎo",m:"unbearable",b:"সহ্য হয় না",l:4,r:"受",pos:"v"},{h:"受到",p:"shòudào",m:"receive",b:"পাওয়া",l:4,r:"受",pos:"v"},{h:"输",p:"shū",m:"lose",b:"হারা",l:4,r:"输",pos:"v"},{h:"熟悉",p:"shúxī",m:"familiar",b:"পরিচিত",l:4,r:"熟",pos:"adj"},
+{h:"数量",p:"shùliàng",m:"quantity",b:"পরিমাণ",l:4,r:"数",pos:"n"},{h:"帅",p:"shuài",m:"handsome",b:"সুদর্শন",l:4,r:"帅",pos:"adj"},{h:"顺便",p:"shùnbiàn",m:"by the way",b:"পথে",l:4,r:"顺",pos:"adv"},{h:"顺利",p:"shùnlì",m:"smooth",b:"মসৃণ",l:4,r:"顺",pos:"adj"},{h:"顺序",p:"shùnxù",m:"order",b:"ক্রম",l:4,r:"顺",pos:"n"},
+{h:"说明",p:"shuōmíng",m:"explain",b:"ব্যাখ্যা",l:4,r:"说",pos:"v"},{h:"硕士",p:"shuòshì",m:"master's",b:"মাস্টার্স",l:4,r:"硕",pos:"n"},{h:"死",p:"sǐ",m:"die",b:"মারা যাওয়া",l:4,r:"死",pos:"v"},{h:"速度",p:"sùdù",m:"speed",b:"গতি",l:4,r:"速",pos:"n"},{h:"塑料袋",p:"sùliàodài",m:"plastic bag",b:"প্লাস্টিক ব্যাগ",l:4,r:"袋",pos:"n"},
+{h:"酸",p:"suān",m:"sour",b:"টক",l:4,r:"酸",pos:"adj"},{h:"随便",p:"suíbiàn",m:"casual",b:"যেকোনো",l:4,r:"随",pos:"adj"},{h:"随着",p:"suízhe",m:"along with",b:"সাথে সাথে",l:4,r:"随",pos:"other"},{h:"孙子",p:"sūnzi",m:"grandson",b:"নাতি",l:4,r:"孙",pos:"n"},{h:"所有",p:"suǒyǒu",m:"all",b:"সমস্ত",l:4,r:"所",pos:"other"},
+{h:"台",p:"tái",m:"(MW machines)",b:"যন্ত্র গণনা",l:4,r:"—",pos:"mw"},{h:"抬",p:"tái",m:"lift",b:"তোলা",l:4,r:"抬",pos:"v"},{h:"态度",p:"tàidu",m:"attitude",b:"মনোভাব",l:4,r:"态",pos:"n"},{h:"谈",p:"tán",m:"talk",b:"আলাপ",l:4,r:"谈",pos:"v"},{h:"弹钢琴",p:"tán gāngqín",m:"play piano",b:"পিয়ানো বাজানো",l:4,r:"琴",pos:"v"},
+{h:"汤",p:"tāng",m:"soup",b:"স্যুপ",l:4,r:"汤",pos:"n"},{h:"躺",p:"tǎng",m:"lie down",b:"শোয়া",l:4,r:"—",pos:"v"},{h:"糖",p:"táng",m:"sugar",b:"চিনি",l:4,r:"糖",pos:"n"},{h:"讨论",p:"tǎolùn",m:"discuss",b:"আলোচনা",l:4,r:"讨",pos:"v"},{h:"讨厌",p:"tǎoyàn",m:"dislike",b:"অপছন্দ",l:4,r:"讨",pos:"v"},
+{h:"提",p:"tí",m:"carry; mention",b:"বহন",l:4,r:"提",pos:"v"},{h:"提供",p:"tígōng",m:"provide",b:"প্রদান",l:4,r:"提",pos:"v"},{h:"提前",p:"tíqián",m:"in advance",b:"আগেই",l:4,r:"提",pos:"adv"},{h:"提醒",p:"tíxǐng",m:"remind",b:"মনে করানো",l:4,r:"提",pos:"v"},{h:"填空",p:"tiánkòng",m:"fill in blank",b:"শূন্যস্থান পূরণ",l:4,r:"填",pos:"v"},
+{h:"条件",p:"tiáojiàn",m:"condition",b:"শর্ত",l:4,r:"条",pos:"n"},{h:"停",p:"tíng",m:"stop",b:"থামা",l:4,r:"停",pos:"v"},{h:"通过",p:"tōngguò",m:"through",b:"মাধ্যমে",l:4,r:"通",pos:"v"},{h:"通知",p:"tōngzhī",m:"notify",b:"জানানো",l:4,r:"通",pos:"v"},{h:"同情",p:"tóngqíng",m:"sympathy",b:"সহানুভূতি",l:4,r:"同",pos:"v"},
+{h:"推",p:"tuī",m:"push",b:"ঠেলা",l:4,r:"推",pos:"v"},{h:"推迟",p:"tuīchí",m:"postpone",b:"পিছিয়ে দেওয়া",l:4,r:"推",pos:"v"},{h:"脱",p:"tuō",m:"take off",b:"খোলা",l:4,r:"—",pos:"v"},{h:"袜子",p:"wàzi",m:"socks",b:"মোজা",l:4,r:"袜",pos:"n"},{h:"完全",p:"wánquán",m:"completely",b:"সম্পূর্ণ",l:4,r:"完",pos:"adv"},
+{h:"网球",p:"wǎngqiú",m:"tennis",b:"টেনিস",l:4,r:"网",pos:"n"},{h:"网站",p:"wǎngzhàn",m:"website",b:"ওয়েবসাইট",l:4,r:"网",pos:"n"},{h:"往往",p:"wǎngwǎng",m:"often",b:"প্রায়ই",l:4,r:"往",pos:"adv"},{h:"危险",p:"wēixiǎn",m:"dangerous",b:"বিপজ্জনক",l:4,r:"危",pos:"adj"},{h:"味道",p:"wèidao",m:"taste",b:"স্বাদ",l:4,r:"味",pos:"n"},
+{h:"温度",p:"wēndù",m:"temperature",b:"তাপমাত্রা",l:4,r:"温",pos:"n"},{h:"文章",p:"wénzhāng",m:"article",b:"প্রবন্ধ",l:4,r:"文",pos:"n"},{h:"污染",p:"wūrǎn",m:"pollution",b:"দূষণ",l:4,r:"污",pos:"n"},{h:"无",p:"wú",m:"without",b:"ছাড়া",l:4,r:"无",pos:"other"},{h:"无聊",p:"wúliáo",m:"boring",b:"বিরক্তিকর",l:4,r:"无",pos:"adj"},
+{h:"无论",p:"wúlùn",m:"regardless",b:"যাই হোক",l:4,r:"无",pos:"conj"},{h:"误会",p:"wùhuì",m:"misunderstand",b:"ভুল বোঝাবুঝি",l:4,r:"误",pos:"v"},{h:"吸引",p:"xīyǐn",m:"attract",b:"আকৃষ্ট",l:4,r:"引",pos:"v"},{h:"咸",p:"xián",m:"salty",b:"নোনা",l:4,r:"—",pos:"adj"},{h:"羡慕",p:"xiànmù",m:"envy",b:"ঈর্ষা",l:4,r:"慕",pos:"v"},
+{h:"相反",p:"xiāngfǎn",m:"opposite",b:"বিপরীত",l:4,r:"反",pos:"adj"},{h:"详细",p:"xiángxì",m:"detailed",b:"বিস্তারিত",l:4,r:"详",pos:"adj"},{h:"响",p:"xiǎng",m:"loud",b:"জোরে",l:4,r:"响",pos:"adj"},{h:"象",p:"xiàng",m:"elephant",b:"হাতি",l:4,r:"象",pos:"n"},{h:"消息",p:"xiāoxi",m:"news",b:"খবর",l:4,r:"消",pos:"n"},
+{h:"小吃",p:"xiǎochī",m:"snack",b:"নাস্তা",l:4,r:"小",pos:"n"},{h:"小说",p:"xiǎoshuō",m:"novel",b:"উপন্যাস",l:4,r:"小",pos:"n"},{h:"效果",p:"xiàoguǒ",m:"effect",b:"ফলাফল",l:4,r:"效",pos:"n"},{h:"心情",p:"xīnqíng",m:"mood",b:"মেজাজ",l:4,r:"心",pos:"n"},{h:"辛苦",p:"xīnkǔ",m:"hardworking",b:"কষ্টকর",l:4,r:"辛",pos:"adj"},
+{h:"信封",p:"xìnfēng",m:"envelope",b:"খাম",l:4,r:"信",pos:"n"},{h:"信息",p:"xìnxī",m:"information",b:"তথ্য",l:4,r:"信",pos:"n"},{h:"信心",p:"xìnxīn",m:"confidence",b:"আত্মবিশ্বাস",l:4,r:"信",pos:"n"},{h:"兴奋",p:"xīngfèn",m:"excited",b:"উত্তেজিত",l:4,r:"兴",pos:"adj"},{h:"行",p:"xíng",m:"OK",b:"ঠিক আছে",l:4,r:"行",pos:"v"},
+{h:"幸福",p:"xìngfú",m:"happiness",b:"সুখ",l:4,r:"幸",pos:"adj"},{h:"性别",p:"xìngbié",m:"gender",b:"লিঙ্গ",l:4,r:"性",pos:"n"},{h:"性格",p:"xìnggé",m:"personality",b:"ব্যক্তিত্ব",l:4,r:"性",pos:"n"},{h:"修理",p:"xiūlǐ",m:"repair",b:"মেরামত",l:4,r:"修",pos:"v"},{h:"许多",p:"xǔduō",m:"many",b:"অনেক",l:4,r:"许",pos:"adj"},
+{h:"学期",p:"xuéqī",m:"semester",b:"সেমিস্টার",l:4,r:"学",pos:"n"},{h:"压力",p:"yālì",m:"pressure",b:"চাপ",l:4,r:"压",pos:"n"},{h:"牙膏",p:"yágāo",m:"toothpaste",b:"টুথপেস্ট",l:4,r:"牙",pos:"n"},{h:"亚洲",p:"Yàzhōu",m:"Asia",b:"এশিয়া",l:4,r:"亚",pos:"n"},{h:"严格",p:"yángé",m:"strict",b:"কঠোর",l:4,r:"严",pos:"adj"},
+{h:"严重",p:"yánzhòng",m:"serious",b:"গুরুতর",l:4,r:"严",pos:"adj"},{h:"研究",p:"yánjiū",m:"research",b:"গবেষণা",l:4,r:"研",pos:"v"},{h:"演出",p:"yǎnchū",m:"show",b:"প্রদর্শনী",l:4,r:"演",pos:"n"},{h:"演员",p:"yǎnyuán",m:"actor",b:"অভিনেতা",l:4,r:"演",pos:"n"},{h:"养成",p:"yǎngchéng",m:"develop",b:"গড়ে তোলা",l:4,r:"养",pos:"v"},
+{h:"样子",p:"yàngzi",m:"appearance",b:"চেহারা",l:4,r:"样",pos:"n"},{h:"邀请",p:"yāoqǐng",m:"invite",b:"আমন্ত্রণ",l:4,r:"邀",pos:"v"},{h:"钥匙",p:"yàoshi",m:"key",b:"চাবি",l:4,r:"匙",pos:"n"},{h:"页",p:"yè",m:"page",b:"পৃষ্ঠা",l:4,r:"页",pos:"n"},{h:"叶子",p:"yèzi",m:"leaf",b:"পাতা",l:4,r:"叶",pos:"n"},
+{h:"一切",p:"yīqiè",m:"everything",b:"সবকিছু",l:4,r:"一",pos:"other"},{h:"以",p:"yǐ",m:"by; with",b:"দ্বারা",l:4,r:"以",pos:"other"},{h:"以为",p:"yǐwéi",m:"think (wrong)",b:"ভেবেছিলাম",l:4,r:"以",pos:"v"},{h:"艺术",p:"yìshù",m:"art",b:"শিল্প",l:4,r:"艺",pos:"n"},{h:"意见",p:"yìjiàn",m:"opinion",b:"মতামত",l:4,r:"意",pos:"n"},
+{h:"引起",p:"yǐnqǐ",m:"cause",b:"সৃষ্টি করা",l:4,r:"引",pos:"v"},{h:"印象",p:"yìnxiàng",m:"impression",b:"ছাপ",l:4,r:"印",pos:"n"},{h:"赢",p:"yíng",m:"win",b:"জেতা",l:4,r:"赢",pos:"v"},{h:"勇敢",p:"yǒnggǎn",m:"brave",b:"সাহসী",l:4,r:"勇",pos:"adj"},{h:"永远",p:"yǒngyuǎn",m:"forever",b:"চিরকাল",l:4,r:"永",pos:"adv"},
+{h:"优点",p:"yōudiǎn",m:"advantage",b:"সুবিধা",l:4,r:"优",pos:"n"},{h:"优秀",p:"yōuxiù",m:"excellent",b:"চমৎকার",l:4,r:"优",pos:"adj"},{h:"由",p:"yóu",m:"by",b:"দ্বারা",l:4,r:"由",pos:"other"},{h:"由于",p:"yóuyú",m:"due to",b:"কারণে",l:4,r:"由",pos:"other"},{h:"尤其",p:"yóuqí",m:"especially",b:"বিশেষত",l:4,r:"尤",pos:"adv"},
+{h:"友好",p:"yǒuhǎo",m:"friendly",b:"বন্ধুত্বপূর্ণ",l:4,r:"友",pos:"adj"},{h:"友谊",p:"yǒuyì",m:"friendship",b:"বন্ধুত্ব",l:4,r:"友",pos:"n"},{h:"有趣",p:"yǒuqù",m:"interesting",b:"মজার",l:4,r:"趣",pos:"adj"},{h:"于是",p:"yúshì",m:"so",b:"তাই",l:4,r:"于",pos:"conj"},{h:"愉快",p:"yúkuài",m:"pleasant",b:"আনন্দদায়ক",l:4,r:"愉",pos:"adj"},
+{h:"与",p:"yǔ",m:"and",b:"এবং",l:4,r:"与",pos:"conj"},{h:"语法",p:"yǔfǎ",m:"grammar",b:"ব্যাকরণ",l:4,r:"语",pos:"n"},{h:"语言",p:"yǔyán",m:"language",b:"ভাষা",l:4,r:"语",pos:"n"},{h:"预习",p:"yùxí",m:"preview",b:"পূর্বপ্রস্তুতি",l:4,r:"预",pos:"v"},{h:"原来",p:"yuánlái",m:"originally",b:"মূলত",l:4,r:"原",pos:"adv"},
+{h:"原谅",p:"yuánliàng",m:"forgive",b:"ক্ষমা",l:4,r:"原",pos:"v"},{h:"原因",p:"yuányīn",m:"reason",b:"কারণ",l:4,r:"原",pos:"n"},{h:"约会",p:"yuēhuì",m:"date",b:"ডেট",l:4,r:"约",pos:"n"},{h:"阅读",p:"yuèdú",m:"read",b:"পড়া",l:4,r:"阅",pos:"v"},{h:"允许",p:"yǔnxǔ",m:"allow",b:"অনুমতি",l:4,r:"允",pos:"v"},
+{h:"杂志",p:"zázhì",m:"magazine",b:"ম্যাগাজিন",l:4,r:"杂",pos:"n"},{h:"咱们",p:"zánmen",m:"we (inclusive)",b:"আমরা",l:4,r:"—",pos:"other"},{h:"暂时",p:"zànshí",m:"temporary",b:"সাময়িক",l:4,r:"暂",pos:"adv"},{h:"脏",p:"zāng",m:"dirty",b:"নোংরা",l:4,r:"—",pos:"adj"},{h:"责任",p:"zérèn",m:"responsibility",b:"দায়িত্ব",l:4,r:"责",pos:"n"},
+{h:"增加",p:"zēngjiā",m:"increase",b:"বাড়ানো",l:4,r:"增",pos:"v"},{h:"占线",p:"zhànxiàn",m:"busy (phone)",b:"ব্যস্ত",l:4,r:"占",pos:"v"},{h:"招聘",p:"zhāopìn",m:"recruit",b:"নিয়োগ",l:4,r:"招",pos:"v"},{h:"真正",p:"zhēnzhèng",m:"truly",b:"সত্যিকারের",l:4,r:"真",pos:"adj"},{h:"整理",p:"zhěnglǐ",m:"organize",b:"গুছানো",l:4,r:"整",pos:"v"},
+{h:"正常",p:"zhèngcháng",m:"normal",b:"স্বাভাবিক",l:4,r:"正",pos:"adj"},{h:"正好",p:"zhènghǎo",m:"just right",b:"ঠিক",l:4,r:"正",pos:"adv"},{h:"正确",p:"zhèngquè",m:"correct",b:"সঠিক",l:4,r:"正",pos:"adj"},{h:"正式",p:"zhèngshì",m:"formal",b:"আনুষ্ঠানিক",l:4,r:"正",pos:"adj"},{h:"证明",p:"zhèngmíng",m:"prove",b:"প্রমাণ",l:4,r:"证",pos:"v"},
+{h:"之",p:"zhī",m:"of",b:"এর",l:4,r:"之",pos:"other"},{h:"值得",p:"zhíde",m:"worth",b:"মূল্যবান",l:4,r:"值",pos:"v"},{h:"直接",p:"zhíjiē",m:"direct",b:"সরাসরি",l:4,r:"直",pos:"adv"},{h:"职业",p:"zhíyè",m:"profession",b:"পেশা",l:4,r:"职",pos:"n"},{h:"植物",p:"zhíwù",m:"plant",b:"উদ্ভিদ",l:4,r:"植",pos:"n"},
+{h:"只好",p:"zhǐhǎo",m:"have to",b:"বাধ্য",l:4,r:"只",pos:"adv"},{h:"只要",p:"zhǐyào",m:"as long as",b:"যতক্ষণ",l:4,r:"只",pos:"conj"},{h:"指",p:"zhǐ",m:"point",b:"নির্দেশ করা",l:4,r:"指",pos:"v"},{h:"至少",p:"zhìshǎo",m:"at least",b:"অন্তত",l:4,r:"至",pos:"adv"},{h:"质量",p:"zhìliàng",m:"quality",b:"গুণমান",l:4,r:"质",pos:"n"},
+{h:"周围",p:"zhōuwéi",m:"surroundings",b:"চারপাশ",l:4,r:"周",pos:"n"},{h:"主意",p:"zhǔyi",m:"idea",b:"ধারণা",l:4,r:"主",pos:"n"},{h:"祝贺",p:"zhùhè",m:"congratulate",b:"অভিনন্দন",l:4,r:"祝",pos:"v"},{h:"著名",p:"zhùmíng",m:"famous",b:"বিখ্যাত",l:4,r:"著",pos:"adj"},{h:"专门",p:"zhuānmén",m:"specially",b:"বিশেষভাবে",l:4,r:"专",pos:"adv"},
+{h:"专业",p:"zhuānyè",m:"major",b:"বিষয়",l:4,r:"专",pos:"n"},{h:"转",p:"zhuǎn",m:"turn",b:"ঘোরা",l:4,r:"转",pos:"v"},{h:"赚",p:"zhuàn",m:"earn",b:"আয় করা",l:4,r:"赚",pos:"v"},{h:"准确",p:"zhǔnquè",m:"accurate",b:"সঠিক",l:4,r:"准",pos:"adj"},{h:"仔细",p:"zǐxì",m:"careful",b:"সতর্ক",l:4,r:"仔",pos:"adj"},
+{h:"自然",p:"zìrán",m:"nature",b:"প্রকৃতি",l:4,r:"自",pos:"n"},{h:"自信",p:"zìxìn",m:"confident",b:"আত্মবিশ্বাসী",l:4,r:"自",pos:"adj"},{h:"总结",p:"zǒngjié",m:"summarize",b:"সারাংশ",l:4,r:"总",pos:"v"},{h:"租",p:"zū",m:"rent",b:"ভাড়া",l:4,r:"租",pos:"v"},{h:"组成",p:"zǔchéng",m:"form",b:"গঠন",l:4,r:"组",pos:"v"},
+{h:"座",p:"zuò",m:"(MW buildings)",b:"ভবন গণনা",l:4,r:"座",pos:"mw"},{h:"座位",p:"zuòwèi",m:"seat",b:"আসন",l:4,r:"座",pos:"n"},{h:"做生意",p:"zuò shēngyi",m:"do business",b:"ব্যবসা করা",l:4,r:"生",pos:"v"},{h:"辣",p:"là",m:"spicy",b:"ঝাল",l:4,r:"—",pos:"adj"}
+];
+
+const DECOMP={"好":"女(woman)+子(child)=good","休":"人(person)+木(tree)=rest","明":"日(sun)+月(moon)=bright","男":"田(field)+力(strength)=male","想":"相(mutual)+心(heart)=think","看":"手(hand)+目(eye)=look","妈":"女(woman)+马(horse)=mama","她":"女(woman)+也(also)=she","爸":"父(father)+巴(cling)=papa","们":"人(person)+门(door)=plural","你":"人(person)+尔(you)=you","他":"人(person)+也(also)=he","住":"人(person)+主(main)=live","做":"人(person)+故(old)=do","信":"人(person)+言(speech)=trust","吃":"口(mouth)+乞(beg)=eat","喝":"口(mouth)+曷(why)=drink","问":"门(door)+口(mouth)=ask","听":"口(mouth)+斤(axe)=listen","吗":"口(mouth)+马(horse)=question","呢":"口(mouth)+尼(nun)=particle","打":"手(hand)+丁(nail)=hit","找":"手(hand)+戈(spear)=find","教":"孝(filial)+文(script)=teach","时":"日(sun)+寸(inch)=time","晚":"日(sun)+免(avoid)=late","暖":"日(sun)+爰(thus)=warm","说":"言(speech)+兑(exchange)=speak","话":"言(speech)+舌(tongue)=words","读":"言(speech)+卖(sell)=read","认":"言(speech)+人(person)=recognize","请":"言(speech)+青(green)=please","谢":"言(speech)+射(shoot)=thank","语":"言(speech)+吾(I)=language","课":"言(speech)+果(fruit)=class","走":"土(earth)+止(stop)=walk","跑":"足(foot)+包(wrap)=run","路":"足(foot)+各(each)=road","饭":"食(food)+反(reverse)=rice","饿":"食(food)+我(I)=hungry","饮":"食(food)+欠(owe)=drink","洗":"水(water)+先(first)=wash","游":"水(water)+方+子=swim","海":"水(water)+每(every)=ocean","学":"子(child)+冖(cover)=study","字":"宀(roof)+子(child)=character","家":"宀(roof)+豕(pig)=home","安":"宀(roof)+女(woman)=peace","客":"宀(roof)+各(each)=guest","宾":"宀(roof)+兵(soldier)=guest"};
+const EXAMPLES={"爱":[{py:"wǒ ài wǒ de jiārén",hz:"我爱我的家人。",en:"I love my family."}],"吃":[{py:"wǒmen chī wǔfàn ba",hz:"我们吃午饭吧。",en:"Let's eat lunch."}],"好":[{py:"jīntiān tiānqì hěn hǎo",hz:"今天天气很好。",en:"The weather is good today."}],"大":[{py:"zhè ge fángzi hěn dà",hz:"这个房子很大。",en:"This house is very big."}],"学习":[{py:"wǒ měitiān xuéxí Hànyǔ",hz:"我每天学习汉语。",en:"I study Chinese every day."}],"工作":[{py:"tā de gōngzuò hěn máng",hz:"他的工作很忙。",en:"His job is very busy."}],"朋友":[{py:"tā shì wǒ de hǎo péngyou",hz:"他是我的好朋友。",en:"He is my good friend."}],"高兴":[{py:"wǒ hěn gāoxìng rènshi nǐ",hz:"我很高兴认识你。",en:"Nice to meet you."}],"名字":[{py:"nǐ jiào shénme míngzi",hz:"你叫什么名字？",en:"What is your name?"}],"汉语":[{py:"wǒ zài xué Hànyǔ",hz:"我在学汉语。",en:"I am learning Chinese."}],"是":[{py:"wǒ shì xuéshēng",hz:"我是学生。",en:"I am a student."}],"喜欢":[{py:"wǒ xǐhuan kàn shū",hz:"我喜欢看书。",en:"I like reading books."}],"会":[{py:"nǐ huì shuō Hànyǔ ma",hz:"你会说汉语吗？",en:"Can you speak Chinese?"}],"家":[{py:"wǒ jiā yǒu sì ge rén",hz:"我家有四个人。",en:"There are four in my family."}],"老师":[{py:"wǒ de lǎoshī hěn hǎo",hz:"我的老师很好。",en:"My teacher is very good."}],"帮助":[{py:"qǐng nǐ bāngzhù wǒ",hz:"请你帮助我。",en:"Please help me."}],"开始":[{py:"wǒmen kāishǐ shàngkè ba",hz:"我们开始上课吧。",en:"Let's start class."}],"时间":[{py:"wǒ méiyǒu shíjiān",hz:"我没有时间。",en:"I don't have time."}],"知道":[{py:"wǒ zhīdào le",hz:"我知道了。",en:"I know now."}],"生活":[{py:"wǒ de shēnghuó hěn kuàilè",hz:"我的生活很快乐。",en:"My life is very happy."}],"发现":[{py:"wǒ fāxiàn le yī ge wèntí",hz:"我发现了一个问题。",en:"I found a problem."}],"茶":[{py:"wǒ xiǎng hē chá",hz:"我想喝茶。",en:"I want to drink tea."}],"电影":[{py:"wǒ xiǎng kàn diànyǐng",hz:"我想看电影。",en:"I want to watch a movie."}],"爸爸":[{py:"wǒ bàba shì yīshēng",hz:"我爸爸是医生。",en:"My father is a doctor."}],"不":[{py:"wǒ bù zhīdào",hz:"我不知道。",en:"I don't know."}],"使":[{py:"zhè shǐ wǒ hěn jǐnzhāng",hz:"这使我很紧张。",en:"This makes me nervous."}]};
+
+
+let learned=JSON.parse(localStorage.getItem('hsk_l')||'{}');
+let srs=JSON.parse(localStorage.getItem('hsk_srs')||'{}');
+let curLvl=0,curDay=null,curMode='learn',pracS={},quizS={};
+
+// SRS: {word: {interval: minutes, next: timestamp, ease: 1-3}}
+function isL(h){return learned[h]===true}
+function toggleL(h){if(learned[h])delete learned[h];else learned[h]=true;save()}
+function save(){localStorage.setItem('hsk_l',JSON.stringify(learned));localStorage.setItem('hsk_srs',JSON.stringify(srs))}
+function speak(t){const u=new SpeechSynthesisUtterance(t);u.lang='zh-CN';u.rate=0.8;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function getW(){return curLvl===0?W:W.filter(w=>w.l===curLvl)}
+
+// SRS functions
+function srsRate(h,ease){
+  const now=Date.now();
+  const prev=srs[h]||{interval:1,next:0,ease:2};
+  let mult=ease===1?0.5:ease===2?1.5:3;
+  let newInt=Math.max(1,Math.round(prev.interval*mult));
+  if(ease===1)newInt=1;
+  srs[h]={interval:newInt,next:now+newInt*60000,ease};
+  if(!learned[h])learned[h]=true;
+  save();
+}
+function getDue(){
+  const now=Date.now();
+  return W.filter(w=>srs[w.h]&&srs[w.h].next<=now);
+}
+
+// Build 30 days grouped by root
+function buildDays(words){
+  const rm={};words.forEach(w=>{const k=w.r==='—'?'_'+w.h:w.r;if(!rm[k])rm[k]={root:w.r,words:[]};rm[k].words.push(w)});
+  const gs=Object.values(rm).sort((a,b)=>{const la=a.words[0].l,lb=b.words[0].l;return la!==lb?la-lb:b.words.length-a.words.length});
+  const days=Array.from({length:30},()=>[]);const pd=Math.ceil(words.length/30);
+  let di=0,dc=0;gs.forEach(g=>{if(dc+g.words.length>pd+8&&di<29){di++;dc=0}days[di].push(g);dc+=g.words.length});return days;
+}
+
+function renderHome(){
+  const ws=getW(),days=buildDays(ws),total=ws.length,lc=ws.filter(w=>isL(w.h)).length,pct=total?Math.round(lc/total*100):0;
+  const nm=['HSK 1-4','HSK 1','HSK 2','HSK 3','HSK 4'];
+  document.getElementById('it').textContent=nm[curLvl]+' ('+total+' words)';
+  document.getElementById('iw').textContent=total+' words';
+  document.getElementById('il').textContent=lc+' learned';
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pt').textContent=lc+'/'+total;
+  document.getElementById('pp').textContent=pct+'%';
+  document.getElementById('sn').textContent=lc;
+  document.getElementById('rn').textContent=getDue().length;
+  document.getElementById('dpc').textContent='~'+Math.ceil(total/30)+' words/day';
+  let sug=0;for(let i=0;i<days.length;i++){if(days[i].flatMap(g=>g.words).every(w=>isL(w.h)))sug=i+1;else break}
+  const grid=document.getElementById('dg');grid.innerHTML='';
+  days.forEach((dg,i)=>{
+    const dw=dg.flatMap(g=>g.words);if(!dw.length)return;
+    const dl=dw.filter(w=>isL(w.h)).length,dp=dw.length?Math.round(dl/dw.length*100):0;
+    const t=document.createElement('div');t.className='dtile';
+    if(dp===100)t.classList.add('cmp');else if(dp>0)t.classList.add('prt');
+    if(i===sug)t.classList.add('tdy');
+    t.style.animationDelay=(i*.012)+'s';
+    t.innerHTML=`<div class="db">${dw.length}</div><div class="dn">${i+1}</div><div class="dl">Day</div><div class="dpb"><div class="dpf" style="width:${dp}%"></div></div>`;
+    t.onclick=()=>openDay(i);grid.appendChild(t);
+  });
+}
+
+function openDay(di){
+  curDay=di;curMode='learn';
+  const days=buildDays(getW()),gs=days[di],aw=gs.flatMap(g=>g.words),lc=aw.filter(w=>isL(w.h)).length;
+  document.getElementById('dtt').textContent='Day '+(di+1);
+  document.getElementById('dts').textContent=aw.length+' words · root grouped';
+  document.getElementById('dfr').textContent=lc+'/'+aw.length;
+  hideAll();document.getElementById('dayV').classList.add('show');
+  setMode('learn');renderLearn(gs);window.scrollTo({top:0});
+}
+
+function renderLearn(gs){
+  const l=document.getElementById('learnL');l.innerHTML='';
+  const wrap=document.createElement('div');wrap.className='lwrap';
+  let idx=0;
+  gs.forEach(g=>{
+    // Root group header (if multi-word root)
+    if(g.root!=='—'&&!g.root.startsWith('_')&&g.words.length>1){
+      const rh=document.createElement('div');rh.className='rghdr';
+      const relCount=W.filter(x=>x.r===g.root).length;
+      rh.innerHTML=`<div class="rgchar" onclick="event.stopPropagation();showRootTree('${g.root}')">${g.root}</div><div class="rginfo"><div class="rn">Root: ${g.root}</div><div class="rc">${relCount} words in this family</div></div><div class="rgline"></div>`;
+      wrap.appendChild(rh);
+    }
+    g.words.forEach(v=>{
+      const c=document.createElement('div');c.className='wc';c.style.animationDelay=(idx*.012)+'s';idx++;
+      const dec=DECOMP[v.h]?`<span class="wdec">${DECOMP[v.h]}</span>`:'';
+      const esc=v.h.replace(/'/g,"\\'");
+      c.innerHTML=`<div class="wpy">${v.p}</div><div class="whz">${v.h} <button class="spk" onclick="event.stopPropagation();speak('${esc}')">🔊</button></div><div class="wmeta"><span class="wpos">${v.pos}</span><span class="wmn">${v.m} / ${v.b}</span>${dec}</div>`;
+      c.onclick=()=>openDet(v);
+      wrap.appendChild(c);
+    });
+  });
+  l.appendChild(wrap);
+}
+
+function showRootTree(root){
+  const words=W.filter(w=>w.r===root);
+  if(words.length===0)return;
+  openDet(words[0],true);
+}
+
+function setMode(m){
+  curMode=m;
+  ['mL','mP','mQ'].forEach((id,i)=>document.getElementById(id).classList.toggle('on',['learn','practice','quiz'][i]===m));
+  document.getElementById('learnL').classList.toggle('show',m==='learn');
+  document.getElementById('pracA').classList.toggle('show',m==='practice');
+  document.getElementById('quizA').classList.toggle('show',m==='quiz');
+  if(m==='practice')startPrac();
+  if(m==='quiz')startQuiz();
+}
+
+// PRACTICE: Build-a-word
+function startPrac(){
+  const days=buildDays(getW()),aw=days[curDay].flatMap(g=>g.words);
+  const sh=[...aw].sort(()=>Math.random()-.5).slice(0,Math.min(10,aw.length));
+  pracS={words:sh,idx:0,score:0,total:sh.length};renderPQ();
+}
+function renderPQ(){
+  const{words,idx,score,total}=pracS;const a=document.getElementById('pracA');
+  if(idx>=words.length){a.innerHTML=`<div class="pres"><h3>Practice Complete!</h3><div class="psc">${score}/${total}</div><p style="color:var(--tx3);font-size:.78rem;margin-top:3px">${score===total?'Perfect! 🎉':'Keep going! 💪'}</p></div><button class="pnxt" onclick="startPrac()">Again</button>`;return}
+  const w=words[idx],chars=[...w.h];
+  const allC=new Set();W.forEach(x=>[...x.h].forEach(c=>allC.add(c)));
+  const dist=[...allC].filter(c=>!chars.includes(c)).sort(()=>Math.random()-.5).slice(0,Math.max(4-chars.length,3));
+  const ch=[...chars,...dist].sort(()=>Math.random()-.5);
+  pracS.slots=Array(chars.length).fill(null);pracS.choices=ch;pracS.answered=false;pracS.cc=chars;
+  let dots='';for(let i=0;i<words.length;i++)dots+=`<div class="pdot${i<idx?' dn':''}${i===idx?' cur':''}"></div>`;
+  a.innerHTML=`<div class="pdots">${dots}</div><div class="pinst">Build the word from characters · অক্ষর দিয়ে শব্দ তৈরি করুন</div><div class="pprm">${w.m} / ${w.b}</div><div class="pslots" id="ps">${chars.map((_,i)=>`<div class="psl" id="s${i}" onclick="rmSlot(${i})"></div>`).join('')}</div><div class="pchs" id="pc">${ch.map((c,i)=>`<button class="pch" id="c${i}" onclick="pickC(${i},'${c}')">${c}</button>`).join('')}</div><button class="pskip" onclick="pracS.idx++;renderPQ()">Skip →</button>`;
+}
+function pickC(ci,ch){if(pracS.answered)return;const{slots,cc}=pracS;const ne=slots.indexOf(null);if(ne===-1)return;slots[ne]=ch;document.getElementById('s'+ne).textContent=ch;document.getElementById('s'+ne).classList.add('fl');document.getElementById('c'+ci).classList.add('used');if(!slots.includes(null)){pracS.answered=true;const ok=slots.every((c,i)=>c===cc[i]);if(ok){pracS.score++;slots.forEach((_,i)=>document.getElementById('s'+i).classList.add('ok'))}else{slots.forEach((_,i)=>document.getElementById('s'+i).classList.add(slots[i]===cc[i]?'ok':'wr'))}setTimeout(()=>{pracS.idx++;renderPQ()},ok?700:1400)}}
+function rmSlot(si){if(pracS.answered||pracS.slots[si]===null)return;const ch=pracS.slots[si];pracS.slots[si]=null;document.getElementById('s'+si).textContent='';document.getElementById('s'+si).classList.remove('fl');pracS.choices.forEach((c,i)=>{if(c===ch&&document.getElementById('c'+i).classList.contains('used'))document.getElementById('c'+i).classList.remove('used')})}
+
+// QUIZ: 4-choice
+function startQuiz(){
+  const days=buildDays(getW()),aw=days[curDay].flatMap(g=>g.words);
+  const sh=[...aw].sort(()=>Math.random()-.5).slice(0,Math.min(10,aw.length));
+  quizS={words:sh,idx:0,score:0,total:sh.length};renderQQ();
+}
+function renderQQ(){
+  const{words,idx,score,total}=quizS;const a=document.getElementById('quizA');
+  if(idx>=words.length){a.innerHTML=`<div class="pres"><h3>Quiz Complete!</h3><div class="psc">${score}/${total}</div></div><button class="pnxt" onclick="startQuiz()">Again</button>`;return}
+  const w=words[idx];
+  const others=W.filter(x=>x.h!==w.h&&x.l===w.l).sort(()=>Math.random()-.5).slice(0,3);
+  const opts=[w,...others].sort(()=>Math.random()-.5);
+  a.innerHTML=`<div style="font-size:.75rem;color:var(--tx3);margin-bottom:8px">${idx+1}/${total} · Score: ${score}</div><div class="qcard"><div class="qhz">${w.h}</div><div class="qpy">${w.p}</div></div><div class="qopts" id="qopts">${opts.map((o,i)=>`<button class="qopt" onclick="pickQ(${i},${o.h===w.h},'${w.h}')">${o.m} / ${o.b}</button>`).join('')}</div>`;
+}
+function pickQ(i,correct,hz){
+  const btns=document.querySelectorAll('#qopts .qopt');
+  btns.forEach((b,j)=>{b.classList.add('dis');if(j===i)b.classList.add(correct?'right':'wrong');if(!correct&&b.textContent.includes(W.find(x=>x.h===hz).m))b.classList.add('right')});
+  if(correct)quizS.score++;
+  setTimeout(()=>{quizS.idx++;renderQQ()},900);
+}
+
+// DETAIL VIEW
+function openDet(w,showRoot){
+  hideAll();document.getElementById('detV').classList.add('show');
+  const rel=W.filter(x=>x.r===w.r&&x.r!=='—'&&x.h!==w.h);
+  const pc=({v:'v',n:'n',adj:'adj',adv:'adv',conj:'conj'})[w.pos]||'other';
+  const esc=w.h.replace(/'/g,"\\'");
+  
+  let decHtml='';
+  if(DECOMP[w.h])decHtml=`<div class="ddec"><div class="ddl">Character Decomposition · অক্ষর বিশ্লেষণ</div><div class="ddf">${DECOMP[w.h]}</div></div>`;
+  
+  let rootHtml='';
+  if(w.r!=='—'){
+    const allRel=W.filter(x=>x.r===w.r);
+    rootHtml=`<div class="droot"><div class="drl">Root Family · মূল পরিবার</div><div class="drc">${w.r}</div>${allRel.length>1?`<div class="drw">${allRel.filter(r=>r.h!==w.h).map(r=>`<div class="drch" onclick="openDet(W.find(x=>x.h==='${r.h.replace(/'/g,"\\'")}''))">${r.h} <small>${r.p}</small></div>`).join('')}</div>`:''}</div>`;
+  }
+  
+  let exHtml='';
+  const exs=EXAMPLES[w.h];
+  if(exs&&exs.length){
+    exHtml=`<div class="dexs"><h4>Example Sentences</h4>${exs.map(e=>`<div class="exc"><button class="es" onclick="speak('${e.hz.replace(/[。？！]/g,'').replace(/'/g,"\\'")}')">🔊</button><div class="ep">${e.py}</div><div class="eh">${e.hz.replace(new RegExp(w.h,'g'),`<span class="hl">${w.h}</span>`)}</div><div class="em">${e.en}</div></div>`).join('')}</div>`;
+  }
+
+  document.getElementById('detC').innerHTML=`<div class="dcard"><div class="dtop"><div></div><div style="display:flex;gap:5px"><button class="dtbtn ${isL(w.h)?'on':''}" onclick="this.classList.toggle('on');toggleL('${esc}')">✓</button></div></div><div class="dpy">${w.p}</div><div class="dhz">${w.h} <button class="dsp" onclick="speak('${esc}')">🔊</button></div><span class="dpos dpos-${pc}">${w.pos}.</span><div class="dmn">${w.m} / ${w.b}</div>${decHtml}${rootHtml}${exHtml}<div class="srs-btns"><button class="srs-btn srs-hard" onclick="srsRate('${esc}',1)">😰 Hard<br><small>1 min</small></button><button class="srs-btn srs-mid" onclick="srsRate('${esc}',2)">🤔 Medium<br><small>+50%</small></button><button class="srs-btn srs-easy" onclick="srsRate('${esc}',3)">😊 Easy<br><small>+200%</small></button></div></div>`;
+
+  document.getElementById('detBack').onclick=()=>{
+    document.getElementById('detV').classList.remove('show');
+    if(curDay!==null){document.getElementById('dayV').classList.add('show');
+      const days=buildDays(getW()),aw=days[curDay].flatMap(g=>g.words),lc=aw.filter(w2=>isL(w2.h)).length;
+      document.getElementById('dfr').textContent=lc+'/'+aw.length;
+    }else{document.getElementById('homeV').style.display='';renderHome()}
+  };
+  window.scrollTo({top:0});
+}
+
+// REVIEW (SRS)
+function renderReview(){
+  const due=getDue();
+  document.getElementById('revCount').textContent=due.length+' due';
+  document.getElementById('rn').textContent=due.length;
+  if(!due.length){document.getElementById('revContent').innerHTML='<div class="rev-empty"><div class="big">✓</div><p>No words due for review!<br>Keep learning new words.</p></div>';return}
+  const wrap=document.createElement('div');wrap.className='lwrap';
+  due.slice(0,20).forEach((w,i)=>{
+    const c=document.createElement('div');c.className='wc';c.style.animationDelay=(i*.015)+'s';
+    const esc=w.h.replace(/'/g,"\\'");
+    c.innerHTML=`<div class="wpy">${w.p}</div><div class="whz">${w.h} <button class="spk" onclick="event.stopPropagation();speak('${esc}')">🔊</button></div><div class="wmeta"><span class="wpos">${w.pos}</span><span class="wmn">${w.m} / ${w.b}</span></div>`;
+    c.onclick=()=>openDet(w);
+    wrap.appendChild(c);
+  });
+  document.getElementById('revContent').innerHTML='';
+  document.getElementById('revContent').appendChild(wrap);
+}
+
+// STATS
+function renderStats(){
+  const t=W.length,l=W.filter(w=>isL(w.h)).length,p=t?Math.round(l/t*100):0,due=getDue().length;
+  document.getElementById('sg').innerHTML=`<div class="sbox"><div class="sv sv-1">${t}</div><div class="sl">Total Words</div></div><div class="sbox"><div class="sv sv-2">${l}</div><div class="sl">Learned</div></div><div class="sbox"><div class="sv sv-3">${p}%</div><div class="sl">Progress</div></div><div class="sbox"><div class="sv sv-4">${due}</div><div class="sl">Due Review</div></div>`;
+  document.getElementById('lp').innerHTML=[1,2,3,4].map(lv=>{
+    const lw=W.filter(w=>w.l===lv),ll=lw.filter(w=>isL(w.h)).length,lp=lw.length?Math.round(ll/lw.length*100):0;
+    return `<div class="lvrow"><div class="lvn" style="color:var(--h${lv})">HSK ${lv}</div><div class="lvt"><div class="lvf lvf-${lv}" style="width:${lp}%"></div></div><div class="lvpc">${lp}%</div></div>`;
+  }).join('');
+}
+
+// NAV
+function hideAll(){document.getElementById('homeV').style.display='none';['dayV','detV','revV','statV'].forEach(id=>document.getElementById(id).classList.remove('show'));document.getElementById('sresW').style.display='none';document.getElementById('dgw').style.display=''}
+function goHome(){curDay=null;hideAll();document.getElementById('homeV').style.display='';document.getElementById('dgw').style.display='';updNav('home');renderHome();window.scrollTo({top:0})}
+function navTo(n){
+  updNav(n);
+  if(n==='home')goHome();
+  else if(n==='review'){hideAll();document.getElementById('revV').classList.add('show');renderReview();window.scrollTo({top:0})}
+  else if(n==='stats'){hideAll();document.getElementById('statV').classList.add('show');renderStats();window.scrollTo({top:0})}
+}
+function updNav(n){document.querySelectorAll('.ni').forEach(x=>x.classList.toggle('on',x.dataset.nav===n))}
+function resetAll(){if(confirm('Reset all progress? সব মুছে ফেলবেন?')){learned={};srs={};save();goHome()}}
+
+// SEARCH
+document.getElementById('sb').addEventListener('input',function(){
+  const q=this.value.trim().toLowerCase();const sr=document.getElementById('sresW'),dg=document.getElementById('dgw');
+  if(!q){sr.style.display='none';dg.style.display='';return}
+  sr.style.display='block';dg.style.display='none';
+  const res=W.filter(w=>w.h.includes(q)||w.p.toLowerCase().includes(q)||w.m.toLowerCase().includes(q)||w.b.toLowerCase().includes(q)).slice(0,25);
+  sr.innerHTML=res.length?res.map(w=>{const esc=w.h.replace(/'/g,"\\'");return `<div class="src" data-l="${w.l}" onclick="openDet(W.find(x=>x.h==='${esc}'))"><div class="sh">${w.h}</div><div class="sb"><div class="sp">${w.p}</div><div class="sm">${w.m} / ${w.b}</div></div><span class="sbd" data-l="${w.l}">HSK${w.l}</span></div>`}).join(''):'<div style="text-align:center;padding:24px;color:var(--tx3)">No results found</div>';
+});
+
+// HSK TABS
+document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');curLvl=parseInt(t.dataset.l);if(curDay!==null)goHome();else renderHome()});
+
+renderHome();
+
+</script>
+</body>
+</html>
