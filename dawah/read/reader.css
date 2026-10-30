@@ -97,3 +97,6 @@ aside a.done::after,.toc a.done::after{content:" ✓";color:#2E9E5B;font-weight:
  .tw td.zh{white-space:normal;font-size:1.3em}
  .tw td:empty{display:none}
 }
+.langs{display:flex;gap:3px;margin-left:auto}.langs a{font:600 12px system-ui,"Noto Sans Bengali","Noto Naskh Arabic",sans-serif;padding:5px 8px;border-radius:8px;border:1px solid var(--line);color:var(--ink);text-decoration:none;white-space:nowrap}.langs a.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+[dir=rtl] .langs{margin-left:0;margin-right:auto}
+@media (max-width:560px){.top .t small{display:none}#voiceBtn,#fsBtn{display:none}.langs a{padding:4px 6px;font-size:11px}}

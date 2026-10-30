@@ -40,10 +40,15 @@ object Store {
     // lessons and book
     fun lessonDone(id: String) = id in set("done")
     fun markLesson(id: String) { if (!lessonDone(id)) { add("done", id); logActivity(3) } }
-    fun sectionRead(partId: String, secId: String) = "$partId#$secId" in set("read")
-    fun markSection(partId: String, secId: String) { if (!sectionRead(partId, secId)) { add("read", "$partId#$secId"); logActivity(3) } }
+    /** Which edition of the book to read: "en", "bn" or "ur". Each edition keeps its own reading progress. */
+    var bookLang: String
+        get() = p.getString("bookLang", null) ?: if (bengali) "bn" else "en"
+        set(v) { p.edit().putString("bookLang", v).apply(); changed() }
+    private fun secKey(partId: String, secId: String) = if (bookLang == "en") "$partId#$secId" else "$bookLang:$partId#$secId"
+    fun sectionRead(partId: String, secId: String) = secKey(partId, secId) in set("read")
+    fun markSection(partId: String, secId: String) { if (!sectionRead(partId, secId)) { add("read", secKey(partId, secId)); logActivity(3) } }
     val lessonsDone: Int get() = set("done").size
-    val sectionsRead: Int get() = set("read").size
+    val sectionsRead: Int get() = set("read").count { if (bookLang == "en") ':' !in it else it.startsWith("$bookLang:") }
 
     // spaced review (Leitner boxes): box 1..5, due date
     private val gaps = intArrayOf(0, 1, 3, 7, 16, 35)

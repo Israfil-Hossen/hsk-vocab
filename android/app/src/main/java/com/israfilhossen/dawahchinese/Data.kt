@@ -74,14 +74,26 @@ data class BookPart(val id: String, val title: String, val bn: String, val secti
 
 object Data {
     lateinit var content: Content
-    lateinit var book: List<BookPart>
+    private lateinit var app: Context
+    private val books = mutableMapOf<String, List<BookPart>>()
     private val json = Json { ignoreUnknownKeys = true }
 
     fun load(c: Context) {
         if (::content.isInitialized) return
+        app = c.applicationContext
         content = json.decodeFromString(Content.serializer(), c.assets.open("data/content.json").bufferedReader().readText())
-        val root = json.parseToJsonElement(c.assets.open("data/book.json").bufferedReader().readText()).jsonObject
-        book = root["parts"]!!.jsonArray.map { p ->
+    }
+
+    /** The book in the reader's chosen language: "en", "bn" (Bangla) or "ur" (Urdu). Loaded on first use. */
+    fun bookFor(lang: String): List<BookPart> = books.getOrPut(lang) {
+        val file = if (lang == "en") "data/book.json" else "data/book_$lang.json"
+        runCatching { parseBook(app.assets.open(file).bufferedReader().readText()) }.getOrElse { if (lang == "en") throw it else bookFor("en") }
+    }
+    val book: List<BookPart> get() = bookFor(Store.bookLang)
+
+    private fun parseBook(text: String): List<BookPart> {
+        val root = json.parseToJsonElement(text).jsonObject
+        return root["parts"]!!.jsonArray.map { p ->
             val o = p.jsonObject
             BookPart(
                 o.str("id"), o.str("t"), o.str("bn"),
@@ -113,7 +125,7 @@ object Data {
         }
     }
 
-    val allSections: List<Pair<BookPart, BookSection>> by lazy { book.flatMap { p -> p.sections.map { p to it } } }
+    val allSections: List<Pair<BookPart, BookSection>> get() = book.flatMap { p -> p.sections.map { p to it } }
 
     fun lessonById(id: String): Pair<Level, Lesson>? {
         for (l in content.levels) for (u in l.lessons) if (u.id == id) return l to u
@@ -123,7 +135,7 @@ object Data {
     /** The book section a "read" lesson points to, e.g. part-0 / "0.2". */
     fun sectionFor(lesson: Lesson): Pair<BookPart, BookSection>? {
         val part = book.firstOrNull { it.id == lesson.page } ?: return null
-        val sec = part.sections.firstOrNull { it.title.startsWith(lesson.sec ?: "") } ?: part.sections.firstOrNull() ?: return null
+        val sec = part.sections.firstOrNull { it.title.startsWith((lesson.sec ?: "") + " ") } ?: part.sections.firstOrNull() ?: return null
         return part to sec
     }
 

@@ -477,7 +477,7 @@ fun ReaderScreen(nav: Nav, part: String, sec: String) {
 
     fun goNext() { Speech.stop(); if (next != null) nav.replace(Screen.Reader(next.first.id, next.second.id)) else nav.back() }
 
-    Screenful {
+    BookDirection { Screenful {
         Column(Modifier.fillMaxSize()) {
             TopBack(nav, p.title, tr("Section $pos of ${p.sections.size}", "অংশ $pos / ${p.sections.size}"))
             Bar(pos.toFloat() / p.sections.size, Modifier.padding(horizontal = 20.dp), height = 3.dp, color = C.gold)
@@ -515,6 +515,7 @@ fun ReaderScreen(nav: Nav, part: String, sec: String) {
             }
         }
     }
+    } }
 }
 
 @Composable

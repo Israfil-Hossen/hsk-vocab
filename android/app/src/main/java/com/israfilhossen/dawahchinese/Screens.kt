@@ -50,6 +50,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,6 +63,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -288,7 +291,9 @@ fun BookScreen(nav: Nav) {
     val next = Store.nextSection()
     LazyColumn(Modifier.fillMaxSize().statusBarsPadding(), contentPadding = PaddingValues(20.dp)) {
         item {
-            Title(tr("The book", "বই"), "Knowing the Creator · 认识真主")
+            Title(tr("The book", "বই"), bookName() + " · 认识真主")
+            BookLanguage()
+            Gap(12.dp)
             Panel(color = C.green, onClick = next?.let { { nav.go(Screen.Reader(it.first.id, it.second.id)) } }) {
                 Text(tr("Your reading", "তোমার পড়া"), color = C.gold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                 Gap(6.dp)
@@ -312,7 +317,7 @@ fun BookScreen(nav: Nav) {
                 verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(p.title, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-                    Text(p.bn + " · " + tr("${n}/${p.sections.size} read", "${n}/${p.sections.size} পড়া"), fontSize = 13.sp, color = C.muted)
+                    Text((if (p.bn.isNotBlank() && Store.bookLang == "en") p.bn + " · " else "") + tr("${n}/${p.sections.size} read", "${n}/${p.sections.size} পড়া"), fontSize = 13.sp, color = C.muted)
                     Gap(6.dp)
                     Bar(n.toFloat() / p.sections.size, Modifier.width(140.dp), height = 4.dp, color = if (n == p.sections.size) C.ok else C.green)
                 }
@@ -325,8 +330,8 @@ fun BookScreen(nav: Nav) {
 
 @Composable
 fun PartScreen(nav: Nav, id: String) {
-    val p = Data.book.first { it.id == id }
-    Screenful {
+    val p = Data.book.firstOrNull { it.id == id } ?: return
+    BookDirection { Screenful {
         LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 30.dp)) {
             item { TopBack(nav, p.title, p.bn) }
             items(p.sections) { s ->
@@ -339,6 +344,7 @@ fun PartScreen(nav: Nav, id: String) {
             }
         }
     }
+    } }
 }
 
 // ---------------- Me: progress and settings ----------------
@@ -590,3 +596,32 @@ fun OutlinedWide(text: String, onClick: () -> Unit) = OutlinedButton(onClick = o
 }
 
 fun reminderTime(): LocalTime = LocalTime.of(Store.reminderHour, Store.reminderMinute)
+
+/** The edition's name: Knowing the Creator, স্রষ্টাকে জানা or خالق کی پہچان. */
+fun bookName() = when (Store.bookLang) { "bn" -> "স্রষ্টাকে জানা"; "ur" -> "خالق کی پہچان"; else -> "Knowing the Creator" }
+
+/** Urdu reads right to left: lay the book screens out that way. */
+@Composable
+fun BookDirection(content: @Composable () -> Unit) {
+    val dir = if (Store.bookLang == "ur") LayoutDirection.Rtl else LayoutDirection.Ltr
+    CompositionLocalProvider(LocalLayoutDirection provides dir) { content() }
+}
+
+/** Choose the edition of the book: English, Bangla or Urdu. */
+@Composable
+fun BookLanguage() {
+    val langs = listOf("en" to "English", "bn" to "বাংলা", "ur" to "اردو")
+    SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
+        langs.forEachIndexed { i, (code, label) ->
+            SegmentedButton(selected = Store.bookLang == code, onClick = { Store.bookLang = code },
+                shape = SegmentedButtonDefaults.itemShape(i, langs.size),
+                colors = SegmentedButtonDefaults.colors(activeContainerColor = C.mint, activeContentColor = C.green)) { Text(label) }
+        }
+    }
+    if (Store.bookLang != "en") {
+        Gap(8.dp)
+        Text(if (Store.bookLang == "bn") "বাংলা অনুবাদের খসড়া। কুরআনের আয়াতের অনুবাদ: মাওলানা মুহিউদ্দীন খান। ছড়িয়ে দেওয়ার আগে একজন আলেমকে দিয়ে যাচাই করিয়ে নিন।"
+            else "اردو ترجمے کا مسودہ۔ قرآنی آیات کا ترجمہ: مولانا سید ابوالاعلیٰ مودودی۔ پھیلانے سے پہلے کسی عالم سے نظرثانی کروا لیں۔",
+            fontSize = 12.sp, color = C.muted, lineHeight = 17.sp)
+    }
+}

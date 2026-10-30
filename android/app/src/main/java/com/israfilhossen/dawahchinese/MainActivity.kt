@@ -86,6 +86,11 @@ class MainActivity : ComponentActivity() {
             "dialogue" -> listOf(Screen.Tab(1), Screen.LevelScr(2), Screen.LessonScr(l2.lessons.first { it.type == "dialogue" }.id))
             "grammar" -> listOf(Screen.Tab(1), Screen.LevelScr(1), Screen.LessonScr(l1.lessons.first { it.type == "grammar" }.id))
             "reader" -> listOf(Screen.Tab(2), Screen.PartScr(book.id), Screen.Reader(book.id, book.sections[2].id))
+            "book-ur", "reader-ur", "reader-bn" -> {
+                Store.bookLang = s.substringAfter('-')
+                val b = Data.book[2]
+                if (s == "book-ur") listOf(Screen.Tab(2)) else listOf(Screen.Tab(2), Screen.PartScr(b.id), Screen.Reader(b.id, b.sections[1].id))
+            }
             "about" -> listOf(Screen.Tab(3), Screen.About)
             else -> listOf(Screen.Tab(0))
         }

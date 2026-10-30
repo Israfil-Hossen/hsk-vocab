@@ -23,7 +23,7 @@
 <meta name="apple-mobile-web-app-title" content="Dawah Chinese">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Dawah Chinese · 认识真主","url":"https://israfil-hossen.github.io/hsk-vocab/","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":["en","zh","bn"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Mohammad Israfil Hossain"},"description":"Learn Chinese from zero to HSK 4 on one dawah path, with the book Knowing the Creator 认识真主."}
 </script>
@@ -171,6 +171,8 @@ select{width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);b
  <a href="#/me" data-t="me"><span class="ic">👤</span><span data-l="Me|আমি">Me</span></a>
 </div></nav>
 <noscript><p style="padding:20px">Dawah Chinese needs JavaScript. You can still <a href="dawah/read/">read the book online</a>.</p></noscript>
+<script src="dawah/read/bn/toc.js"></script>
+<script src="dawah/read/ur/toc.js"></script>
 <script src="dawah/read/toc.js"></script>
 <script src="dawah/voice.js"></script>
 <script>
@@ -189,7 +191,13 @@ const tr=(en,bn)=>S.bn?bn:en;
 const meaning=i=>S.bn?(i.bn||i.en):i.en;
 const day=(d=new Date())=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const dayNum=(d=new Date())=>Math.floor((d.getTime()-d.getTimezoneOffset()*6e4)/864e5);
-function readerDone(){try{return new Set(JSON.parse(localStorage.getItem('rd:done')||'[]'))}catch(e){return new Set()}}
+// the book comes in three editions; each keeps its own reading progress in the reader
+const BOOKS={en:window.BOOK||[],bn:window.BOOK_bn,ur:window.BOOK_ur};
+const blang=()=>BOOKS[S.blang]?S.blang:(S.bn&&BOOKS.bn?'bn':'en');
+const curBook=()=>BOOKS[blang()]||BOOKS.en;
+const rbase=()=>'dawah/read/'+(blang()==='en'?'':blang()+'/');
+const BNAME={en:'Knowing the Creator',bn:'স্রষ্টাকে জানা',ur:'خالق کی پہچان'};
+function readerDone(){try{return new Set(JSON.parse(localStorage.getItem('rd:done'+(blang()==='en'?'':':'+blang()))||'[]'))}catch(e){return new Set()}}
 function readerAct(){try{return JSON.parse(localStorage.getItem('rd:act')||'{}')}catch(e){return {}}}
 function points(d){const k=day(d);return (S.act[k]||0)+(readerAct()[k]||0)*3}
 let celebrate=false;
@@ -203,15 +211,15 @@ const wordsKnown=()=>Object.values(S.box).filter(v=>v[0]>=2).length;
 let C=null,ALL=[],SENT=[];
 const lessons=l=>l.sections.flatMap(s=>s.units);
 function lessonById(id){for(const l of C.levels)for(const u of lessons(l))if(u.id===id)return [l,u];return null}
-function readTarget(u){const p=(window.BOOK||[]).find(b=>b.u===u.page+'.html');if(!p)return null;
- const s=p.s.find(x=>x[1].replace(/\s+/g,' ').startsWith(u.sec+' '))||p.s[0];return {href:'dawah/read/'+p.u+'#'+s[0],key:p.u+'#'+s[0]}}
+function readTarget(u){const p=curBook().find(b=>b.u===u.page+'.html');if(!p)return null;
+ const s=p.s.find(x=>x[1].replace(/\s+/g,' ').startsWith(u.sec+' '))||p.s[0];return {href:rbase()+p.u+'#'+s[0],key:p.u+'#'+s[0]}}
 function isDone(u){if(u.type==='read'){const t=readTarget(u);return !!S.done[u.id]||(t&&readerDone().has(t.key))}return !!S.done[u.id]}
 function markLesson(id){if(!S.done[id]){S.done[id]=1;log(3)}else save()}
 function nextLesson(){const lv=C.levels;for(const l of lv.filter(l=>l.id>=S.start).concat(lv.filter(l=>l.id<S.start)))for(const u of lessons(l))if(!isDone(u))return [l,u];return null}
 function due(){const t=dayNum(),seen=new Set();return ALL.filter(i=>{const b=S.box[i.zh];if(!b||b[1]>t||seen.has(i.zh))return false;seen.add(i.zh);return true})}
-function bookSections(){return (window.BOOK||[]).flatMap(p=>p.s.map(s=>({p,id:s[0],t:s[1].replace(/\s+/g,' '),key:p.u+'#'+s[0]})))}
+function bookSections(){return curBook().flatMap(p=>p.s.map(s=>({p,id:s[0],t:s[1].replace(/\s+/g,' '),key:p.u+'#'+s[0]})))}
 function nextSection(){const d=readerDone();return bookSections().find(s=>!d.has(s.key))}
-const lessonHref=u=>u.type==='read'?(readTarget(u)||{href:'dawah/read/'}).href:'#/lesson/'+u.id;
+const lessonHref=u=>u.type==='read'?(readTarget(u)||{href:rbase()}).href:'#/lesson/'+u.id;
 const emoji=t=>({words:'🔤',listen:'🎧',dialogue:'🗣',grammar:'🧩',read:'📖'}[t]||'💬');
 const size=u=>u.type==='grammar'?u.points.length:u.type==='read'?1:u.items.length;
 function sub(u){const n=size(u);return u.type==='read'?tr('Read in the book','বই থেকে পড়ো'):u.type==='grammar'?tr(n+' patterns',n+'টি নিয়ম'):u.type==='dialogue'?tr(n+' lines',n+' লাইন'):tr(n+' cards',n+'টি কার্ড')}
@@ -240,7 +248,7 @@ function today(){
  ${dn?`<a class="card row" href="#/review" style="margin-top:12px"><div class="bubble" style="background:var(--gold-soft)">🔁</div><div class="grow"><b>${tr('Review','রিভিউ')}</b><div class="sub">${tr(dn+' cards are due today',dn+'টি কার্ড আজ ঝালাই করার')}</div></div><span class="arrow">›</span></a>`:''}
  <div class="label">${tr('Sentence of the day','আজকের বাক্য')}</div>
  <button class="card" data-say="${esc(sod.zh)}"><div class="row"><div class="grow"><div class="zh" style="font-size:24px;line-height:1.4">${esc(sod.zh)}</div><div class="py">${py(sod)}</div><div style="margin-top:6px">${esc(meaning(sod))}</div></div><span class="say" style="margin:0">▶</span></div></button>
- ${rd?`<div class="label">${tr('From the book','বই থেকে')}</div><a class="card row" href="dawah/read/${rd.p.u}#${rd.id}"><div class="bubble">📖</div><div class="grow"><b>${esc(rd.t)}</b><div class="sub">${esc(rd.p.t)}</div></div><span class="arrow">›</span></a>`:''}
+ ${rd?`<div class="label">${tr('From the book','বই থেকে')}</div><a class="card row" href="${rbase()}${rd.p.u}#${rd.id}"><div class="bubble">📖</div><div class="grow"><b>${esc(rd.t)}</b><div class="sub">${esc(rd.p.t)}</div></div><span class="arrow">›</span></a>`:''}
  <a class="card row" href="#/about" style="margin-top:12px"><div class="bubble">☪</div><div class="grow"><b>${tr('Why this app?','কেন এই অ্যাপ?')}</b><div class="sub">${tr('Learn Chinese with the intention of dawah','দাওয়াহর নিয়তে চাইনিজ শেখো')}</div></div><span class="arrow">›</span></a>`;
 }
 
@@ -264,21 +272,23 @@ function level(id){
 
 function book(){
  const d=readerDone(),all=bookSections(),r=all.filter(s=>d.has(s.key)).length,nx=nextSection();
- return `<h1>${tr('The book','বই')}</h1><div class="sub" style="margin:4px 0 16px">Knowing the Creator · 认识真主 — Mohammad Israfil Hossain</div>
+ return `<h1>${tr('The book','বই')}</h1><div class="sub" style="margin:4px 0 14px">${BNAME[blang()]} · 认识真主 — Mohammad Israfil Hossain</div>
+ <div class="seg" data-set="blang" style="margin-bottom:${blang()==='en'?16:8}px">${[['en','English'],['bn','বাংলা'],['ur','اردو']].filter(l=>BOOKS[l[0]]).map(([v,t])=>`<button data-v="${v}" class="${blang()===v?'on':''}">${t}</button>`).join('')}</div>
+ ${blang()==='en'?'':`<div class="sub" style="font-size:13px;margin-bottom:16px" dir="${blang()==='ur'?'rtl':'ltr'}">${blang()==='bn'?'বাংলা অনুবাদের খসড়া। কুরআনের আয়াতের অনুবাদ: মাওলানা মুহিউদ্দীন খান। ছড়িয়ে দেওয়ার আগে একজন আলেমকে দিয়ে যাচাই করিয়ে নিন।':'اردو ترجمے کا مسودہ۔ قرآنی آیات کا ترجمہ: مولانا سید ابوالاعلیٰ مودودی۔ پھیلانے سے پہلے کسی عالم سے نظرثانی کروا لیں۔'}</div>`}
  <div class="card hero"><div class="row">${ring(r/all.length,70,`<b style="color:#fff;font-size:16px">${Math.round(r*100/all.length)}%</b>`,'#C9A54A')}
  <div class="grow"><h2>${tr(r+' of '+all.length+' sections read',all.length+'টির মধ্যে '+r+'টি অংশ পড়া')}</h2>${nx?`<div class="sub">${tr('Next','পরেরটা')}: ${esc(nx.t)}</div>`:''}</div></div>
- ${nx?`<a class="go" href="dawah/read/${nx.p.u}#${nx.id}">${tr('Continue reading','পড়া চালিয়ে যাও')} →</a>`:''}</div>
+ ${nx?`<a class="go" href="${rbase()}${nx.p.u}#${nx.id}">${tr('Continue reading','পড়া চালিয়ে যাও')} →</a>`:''}</div>
  <div class="label">${tr('Contents','সূচি')}</div>
- ${(window.BOOK||[]).map((p,i)=>{const n=p.s.filter(s=>d.has(p.u+'#'+s[0])).length;
-  return `<a class="card row" href="#/part/${i}"><div class="grow"><b>${esc(p.t)}</b><div style="margin-top:8px">${bar(n/p.s.length)}</div></div><span class="sub" style="font-size:13px">${n}/${p.s.length}</span><span class="arrow">›</span></a>`}).join('')}
- <a class="card row" href="dawah/books/Knowing-the-Creator.pdf" style="margin-top:12px"><div class="bubble">⬇</div><div class="grow"><b>${tr('Download the book (PDF)','বইটা ডাউনলোড করো (PDF)')}</b><div class="sub">${tr('Print-ready, free','প্রিন্টের উপযোগী, বিনামূল্যে')}</div></div></a>
+ ${curBook().map((p,i)=>{const n=p.s.filter(s=>d.has(p.u+'#'+s[0])).length;
+  return `<a class="card row" href="#/part/${i}"><div class="grow"><b dir="auto" style="display:block">${esc(p.t)}</b><div style="margin-top:8px">${bar(n/p.s.length)}</div></div><span class="sub" style="font-size:13px">${n}/${p.s.length}</span><span class="arrow">›</span></a>`}).join('')}
+ <a class="card row" href="dawah/books/Knowing-the-Creator${blang()==="en"?"":"-"+blang()}.pdf" style="margin-top:12px"><div class="bubble">⬇</div><div class="grow"><b>${tr('Download the book (PDF)','বইটা ডাউনলোড করো (PDF)')}</b><div class="sub">${tr('Print-ready, free','প্রিন্টের উপযোগী, বিনামূল্যে')}</div></div></a>
  <a class="card row" href="dawah/" style="margin-top:12px"><div class="bubble">🎧</div><div class="grow"><b>${tr('Listen to every sentence','প্রতিটা বাক্য শোনো')}</b><div class="sub">${tr('The dawah audio pages','দাওয়াহর অডিও পাতা')}</div></div></a>`;
 }
 
 function part(i){
- const p=(window.BOOK||[])[i];if(!p)return book();const d=readerDone();
+ const p=curBook()[i];if(!p)return book();const d=readerDone();
  return top(p.t,tr(p.s.length+' sections',p.s.length+'টি অংশ'),'#/book')+`<div class="card list" style="padding:4px 14px">${p.s.map(s=>{const ok=d.has(p.u+'#'+s[0]);
-  return `<a href="dawah/read/${p.u}#${s[0]}"><div class="grow" style="${ok?'color:var(--muted)':''}">${esc(s[1].replace(/\s+/g,' '))}</div>${ok?'<span class="done">✓</span>':'<span class="arrow">›</span>'}</a>`}).join('')}</div>`;
+  return `<a href="${rbase()}${p.u}#${s[0]}"><div class="grow" dir="auto" style="${ok?'color:var(--muted)':''}">${esc(s[1].replace(/\s+/g,' '))}</div>${ok?'<span class="done">✓</span>':'<span class="arrow">›</span>'}</a>`}).join('')}</div>`;
 }
 
 function me(){
@@ -448,7 +458,7 @@ document.addEventListener('click',e=>{
  if(x=t.closest('#wnext')){if(wPage>=PURPOSE.length){S.onb=true;save();location.replace('#/today')}else{wPage++;render()}return}
  if(t.closest('#wskip')){wPage=PURPOSE.length;render();return}
  if(x=t.closest('.choose button')){const k=x.parentNode.dataset.w;S[k]=k==='bn'?x.dataset.v==='1':+x.dataset.v;save();render();return}
- if(x=t.closest('.seg button')){const k=x.parentNode.dataset.set;S[k]=k==='bn'?x.dataset.v==='1':+x.dataset.v;save();rerender(true);return}
+ if(x=t.closest('.seg button')){const k=x.parentNode.dataset.set;S[k]=k==='bn'?x.dataset.v==='1':k==='blang'?x.dataset.v:+x.dataset.v;save();rerender(true);return}
  if(t.closest('#reveal')){P.show=true;render();return}
  if(x=t.closest('[data-ans]')){const ok=x.dataset.ans==='1';review(P.items[P.i].zh,ok);if(ok)P.knew++;P.i++;P.show=false;render();return}
  if(x=t.closest('[data-opt]')){if(Q.picked!==null)return;const k=+x.dataset.opt,q=Q.qs[Q.i],ok=k===q.a;Q.picked=k;if(ok)Q.score++;review(q.it.zh,ok);rerender(true);
