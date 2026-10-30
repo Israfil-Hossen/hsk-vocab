@@ -1,0 +1,36 @@
+name: Fetch Quran translations
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/quran.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      # Bengali: Muhiuddin Khan; Urdu: Fateh Muhammad Jalandhari. Saved as {"surah:ayah": text}.
+      - name: Download
+        run: |
+          for ed in bn.bengali ur.jalandhry en.sahih; do
+            curl -sSf --retry 4 "https://api.alquran.cloud/v1/quran/$ed" -o /tmp/$ed.json
+            python3 -c "
+          import json,sys
+          d=json.load(open('/tmp/$ed.json'))['data']['surahs']
+          out={f\"{s['number']}:{a['numberInSurah']}\":a['text'] for s in d for a in s['ayahs']}
+          json.dump(out,open('tools/quran/$ed.json','w'),ensure_ascii=False)
+          print('$ed',len(out))"
+          done
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add tools/quran
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Add Quran translations for the Bangla and Urdu editions"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin main && break; sleep 5; done
