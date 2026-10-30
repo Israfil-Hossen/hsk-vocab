@@ -1,5 +1,8 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -10,14 +13,20 @@ android {
         applicationId 'com.israfilhossen.dawahchinese'
         minSdk 26
         targetSdk 36
-        versionCode 1
-        versionName '1.0.0'
+        versionCode 2
+        versionName '2.0.0'
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildFeatures {
+        compose true
     }
 
     compileOptions {
@@ -29,20 +38,20 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-
-    sourceSets {
-        main {
-            assets.srcDirs += [layout.buildDirectory.dir('webassets').get().asFile]
-        }
-    }
 }
 
-// The app shows the same pages as the website: copy them from the repository root into the app's assets.
-def copyWeb = tasks.register('copyWeb', Copy) {
-    from(rootProject.file('..')) {
-        include 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'dawah/**'
-        exclude 'dawah/books/*.pdf', 'dawah/books/*.docx', 'dawah/audio/texts.json'
-    }
-    into layout.buildDirectory.dir('webassets/www')
+kotlin {
+    jvmToolchain(17)
 }
-preBuild.dependsOn copyWeb
+
+dependencies {
+    def bom = platform('androidx.compose:compose-bom:2025.06.01')
+    implementation bom
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.foundation:foundation'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material:material-icons-core'
+    implementation 'androidx.activity:activity-compose:1.10.1'
+    implementation 'androidx.core:core-ktx:1.16.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0'
+}
