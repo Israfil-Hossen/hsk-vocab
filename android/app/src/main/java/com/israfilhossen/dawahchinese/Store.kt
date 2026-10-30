@@ -49,7 +49,7 @@ object Store {
     private val gaps = intArrayOf(0, 1, 3, 7, 16, 35)
     fun known(zh: String) = p.getInt("box:$zh", 0) > 0
     fun review(zh: String, gotIt: Boolean) {
-        val box = if (gotIt) (p.getInt("box:$zh", 0) + 1).coerceAtMost(5) else 1
+        val box = if (gotIt) (p.getInt("box:$zh", 0) + 1).coerceIn(2, 5) else 1
         p.edit().putInt("box:$zh", box).putLong("due:$zh", LocalDate.now().plusDays(gaps[box].toLong()).toEpochDay())
             .putStringSet("seen", set("seen") + zh).apply()
         logActivity(1)

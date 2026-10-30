@@ -64,6 +64,7 @@ h2{font-size:21px;font-weight:700;letter-spacing:-.01em}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
 .card+.card{margin-top:12px}
 a.card,button.card{display:block;width:100%;text-align:left;transition:transform .15s}
+a.card.row{display:flex}
 a.card:active,button.card:active{transform:scale(.985)}
 .row{display:flex;align-items:center;gap:14px}
 .grow{flex:1;min-width:0}
@@ -195,7 +196,7 @@ let celebrate=false;
 function log(n){const k=day(),b=points();S.act[k]=(S.act[k]||0)+n;if(b<S.goal&&b+n>=S.goal)celebrate=true;save()}
 function streak(){let d=new Date();if(!points(d))d.setDate(d.getDate()-1);let n=0;while(points(d)>0){n++;d.setDate(d.getDate()-1)}return n}
 const GAPS=[0,1,3,7,16,35];
-function review(zh,ok){const b=ok?Math.min(5,((S.box[zh]||[0])[0])+1):1;S.box[zh]=[b,dayNum()+GAPS[b]];log(1)}
+function review(zh,ok){const b=ok?Math.min(5,Math.max(2,((S.box[zh]||[0])[0])+1)):1;S.box[zh]=[b,dayNum()+GAPS[b]];log(1)}
 const wordsKnown=()=>Object.values(S.box).filter(v=>v[0]>=2).length;
 
 // ---------- content ----------
@@ -289,7 +290,7 @@ function me(){
  return `<h1>${tr('Me','আমি')}</h1><div class="sub" style="margin:4px 0 16px">${tr('Your progress stays on this device.','তোমার অগ্রগতি শুধু এই ডিভাইসেই থাকে।')}</div>
  <div class="grid2"><div class="stat"><b>🔥 ${streak()}</b><span>${tr('day streak','দিন টানা')}</span></div><div class="stat"><b>🔤 ${wordsKnown()}</b><span>${tr('cards known','কার্ড জানা')}</span></div>
  <div class="stat"><b>✅ ${lessonsDone}</b><span>${tr('lessons done','পাঠ শেষ')}</span></div><div class="stat"><b>📖 ${rdN}</b><span>${tr('sections read','অংশ পড়া')}</span></div></div>
- <div class="card" style="margin-top:12px"><b>${tr('This week','এই সপ্তাহ')}</b><div class="week">${wk.map(([d,p])=>`<div><i class="${p>=S.goal?'full':''}" style="height:${Math.max(6,p/mx*60)}px"></i>${'SMTWTFS'[d.getDay()]}</div>`).join('')}</div></div>
+ <div class="card" style="margin-top:12px"><b>${tr('This week','এই সপ্তাহ')}</b><div class="week">${wk.map(([d,p])=>`<div><i class="${p>=S.goal?'full':''}" style="height:${Math.max(6,p/mx*60)}px"></i>${(S.bn?['র','সো','ম','বু','বৃ','শু','শ']:'SMTWTFS')[d.getDay()]}</div>`).join('')}</div></div>
  <div class="label">${tr('Settings','সেটিংস')}</div>
  <div class="card" style="padding:4px 18px">
   <div class="set"><div class="h">${tr('Meanings in','অর্থ দেখাও')}</div><div class="seg" data-set="bn"><button data-v="1" class="${S.bn?'on':''}">বাংলা</button><button data-v="0" class="${S.bn?'':'on'}">English</button></div></div>
@@ -429,7 +430,8 @@ function render(){
   default:html=today();
  }
  app.innerHTML=html;
- if(celebrate){celebrate=false;showDlg('🎉',tr('Daily goal reached!','আজকের লক্ষ্য পূরণ!'),tr('Alhamdulillah. Come back tomorrow to keep your streak.','আলহামদুলিল্লাহ। কাল আবার এসো, ধারাবাহিকতা ধরে রাখো।'))}
+ const busy=(r==='lesson'||r==='review')&&P&&P.i<P.items.length||r==='quiz'&&Q&&Q.i<Q.qs.length;
+ if(celebrate&&!busy){celebrate=false;showDlg('🎉',tr('Daily goal reached!','আজকের লক্ষ্য পূরণ!'),tr('Alhamdulillah. Come back tomorrow to keep your streak.','আলহামদুলিল্লাহ। কাল আবার এসো, ধারাবাহিকতা ধরে রাখো।'))}
  // speak the new card or quiz word once
  const say=(r==='lesson'&&P&&P.i<P.items.length&&P.items[P.i].zh)||(r==='quiz'&&Q&&Q.i<Q.qs.length&&Q.picked===null&&Q.qs[Q.i].it.zh)||null;
  const tag=r+(P?P.i:'')+(Q?Q.i:'')+say;
@@ -440,7 +442,7 @@ function rerender(keepScroll){const y=scrollY;render();if(keepScroll)scrollTo(0,
 function showDlg(e,t,s){const d=document.createElement('div');d.className='dlg';d.innerHTML=`<div class="card"><div style="font-size:52px">${e}</div><h2 style="margin:8px 0">${esc(t)}</h2><div class="sub" style="margin-bottom:20px">${esc(s)}</div><button class="btn">${tr('OK','ঠিক আছে')}</button></div>`;
  d.onclick=ev=>{if(ev.target===d||ev.target.closest('.btn'))d.remove()};document.body.appendChild(d)}
 
-addEventListener('hashchange',()=>{render();scrollTo(0,0)});
+addEventListener('hashchange',()=>{document.querySelectorAll('.dlg').forEach(d=>d.remove());render();scrollTo(0,0)});
 document.addEventListener('click',e=>{
  const t=e.target;let x;
  if(x=t.closest('#wnext')){if(wPage>=PURPOSE.length){S.onb=true;save();location.replace('#/today')}else{wPage++;render()}return}
@@ -450,7 +452,7 @@ document.addEventListener('click',e=>{
  if(t.closest('#reveal')){P.show=true;render();return}
  if(x=t.closest('[data-ans]')){const ok=x.dataset.ans==='1';review(P.items[P.i].zh,ok);if(ok)P.knew++;P.i++;P.show=false;render();return}
  if(x=t.closest('[data-opt]')){if(Q.picked!==null)return;const k=+x.dataset.opt,q=Q.qs[Q.i],ok=k===q.a;Q.picked=k;if(ok)Q.score++;review(q.it.zh,ok);rerender(true);
-  setTimeout(()=>{Q.picked=null;Q.i++;render()},1000);return}
+  const cur=Q;setTimeout(()=>{if(Q!==cur)return;Q.picked=null;Q.i++;render()},1000);return}
  if(t.closest('#qagain')){Q.i=0;Q.score=0;Q.qs=shuffle(Q.qs);render();return}
  if(x=t.closest('[data-mark]')){markLesson(x.dataset.mark);location.hash=x.dataset.back;return}
  if(t.closest('#togm')){const c=$('#chat');c.classList.toggle('hide-m');t.closest('#togm').textContent=c.classList.contains('hide-m')?tr('Show meanings','অর্থ দেখাও'):tr('Hide meanings','অর্থ লুকাও');return}
