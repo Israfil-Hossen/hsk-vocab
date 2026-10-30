@@ -1,7 +1,7 @@
 {
-  "name": "HSK 30-Day Mastery",
-  "short_name": "HSK Mastery",
-  "description": "Master 1200+ HSK Chinese vocabulary in 30 days with root-word grouping, SRS, and active recall",
+  "name": "Dawah Chinese · HSK 1–4",
+  "short_name": "Dawah Chinese",
+  "description": "Read the Knowing the Creator book online and learn Chinese from zero to HSK 4 through dawah: the Dawah deck, 1,089 HSK words, SRS review and audio for every sentence.",
   "start_url": "/hsk-vocab/",
   "scope": "/hsk-vocab/",
   "display": "standalone",
