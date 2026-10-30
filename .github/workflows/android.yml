@@ -12,6 +12,11 @@ on:
 
 permissions:
   contents: write
+  actions: write
+
+concurrency:
+  group: android
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -38,6 +43,9 @@ jobs:
           yes | "$SM" --licenses > /dev/null || true
           "$SM" "platforms;android-36" "build-tools;36.0.0" 2>&1 | tail -3
           echo "sdk.dir=$SDK" > android/local.properties
+
+      - name: Lesson audio into the app
+        run: python3 tools/app_audio.py
 
       - name: Build app bundle and test APK
         working-directory: android

@@ -447,7 +447,7 @@ fun Week() {
                 Box(Modifier.fillMaxWidth(0.7f).height((70 * v / max).coerceAtLeast(3).dp).clip(RoundedCornerShape(6.dp))
                     .background(if (v >= Store.goal) C.ok else if (v > 0) C.green2 else C.line))
                 Gap(6.dp)
-                Text(d.dayOfWeek.name.take(1), fontSize = 12.sp, color = C.muted)
+                Text(tr(d.dayOfWeek.name.take(1), listOf("সো", "ম", "বু", "বৃ", "শু", "শ", "র")[d.dayOfWeek.value - 1]), fontSize = 12.sp, color = C.muted)
             }
         }
     }

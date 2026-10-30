@@ -30,6 +30,7 @@ object Speech {
                 val r = tts?.setLanguage(Locale.SIMPLIFIED_CHINESE) ?: TextToSpeech.LANG_NOT_SUPPORTED
                 missingVoice.value = r == TextToSpeech.LANG_MISSING_DATA || r == TextToSpeech.LANG_NOT_SUPPORTED
                 ready.value = !missingVoice.value
+                if (ready.value) pickMaleVoice()
                 tts?.setOnUtteranceProgressListener(object : android.speech.tts.UtteranceProgressListener() {
                     override fun onStart(id: String?) {}
                     override fun onDone(id: String?) { speaking.value = null }
@@ -38,6 +39,15 @@ object Speech {
                 })
             } else missingVoice.value = true
         }
+    }
+
+    /** Prefer an installed male Chinese voice (Google's cmn-cn-x-ccd / -cce are male) when no recording exists. */
+    private fun pickMaleVoice() {
+        val t = tts ?: return
+        val zh = runCatching { t.voices }.getOrNull().orEmpty()
+            .filter { it.locale.language == "zh" && (it.locale.country == "CN" || it.locale.country.isEmpty()) && !it.isNetworkConnectionRequired }
+        val male = zh.firstOrNull { v -> listOf("ccd", "cce", "yunxi", "male").any { v.name.lowercase().contains(it) } && !v.name.lowercase().contains("female") }
+        if (male != null) runCatching { t.voice = male }
     }
 
     /** The same key the website uses: FNV-1a of the text without punctuation. */

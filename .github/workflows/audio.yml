@@ -1,0 +1,49 @@
+name: Record audio (male voice)
+
+on:
+  workflow_dispatch:
+    inputs:
+      redo:
+        description: 'Record everything again (yes/no)'
+        default: 'no'
+  push:
+    branches: [main]
+    paths:
+      - 'dawah/audio/texts.json'
+      - 'tools/make_audio.py'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: audio
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install edge-tts
+      - name: Record
+        run: |
+          if [ "${{ github.event.inputs.redo }}" = "yes" ]; then python tools/make_audio.py --redo; else python tools/make_audio.py; fi
+          python tools/make_audio.py
+      - name: Commit the recordings
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add dawah/audio
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Record natural male voice audio"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin main && break; sleep 5; done
+      # A push made with the workflow token starts no other workflow, so start the app build here.
+      - name: Rebuild the Android app with the new audio
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run android.yml --ref main

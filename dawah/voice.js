@@ -10,7 +10,7 @@ function key(t){t=t.replace(/[^一-鿿0-9A-Za-z]/g,'');let h=0x811c9dc5;for(cons
 // higher score = more natural voice
 function score(v){const n=v.name;let s=0;
  if(/zh[-_]CN/i.test(v.lang))s+=20;else if(/^zh/i.test(v.lang))s+=8;else return -1;
- if(/natural|online|neural/i.test(n))s+=50;if(/xiaoxiao|yunxi|xiaoyi|yunjian|xiaochen/i.test(n))s+=20;
+ if(/natural|online|neural/i.test(n))s+=50;if(/yunxi|yunjian|yunyang|yunze|kangkang|\bmale/i.test(n)&&!/female/i.test(n))s+=40;
  if(/google/i.test(n))s+=30;if(/premium|enhanced|siri/i.test(n))s+=35;if(/tingting|lili|yu-shu|lilian/i.test(n))s+=12;
  if(/huihui|kangkang|yaoyao/i.test(n))s-=5;return s}
 function load(){voices=speechSynthesis.getVoices().filter(v=>score(v)>=0).sort((a,b)=>score(b)-score(a));
