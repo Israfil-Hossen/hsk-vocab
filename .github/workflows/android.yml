@@ -15,25 +15,38 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
-
-      - name: Install Android 16 SDK
-        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+      - name: Android SDK (Android 16)
+        run: |
+          SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
+          if [ -z "$SDK" ] || [ ! -d "$SDK" ]; then
+            SDK="$HOME/android-sdk"; mkdir -p "$SDK/cmdline-tools"
+            curl -sSLo /tmp/tools.zip https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+            unzip -q /tmp/tools.zip -d "$SDK/cmdline-tools" && mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
+          fi
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
+          SM=$(ls "$SDK"/cmdline-tools/latest/bin/sdkmanager 2>/dev/null || ls "$SDK"/cmdline-tools/*/bin/sdkmanager | head -1)
+          yes | "$SM" --licenses > /dev/null || true
+          "$SM" "platforms;android-36" "build-tools;36.0.0" 2>&1 | tail -3
+          echo "sdk.dir=$SDK" > android/local.properties
 
       - name: Build app bundle and test APK
         working-directory: android
-        run: ./gradlew --no-daemon bundleRelease assembleDebug
+        run: |
+          set -o pipefail
+          ./gradlew --no-daemon --stacktrace bundleRelease assembleDebug 2>&1 | tee ../build.log
 
       - name: Keep the builds as an artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: dawah-chinese-builds
@@ -41,12 +54,15 @@ jobs:
             android/app/build/outputs/bundle/release/*.aab
             android/app/build/outputs/apk/debug/*.apk
 
-      # Also publish the unsigned bundle on a separate branch, so it can be signed and handed over.
+      # Publish the unsigned bundle, the test APK and the build log on a separate branch (also when the build fails).
       - name: Publish builds to the android-build branch
+        if: always()
         run: |
           mkdir -p /tmp/out
-          cp android/app/build/outputs/bundle/release/*.aab /tmp/out/
-          cp android/app/build/outputs/apk/debug/*.apk /tmp/out/
+          cp android/app/build/outputs/bundle/release/*.aab /tmp/out/ 2>/dev/null || true
+          cp android/app/build/outputs/apk/debug/*.apk /tmp/out/ 2>/dev/null || true
+          tail -c 200000 build.log > /tmp/out/build.log 2>/dev/null || echo "no build log" > /tmp/out/build.log
+          echo "${{ job.status }} ${GITHUB_SHA}" > /tmp/out/status.txt
           cd /tmp/out
           git init -q -b android-build
           git config user.name "github-actions"
