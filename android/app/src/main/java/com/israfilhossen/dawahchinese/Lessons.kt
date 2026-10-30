@@ -133,7 +133,7 @@ fun CardsPlayer(nav: Nav, title: String, sub: String, items: List<Item>, listen:
                             Text(card.zh, fontSize = cardSize(card.zh), style = chineseStyle, textAlign = TextAlign.Center,
                                 lineHeight = cardSize(card.zh) * 1.25f, modifier = Modifier.clickable { Speech.speak(card.zh) })
                             Gap(10.dp)
-                            Pinyin(it, size = 20.sp, align = TextAlign.Center)
+                            Pinyin(card, size = 20.sp, align = TextAlign.Center)
                             Gap(18.dp)
                             SpeakButton(card.zh)
                         }
@@ -141,9 +141,9 @@ fun CardsPlayer(nav: Nav, title: String, sub: String, items: List<Item>, listen:
                             Gap(20.dp)
                             Box(Modifier.fillMaxWidth().height(1.dp).background(C.line))
                             Gap(18.dp)
-                            Text(Store.meaning(it), fontSize = 21.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center, color = C.green)
+                            Text(Store.meaning(card), fontSize = 21.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center, color = C.green)
                             val other = if (Store.bengali) card.en else card.bn
-                            if (other.isNotBlank() && other != Store.meaning(it)) {
+                            if (other.isNotBlank() && other != Store.meaning(card)) {
                                 Gap(6.dp)
                                 Text(other, fontSize = 15.sp, color = C.muted, textAlign = TextAlign.Center)
                             }

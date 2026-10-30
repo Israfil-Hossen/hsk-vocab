@@ -1,12 +1,12 @@
 {
-  "name": "Dawah Chinese · HSK 1–4",
+  "name": "Dawah Chinese · 认识真主",
   "short_name": "Dawah Chinese",
-  "description": "Read the Knowing the Creator book online and learn Chinese from zero to HSK 4 through dawah: the Dawah deck, 1,089 HSK words, SRS review and audio for every sentence.",
+  "description": "Learn Chinese from zero to HSK 4 on one dawah path, and read the book Knowing the Creator 认识真主 online. Free, in English, 中文 and বাংলা.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#EDF5FD",
+  "background_color": "#FAF8F3",
   "theme_color": "#0C3A2D",
   "lang": "en",
   "categories": [

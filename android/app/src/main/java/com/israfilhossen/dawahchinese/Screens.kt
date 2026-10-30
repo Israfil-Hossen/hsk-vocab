@@ -470,8 +470,8 @@ data class Page(val emoji: String, val title: String, val titleBn: String, val b
 
 val purposePages = listOf(
     Page("☪", "Why this app?", "কেন এই অ্যাপ?",
-        "Dawah Chinese is for Muslim students in China. It teaches you Chinese from zero to HSK 4, and at the same time it teaches you to answer your Chinese friends' questions about God and Islam with knowledge, wisdom and kindness. Every word you learn here is learned for dawah.",
-        "চীনে পড়া মুসলিম ছাত্রদের জন্য। শূন্য থেকে HSK 4 পর্যন্ত চাইনিজ শেখায়, আর একই সাথে শেখায় বন্ধুরা আল্লাহ ও ইসলাম নিয়ে প্রশ্ন করলে জ্ঞান, হিকমত আর ভালোবাসা দিয়ে উত্তর দিতে। এখানে শেখা প্রতিটা শব্দ দাওয়াহর নিয়তে শেখা।"),
+        "Dawah Chinese is for Muslim students in China. It teaches you Chinese from zero to HSK 4, and at the same time it teaches you to answer your Chinese friends' questions about God and Islam with knowledge, wisdom and kindness. Every word you learn here is learned for dawah, and learning with that intention is itself worship, in sha Allah.",
+        "চীনে পড়া মুসলিম ছাত্রদের জন্য। শূন্য থেকে HSK 4 পর্যন্ত চাইনিজ শেখায়, আর একই সাথে শেখায় বন্ধুরা আল্লাহ ও ইসলাম নিয়ে প্রশ্ন করলে জ্ঞান, হিকমত আর ভালোবাসা দিয়ে উত্তর দিতে। এখানে শেখা প্রতিটা শব্দ দাওয়াহর নিয়তে শেখা, আর এই নিয়তে শেখাও ইনশাআল্লাহ সওয়াবের কাজ।"),
     Page("🧭", "How to use it", "কীভাবে ব্যবহার করবে",
         "Open Today every day: continue your lesson, review the cards that are due, and read one section of the book. Follow the path from Start from zero to Level 4. Tap any Chinese text to hear it.",
         "প্রতিদিন \"আজ\" খোলো: পাঠ চালিয়ে যাও, দরকারি কার্ড ঝালাই করো, আর বইয়ের একটা অংশ পড়ো। শূন্য থেকে চতুর্থ ধাপ পর্যন্ত পথ ধরে এগোও। যেকোনো চাইনিজ লেখায় চাপ দিলে উচ্চারণ শোনা যাবে।"),
