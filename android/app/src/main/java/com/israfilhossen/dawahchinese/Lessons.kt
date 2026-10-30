@@ -515,7 +515,7 @@ fun ReaderScreen(nav: Nav, part: String, sec: String) {
             }
         }
     }
-    } }
+    }
 }
 
 @Composable

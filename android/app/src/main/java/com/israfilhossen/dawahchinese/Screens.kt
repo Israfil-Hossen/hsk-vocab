@@ -344,7 +344,7 @@ fun PartScreen(nav: Nav, id: String) {
             }
         }
     }
-    } }
+    }
 }
 
 // ---------------- Me: progress and settings ----------------
