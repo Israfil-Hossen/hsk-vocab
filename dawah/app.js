@@ -2,14 +2,13 @@ const $=s=>document.querySelector(s);
 let rate=0.9, voice=null, playing=null;
 function pickVoice(){const v=speechSynthesis.getVoices();voice=v.find(x=>/zh[-_]CN/i.test(x.lang))||v.find(x=>/^zh/i.test(x.lang))||null;const w=$('#warn');if(w)w.style.display=(v.length&&!voice)?'block':'none'}
 if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}else{const w=$('#warn');if(w)w.style.display='block'}
-function say(text,btn,pitch){return new Promise(res=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text.replace(/＿+/g,'，'));u.lang='zh-CN';if(voice)u.voice=voice;u.rate=rate;u.pitch=pitch||1;
- if(playing)playing.classList.remove('on');if(btn){btn.classList.add('on');playing=btn}
- u.onend=u.onerror=()=>{if(btn)btn.classList.remove('on');res()};speechSynthesis.speak(u)})}
+function say(text,btn,pitch){if(playing&&playing!==btn)playing.classList.remove('on');playing=btn;return window.Zh?Zh.speak(text,btn,{rate,pitch}):Promise.resolve()}
 const strip=t=>t.replace(/^[^：:，。]{1,4}[：:]/,'');
 function controls(){
  const s=$('#slow'),q=$('#quiz'),t=$('#theme');
  if(s)s.onclick=e=>{const on=s.getAttribute('aria-pressed')!=='true';s.setAttribute('aria-pressed',on);rate=on?0.6:0.9};
  if(q)q.onclick=e=>{const on=q.getAttribute('aria-pressed')!=='true';q.setAttribute('aria-pressed',on);document.body.classList.toggle('quiz',on)};
+ const vb=$('#voiceBtn');if(vb)vb.onclick=()=>Zh.openSettings();
  if(t)t.onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.dataset.theme=dark?'light':'dark'};
 }
 function renderPart(D){

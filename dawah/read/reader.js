@@ -11,12 +11,8 @@ on('#themeBtn',()=>{const d=R.dataset.theme?R.dataset.theme==='dark':matchMedia(
 on('#fsBtn',()=>{fs=fs>=21?15:fs+2;R.style.setProperty('--fs',fs+'px');ls.set('rd:fs',fs)});
 on('#bnBtn',()=>{B.classList.toggle('nobn');ls.set('rd:nobn',B.classList.contains('nobn')?'1':'0')});
 // tap any Chinese text to hear it
-let voice=null;function pv(){const v=speechSynthesis.getVoices();voice=v.find(x=>/zh[-_]CN/i.test(x.lang))||v.find(x=>/^zh/i.test(x.lang))||null}
-if('speechSynthesis' in window){pv();speechSynthesis.onvoiceschanged=pv}
-let cur=null;
-document.addEventListener('click',e=>{const el=e.target.closest('.cjk,td.zh');if(!el||!('speechSynthesis' in window))return;
- speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(el.innerText.replace(/[＿_]+/g,'，'));u.lang='zh-CN';if(voice)u.voice=voice;u.rate=.85;
- if(cur)cur.classList.remove('say');cur=el;el.classList.add('say');u.onend=u.onerror=()=>el.classList.remove('say');speechSynthesis.speak(u)});
+document.addEventListener('click',e=>{const el=e.target.closest('.cjk,td.zh');if(!el||!window.Zh)return;Zh.speak(el.innerText,el)});
+on('#voiceBtn',()=>window.Zh&&Zh.openSettings());
 // reading progress and resume
 const key='rd:pos:'+location.pathname;const bar=$('.prog');
 addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;if(bar)bar.style.width=(h>0?scrollY/h*100:0)+'%'},{passive:true});
@@ -38,7 +34,7 @@ if(si)si.addEventListener('input',()=>{const q=si.value.trim().toLowerCase();if(
  sr.innerHTML=res.length?res.slice(0,40).map(([,s,sn])=>'<a href="'+B.dataset.root+s.u+'"><b>'+esc(s.h)+'</b><small>'+esc(s.p)+'</small><small>'+esc(sn).replace(re,m=>'<mark>'+m+'</mark>')+'</small></a>').join(''):'<p>No results · কিছু পাওয়া যায়নি</p>'});
 addEventListener('keydown',e=>{if(e.key==='Escape'&&sb)sb.classList.remove('on')});
 // share
-on('#shareBtn',async()=>{const d={title:document.title,url:location.href.split('#')[0]};if(navigator.share){try{await navigator.share(d)}catch(e){}}else{try{await navigator.clipboard.writeText(d.url);alert('Link copied · লিংক কপি হয়েছে')}catch(e){prompt('Copy this link',d.url)}}});
+on('#shareBtn',()=>{if(window.Zh)Zh.share(document.title,location.href.split('#')[0])});
 })();
 // mark sections as read, show progress, go to the next unread section
 (function(){
@@ -62,7 +58,7 @@ if(page){
   const box=document.createElement('div');box.className='mkbox';const key=k(page,h.id);
   const i=all.findIndex(s=>s.u===page&&s.id===h.id),nx=all[i+1];
   box.innerHTML='<button class="mk" data-k="'+key+'"><span class="l"></span></button>'+(nx?'<a class="nx" href="'+(nx.u===page?'':root+nx.u)+'#'+nx.id+'">Next · পরের অংশ: '+nx.t+' →</a>':'');
-  box.querySelector('.mk').onclick=()=>{if(done.has(key))done.delete(key);else{done.add(key);}save();refresh()};
+  box.querySelector('.mk').onclick=()=>{if(done.has(key))done.delete(key);else{done.add(key);try{const d=new Date(),dk=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');const ac=JSON.parse(ls.get('rd:act')||'{}');ac[dk]=(ac[dk]||0)+1;ls.set('rd:act',JSON.stringify(ac))}catch(e){}}save();refresh()};
   h.parentNode.insertBefore(box,end);
  });
 }

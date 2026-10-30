@@ -66,5 +66,5 @@ summary{cursor:pointer}details ul{margin:8px 0 0;padding-left:18px}details li{ma
 </main>
 <footer>Knowing the Creator 认识真主 · Mohammad Israfil Hossain · free for personal study and dawah, not for sale · <a href="../">HSK practice app</a></footer>
 <script src="app.js"></script>
-<script>document.getElementById('share').onclick=async()=>{const d={title:document.title,url:location.href.split('#')[0]};if(navigator.share){try{await navigator.share(d)}catch(e){}}else{try{await navigator.clipboard.writeText(d.url);alert('Link copied · লিংক কপি হয়েছে')}catch(e){prompt('Copy this link',d.url)}}}</script>
+<script src="voice.js"></script><script>document.getElementById('share').onclick=()=>Zh.share(document.title,location.href.split('#')[0])</script>
 </body></html>

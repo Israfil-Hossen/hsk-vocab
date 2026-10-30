@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.israfilhossen.dawahchinese'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'com.israfilhossen.dawahchinese'
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs += [layout.buildDirectory.dir('webassets').get().asFile]
+        }
+    }
+}
+
+// The app shows the same pages as the website: copy them from the repository root into the app's assets.
+def copyWeb = tasks.register('copyWeb', Copy) {
+    from(rootProject.file('..')) {
+        include 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'dawah/**'
+        exclude 'dawah/books/*.pdf', 'dawah/books/*.docx', 'dawah/audio/texts.json'
+    }
+    into layout.buildDirectory.dir('webassets/www')
+}
+preBuild.dependsOn copyWeb

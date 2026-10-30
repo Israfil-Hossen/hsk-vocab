@@ -232,12 +232,41 @@ body::before{content:'';position:fixed;inset:0;background:linear-gradient(170deg
 .prow .pl{font-size:.58rem;font-weight:700;color:#0C3A2D;background:rgba(12,58,45,.08);border-radius:50px;padding:2px 7px;white-space:nowrap}
 .prow .pg{height:3px;background:#E4ECF2;border-radius:3px;margin-top:5px;overflow:hidden}.prow .pg i{display:block;height:100%;background:#0C3A2D}
 a.ni{text-decoration:none}
+.today{margin-top:8px;background:#fff;border-radius:var(--r);box-shadow:var(--sh2);padding:12px;position:relative;overflow:hidden}
+.today .tg{display:flex;gap:12px;align-items:center}
+.ring{width:64px;height:64px;flex-shrink:0;position:relative}.ring svg{transform:rotate(-90deg)}.ring b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 1rem var(--font);color:#0C3A2D;line-height:1}.ring b small{font-size:.5rem;color:var(--tx3);font-weight:600;margin-top:2px}
+.today h2{font-size:.95rem;font-weight:800}.today .gr{font-size:.68rem;color:var(--tx3)}
+.streak{display:inline-flex;align-items:center;gap:3px;background:#FFF3E0;color:#C2410C;border-radius:50px;padding:2px 8px;font-size:.66rem;font-weight:800;margin-top:3px}
+.tasks{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.task{border:1.5px solid #E3EAF0;border-radius:10px;padding:7px 6px;text-align:center;font-size:.62rem;font-weight:700;color:var(--tx2);cursor:pointer;line-height:1.25;background:#FAFCFE}
+.task i{display:block;font-style:normal;font-size:1.05rem;margin-bottom:1px}.task small{display:block;font-weight:500;color:var(--tx3)}
+.task.ok{border-color:#0F9D58;background:#E9F7EF;color:#0A7B43}
+.sod{margin-top:10px;background:linear-gradient(135deg,#0C3A2D,#1F6B52);color:#F4EBD0;border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;cursor:pointer}
+.sod .k{font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:#E8CF85;font-weight:700}
+.sod .z{font:700 1.05rem var(--se);line-height:1.35}.sod .e{font-size:.64rem;opacity:.85}
+.sod button{border:none;background:#E8CF85;color:#0C3A2D;border-radius:50%;width:34px;height:34px;font-size:.9rem;flex-shrink:0;cursor:pointer}
+.tbtns{display:flex;gap:6px;margin-top:8px}.tbtns button{flex:1;border:1.5px solid #E3EAF0;background:#fff;border-radius:50px;padding:6px;font:700 .64rem var(--font);color:var(--tx2);cursor:pointer}
+.setc{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:4px 12px 12px;margin:12px 0}
+.wk{display:flex;gap:6px;align-items:flex-end;height:70px;margin:6px 0 10px}.wk div{flex:1;text-align:center;font-size:.55rem;color:var(--tx3)}.wk i{display:block;background:#1F6B52;border-radius:4px 4px 0 0;margin:0 auto 3px;width:70%;min-height:2px}
+.setr{display:flex;align-items:center;justify-content:space-between;font-size:.75rem;font-weight:600;padding:6px 0}.setr select{font:inherit;border:1.5px solid #E3EAF0;border-radius:8px;padding:4px}
+.setb{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}.setb button{border:1.5px solid #E3EAF0;background:#FAFCFE;border-radius:10px;padding:8px 4px;font:700 .64rem var(--font);color:var(--tx2);cursor:pointer}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:999}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#0C3A2D;color:#F4EBD0;padding:10px 16px;border-radius:50px;font:700 .8rem var(--font);box-shadow:var(--sh2);z-index:1000;animation:fi .3s ease}
 .dwbook{display:flex;align-items:center;gap:11px;margin-top:8px;background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:11px 12px;text-decoration:none;color:var(--tx)}
 .dwbook .bi{font-size:1.6rem}.dwbook .bt{flex:1;min-width:0}.dwbook b{display:block;font-size:.8rem}.dwbook small{display:block;font-size:.66rem;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dwbook .bb{height:4px;background:#E4ECF2;border-radius:4px;margin-top:5px;overflow:hidden}.dwbook .bb i{display:block;height:100%;background:#A8842F}
 .dwbook .go{font-size:.72rem;font-weight:700;color:#0C3A2D;white-space:nowrap}
 .icard-icon.dw{background:linear-gradient(135deg,#1F6B52,#0C3A2D);color:#E8CF85;font-size:1.6rem}
 .lvn{white-space:nowrap}
+#intro{position:fixed;inset:0;z-index:2000;background:linear-gradient(170deg,#0C3A2D,#155A45 60%,#0C3A2D);color:#F4EBD0;display:flex;flex-direction:column;padding:max(18px,env(safe-area-inset-top)) 18px max(18px,env(safe-area-inset-bottom));font-family:var(--font)}
+#intro .sl{flex:1;overflow:auto;max-width:520px;margin:0 auto;width:100%;display:none;flex-direction:column;justify-content:center}#intro .sl.on{display:flex}
+#intro .ic{font-size:2.6rem;margin-bottom:6px}#intro h1{font-size:1.45rem;line-height:1.25;margin-bottom:8px}#intro h1 small{display:block;font-size:.85rem;color:#E8CF85;font-weight:600;margin-top:4px}
+#intro p,#intro li{font-size:.86rem;line-height:1.55;color:#E9E2C8}#intro .bn{color:#CFE6DA;font-size:.82rem;margin-top:6px}
+#intro ol{padding-left:18px;margin-top:6px}#intro li{margin:5px 0}#intro li b{color:#fff}
+#intro .ft{display:flex;gap:8px;align-items:center;max-width:520px;margin:12px auto 0;width:100%}
+#intro .dots{flex:1;display:flex;gap:6px}#intro .dots i{width:8px;height:8px;border-radius:50%;background:rgba(244,235,208,.3)}#intro .dots i.on{background:#E8CF85;width:22px;border-radius:5px}
+#intro button{border:none;border-radius:50px;padding:11px 20px;font:700 .85rem var(--font);cursor:pointer}#intro .nx{background:#E8CF85;color:#0C3A2D}#intro .sk{background:transparent;color:#E9E2C8}
+#intro .rm{display:block;width:100%;margin-top:12px;background:rgba(244,235,208,.12);color:#F4EBD0;border:1.5px solid rgba(232,207,133,.5)}
 </style>
 </head>
 <body>
@@ -248,7 +277,25 @@ a.ni{text-decoration:none}
 <div class="tabs" id="tabs"><button class="tab on" data-l="5">☪ Dawah</button><button class="tab" data-l="0">All HSK</button><button class="tab" data-l="1">HSK 1</button><button class="tab" data-l="2">HSK 2</button><button class="tab" data-l="3">HSK 3</button><button class="tab" data-l="4">HSK 4</button></div>
 
 <!-- HOME -->
+<div id="intro" style="display:none">
+<div class="sl"><div class="ic">☪</div><h1>Why this app?<small>কেন এই অ্যাপ?</small></h1>
+<p>Dawah Chinese is for Muslim students in China. It does two things at once: it teaches you Chinese <b>from zero to HSK 4</b>, and it teaches you to answer your Chinese friends' questions about God and Islam <b>with knowledge, wisdom and kindness</b>.</p>
+<p>Everything is free and works offline: the full book <b>Knowing the Creator 认识真主</b>, a Dawah deck of 210 sentences, all 1,089 HSK words, and audio for every sentence, in English, 中文 and বাংলা.</p>
+<p class="bn">চীনে পড়া মুসলিম ছাত্রদের জন্য: শূন্য থেকে HSK 4 পর্যন্ত চাইনিজ শেখা, আর বন্ধুরা আল্লাহ ও ইসলাম নিয়ে প্রশ্ন করলে জ্ঞান, হিকমত আর ভালোবাসা দিয়ে উত্তর দেওয়া শেখা।</p></div>
+<div class="sl"><div class="ic">🧭</div><h1>How to use it<small>কীভাবে ব্যবহার করবেন</small></h1>
+<ol><li><b>Open "Today" every day</b> and finish three small tasks: review, learn 5, read 1 section (about 15 minutes). <span class="bn">প্রতিদিন "Today"-র তিনটা ছোট কাজ।</span></li>
+<li><b>Follow the ☪ Dawah path</b> stage by stage: first-day phrases, core words, sentences for each HSK level, the 12 questions people ask and their answers. Tap ▶ to hear any sentence. <span class="bn">ধাপে ধাপে দাওয়াহর পথ, ▶ চাপলে উচ্চারণ।</span></li>
+<li><b>Read the book</b> inside the app. Tap "Mark as read" after each part and go to the next. <span class="bn">অ্যাপের ভেতরেই বই পড়ুন, প্রতিটা অংশ শেষে "Mark as read"।</span></li>
+<li><b>New to Chinese?</b> Start with Part 0: pinyin, tones and characters, explained for Bengali speakers. <span class="bn">একদম নতুন হলে Part 0 দিয়ে শুরু।</span></li>
+<li><b>Use the HSK 1–4 tabs</b> for all exam words, with quiz and spaced review. <span class="bn">HSK ট্যাবে পরীক্ষার সব শব্দ।</span></li></ol></div>
+<div class="sl"><div class="ic">🔥</div><h1>Why every day?<small>কেন প্রতিদিন?</small></h1>
+<p>Fifteen minutes every day is worth more than three hours once a week: your memory keeps what it meets again and again. The app counts your streak 🔥 and celebrates each day you reach your goal.</p>
+<p>And remember the purpose: speak about your faith when a friend asks, with good manners and within the law. Practise here, so that when the question comes, you are ready.</p>
+<p class="bn">প্রতিদিন ১৫ মিনিট, সপ্তাহে একদিন তিন ঘণ্টার চেয়ে অনেক বেশি কাজে আসে। আর উদ্দেশ্য মনে রাখুন: বন্ধু জিজ্ঞেস করলে আদব আর আইন মেনে উত্তর দেওয়া। প্রশ্ন আসার আগেই এখানে প্রস্তুত হোন।</p>
+<button class="rm" onclick="remind()">⏰ Remind me every day · প্রতিদিন মনে করিয়ে দাও</button></div>
+<div class="ft"><div class="dots"></div><button class="sk" onclick="introDone()">Skip</button><button class="nx" onclick="introNext()">Next →</button></div></div>
 <div id="homeV" class="mx">
+<div id="today" class="today"></div>
 <div class="icard"><div class="icard-icon">📚</div><div class="info-body"><h2 id="it">HSK 1-4 Vocabulary</h2><div class="ist"><div class="is"><div class="d d-b"></div><span id="iw">0</span></div><div class="is"><div class="d d-g"></div><span id="il">0</span></div><div class="is"><div class="d d-y"></div><span id="ir">30 days</span></div></div></div></div>
 <div class="pbar"><div class="pfill" id="pf" style="width:0%"></div></div><div class="plbl"><span id="pt">0/0</span><span id="pp">0%</span></div>
 <div id="dwHero" class="dwhero" style="display:none"></div>
@@ -287,6 +334,10 @@ a.ni{text-decoration:none}
 <div class="stit" style="margin-top:12px"><div class="si">📊</div><h3>Your Progress</h3></div>
 <div class="sgrid" id="sg"></div>
 <div class="lvprog" id="lp"></div>
+<div class="setc"><div class="stit"><div class="si">⚙</div><h3>Daily habit &amp; voice · অভ্যাস ও কণ্ঠ</h3></div>
+<div class="wk" id="wk"></div>
+<div class="setr"><span>Daily goal · দৈনিক লক্ষ্য</span><select id="goalSel" onchange="setGoal(this.value)"><option value="5">5 · light</option><option value="10">10 · steady</option><option value="20">20 · strong</option><option value="30">30 · intense</option></select></div>
+<div class="setb"><button onclick="showIntro()">ℹ About this app</button><button onclick="Zh.openSettings()">🎙 Chinese voice</button><button onclick="remind()">⏰ Daily reminder</button></div></div>
 <button class="rstbtn" onclick="resetAll()">🗑 Reset All Progress</button>
 </div>
 
@@ -298,6 +349,7 @@ a.ni{text-decoration:none}
 <button class="ni" data-nav="stats" onclick="navTo('stats')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Stats</button>
 </div></nav>
 <script src="dawah/read/toc.js"></script>
+<script src="dawah/voice.js"></script>
 <script>
 const W=[
 {h:"爱",p:"ài",m:"love",b:"ভালোবাসা",l:1,r:"爱",pos:"v"},{h:"八",p:"bā",m:"eight",b:"আট",l:1,r:"—",pos:"num"},{h:"爸爸",p:"bàba",m:"father",b:"বাবা",l:1,r:"爸",pos:"n"},{h:"杯子",p:"bēizi",m:"cup",b:"কাপ",l:1,r:"子",pos:"n"},{h:"北京",p:"Běijīng",m:"Beijing",b:"বেইজিং",l:1,r:"北",pos:"n"},
@@ -536,9 +588,9 @@ let curLvl=initTab(),curDay=null,curMode='learn',pracS={},quizS={};
 
 // SRS: {word: {interval: minutes, next: timestamp, ease: 1-3}}
 function isL(h){return learned[h]===true}
-function toggleL(h){if(learned[h])delete learned[h];else learned[h]=true;save()}
+function toggleL(h){if(learned[h])delete learned[h];else{learned[h]=true;logAct('l')}save()}
 function save(){localStorage.setItem('hsk_l',JSON.stringify(learned));localStorage.setItem('hsk_srs',JSON.stringify(srs))}
-function speak(t){const u=new SpeechSynthesisUtterance(t);u.lang='zh-CN';u.rate=0.8;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function speak(t){if(window.Zh)Zh.speak(t)}
 function initTab(){const m={dawah:5,all:0,hsk1:1,hsk2:2,hsk3:3,hsk4:4};const q=new URLSearchParams(location.search).get('tab')||location.hash.slice(1);if(q in m)return m[q];const s=parseInt(localStorage.getItem('hsk_tab'));return isNaN(s)?5:s}
 function getW(){return curLvl===5?DAWAH:curLvl===0?W:W.filter(w=>w.l===curLvl)}
 
@@ -551,7 +603,7 @@ function srsRate(h,ease){
   if(ease===1)newInt=1;
   srs[h]={interval:newInt,next:now+newInt*60000,ease};
   if(!learned[h])learned[h]=true;
-  save();
+  logAct('r');save();
 }
 function getDue(){
   const now=Date.now();
@@ -568,6 +620,7 @@ function buildDays(words){
 }
 
 function renderHome(){
+  if(typeof renderToday==='function')renderToday();
   const ws=getW(),days=buildDays(ws),total=ws.length,lc=ws.filter(w=>isL(w.h)).length,pct=total?Math.round(lc/total*100):0;
   const nm=['HSK 1-4','HSK 1','HSK 2','HSK 3','HSK 4','☪ Dawah Chinese'];
   document.getElementById('it').textContent=nm[curLvl]+' ('+total+(curLvl===5?' items':' words')+')';
@@ -762,6 +815,7 @@ function renderReview(){
 
 // STATS
 function renderStats(){
+  if(typeof renderWeek==='function')renderWeek();
   const t=W.length,l=W.filter(w=>isL(w.h)).length,p=t?Math.round(l/t*100):0,due=getDue().length;
   document.getElementById('sg').innerHTML=`<div class="sbox"><div class="sv sv-1">${t}</div><div class="sl">Total Words</div></div><div class="sbox"><div class="sv sv-2">${l}</div><div class="sl">Learned</div></div><div class="sbox"><div class="sv sv-3">${p}%</div><div class="sl">Progress</div></div><div class="sbox"><div class="sv sv-4">${due}</div><div class="sl">Due Review</div></div>`;
   document.getElementById('lp').innerHTML=[5,1,2,3,4].map(lv=>{
@@ -794,6 +848,59 @@ document.getElementById('sb').addEventListener('input',function(){
 // HSK TABS
 document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');curLvl=parseInt(t.dataset.l);try{localStorage.setItem('hsk_tab',curLvl)}catch(e){}if(curDay!==null)goHome();else renderHome()});
 document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',+x.dataset.l===curLvl));
+
+// DAILY HABIT: activity log, streak, goal, sentence of the day, reminders, install
+function dkey(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function getJ(k,dflt){try{return JSON.parse(localStorage.getItem(k))||dflt}catch(e){return dflt}}
+function setJ(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function goal(){return parseInt(localStorage.getItem('act:goal'))||10}
+function setGoal(v){try{localStorage.setItem('act:goal',v)}catch(e){}renderToday()}
+function dayPts(k){const a=getJ('act',{})[k]||{},r=getJ('rd:act',{})[k]||0;return (a.l||0)+(a.r||0)+2*r}
+function logAct(kind){const a=getJ('act',{}),k=dkey();a[k]=a[k]||{l:0,r:0};a[k][kind]++;setJ('act',a);
+  if(dayPts(k)>=goal()&&localStorage.getItem('act:cel')!==k){try{localStorage.setItem('act:cel',k)}catch(e){}setTimeout(()=>{confetti();toast('মাশাআল্লাহ! Today\'s goal done 🎉')},350)}}
+function streak(){let n=0,d=new Date();if(dayPts(dkey(d))===0)d.setDate(d.getDate()-1);while(dayPts(dkey(d))>0){n++;d.setDate(d.getDate()-1)}return n}
+function sentenceOfDay(){const s=DAWAH.filter(x=>x.t==='s'||x.t==='f');const d=new Date(),i=(d.getFullYear()*372+d.getMonth()*31+d.getDate())%s.length;return s[i]}
+function renderToday(){
+  const el=document.getElementById('today');if(!el)return;const k=dkey(),a=getJ('act',{})[k]||{},rd=getJ('rd:act',{})[k]||0,p=dayPts(k),g=goal(),pc=Math.min(1,p/g),st=streak(),due=getDue().length;
+  const h=new Date().getHours(),greet=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  const C=2*Math.PI*27,s=sentenceOfDay();
+  el.innerHTML=`<div class="tg"><div class="ring"><svg width="64" height="64"><circle cx="32" cy="32" r="27" fill="none" stroke="#E8EEF3" stroke-width="7"/><circle cx="32" cy="32" r="27" fill="none" stroke="${pc>=1?'#0F9D58':'#1F6B52'}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pc)}"/></svg><b>${p}<small>of ${g}</small></b></div>
+  <div style="flex:1;min-width:0"><div class="gr">Assalamu alaikum · ${greet}</div><h2>${pc>=1?'Goal done today · মাশাআল্লাহ!':'Today · আজকের লক্ষ্য'}</h2>${st?`<span class="streak">🔥 ${st}-day streak</span>`:'<span class="gr">Start your streak today · আজ থেকে শুরু</span>'}</div></div>
+  <div class="tasks"><div class="task ${due===0&&Object.keys(srs).length?'ok':''}" onclick="navTo('review')"><i>↻</i>Review<small>${due?due+' due':Object.keys(srs).length?'all done':'after learning'}</small></div>
+  <div class="task ${(a.l||0)>=5?'ok':''}" onclick="startNext()"><i>✚</i>Learn 5<small>${Math.min(a.l||0,5)}/5 new</small></div>
+  <div class="task ${rd>=1?'ok':''}" onclick="location.href=document.getElementById('dwBook').href||'dawah/read/'"><i>📖</i>Read 1<small>${rd?'section read':'book section'}</small></div></div>
+  ${s?`<div class="sod" onclick="Zh.speak('${s.h.replace(/'/g,"\\'")}')"><div style="flex:1;min-width:0"><div class="k">Sentence of the day · আজকের বাক্য</div><div class="z">${s.h}</div><div class="e">${s.p}<br>${s.m} · ${s.b}</div></div><button aria-label="Play">▶</button></div>`:''}
+  <div class="tbtns"><button onclick="remind()">⏰ Remind me daily</button><button onclick="Zh.openSettings()">🎙 Voice</button>${installEvt||isIOS()?'<button onclick="installApp()">📲 Install</button>':''}</div>`;
+}
+function startNext(){if(curLvl!==5){curLvl=5;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',+x.dataset.l===5));}const days=buildDays(getW());let i=days.findIndex(d=>d.flatMap(g=>g.words).some(w=>!isL(w.h)));openDay(i<0?0:i)}
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+function confetti(){const c=document.createElement('canvas');c.id='confetti';c.width=innerWidth;c.height=innerHeight;document.body.appendChild(c);const x=c.getContext('2d');
+  const P=Array.from({length:140},()=>({x:innerWidth/2,y:innerHeight/3,vx:(Math.random()-.5)*12,vy:Math.random()*-12-3,s:4+Math.random()*5,c:['#0C3A2D','#E8CF85','#1F6B52','#F4B400','#DB4437','#1A73E8'][Math.random()*6|0],r:Math.random()*6}));
+  let f=0;(function tick(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.r+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++f<110)requestAnimationFrame(tick);else c.remove()})()}
+function remind(){
+  if(window.AndroidApp){const tm=prompt('Daily reminder time (24h) · প্রতিদিন কখন মনে করাব?','20:00');if(!tm)return;const m=tm.match(/(\d{1,2})[:.]?(\d{2})?/);if(!m)return;AndroidApp.setReminder(Math.min(23,+m[1]),Math.min(59,+(m[2]||0)));toast('⏰ Reminder set · প্রতিদিন '+tm);return}
+  const tm=prompt('Daily reminder time (24h) · প্রতিদিন কখন মনে করাব?','20:00');if(!tm)return;const m=tm.match(/(\d{1,2})[:.]?(\d{2})?/);if(!m)return;
+  const hh=String(Math.min(23,+m[1])).padStart(2,'0'),mm=String(Math.min(59,+(m[2]||0))).padStart(2,'0'),d=dkey().replace(/-/g,''),url=location.href.split('?')[0].split('#')[0];
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Dawah Chinese//EN','BEGIN:VEVENT','UID:dawah-chinese-daily@'+location.host,'DTSTAMP:'+d+'T000000Z','DTSTART:'+d+'T'+hh+mm+'00','DURATION:PT15M','RRULE:FREQ=DAILY',
+   'SUMMARY:📖 Dawah Chinese · 15 minutes','DESCRIPTION:Review\\, learn 5 and read 1 section · আজকের পাঠ: '+url,'URL:'+url,'BEGIN:VALARM','ACTION:DISPLAY','TRIGGER:PT0M','DESCRIPTION:Dawah Chinese','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const g='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('📖 Dawah Chinese · 15 minutes')+'&dates='+d+'T'+hh+mm+'00/'+d+'T'+hh+String(Math.min(59,+mm+15)).padStart(2,'0')+'00&recur='+encodeURIComponent('RRULE:FREQ=DAILY')+'&details='+encodeURIComponent('Review, learn 5 and read 1 section: '+url);
+  if(confirm('Google Calendar? (OK)\nOr download a calendar file for any phone (Cancel)\nGoogle ক্যালেন্ডার হলে OK, অন্য ক্যালেন্ডার হলে Cancel')){open(g,'_blank')}
+  else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='dawah-chinese-reminder.ics';a.click()}
+}
+let installEvt=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;renderToday()});
+function isIOS(){if(window.AndroidApp)return false;return /iphone|ipad|ipod/i.test(navigator.userAgent)&&!navigator.standalone}
+function installApp(){if(installEvt){installEvt.prompt();installEvt=null;renderToday()}else alert(isIOS()?'iPhone: tap Share ⬆ then "Add to Home Screen" · শেয়ার চেপে "Add to Home Screen"':'Use your browser menu → "Install app" or "Add to Home screen" · ব্রাউজারের মেনু থেকে "Install app"')}
+function renderWeek(){const el=document.getElementById('wk');if(!el)return;const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push([d,dayPts(dkey(d))])}
+  const mx=Math.max(goal(),...days.map(x=>x[1]));el.innerHTML=days.map(([d,p])=>`<div><i style="height:${Math.round(p/mx*52)}px;${p>=goal()?'background:#0F9D58':''}"></i>${'SMTWTFS'[d.getDay()]}<br>${p}</div>`).join('');
+  const gs=document.getElementById('goalSel');if(gs)gs.value=String(goal())}
+
+let introI=0;
+function showIntro(){const el=document.getElementById('intro');el.style.display='flex';introI=0;introShow()}
+function introShow(){const s=[...document.querySelectorAll('#intro .sl')];s.forEach((x,i)=>x.classList.toggle('on',i===introI));
+  document.querySelector('#intro .dots').innerHTML=s.map((_,i)=>`<i class="${i===introI?'on':''}"></i>`).join('');document.querySelector('#intro .nx').textContent=introI===s.length-1?'Start · শুরু করুন':'Next →'}
+function introNext(){const n=document.querySelectorAll('#intro .sl').length;if(introI<n-1){introI++;introShow()}else introDone()}
+function introDone(){document.getElementById('intro').style.display='none';try{localStorage.setItem('intro:seen','1')}catch(e){}}
+if(!localStorage.getItem('intro:seen'))showIntro();
 
 renderHome();
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dawah Chinese</string>
+    <string name="reminder_channel">Daily study reminder</string>
+    <string name="reminder_title">📖 Dawah Chinese · today\'s 15 minutes</string>
+    <string name="reminder_text">Review, learn 5 and read 1 section · আজকের পাঠ শুরু করুন</string>
+</resources>
