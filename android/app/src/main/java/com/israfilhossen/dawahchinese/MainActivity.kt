@@ -13,13 +13,14 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -106,11 +107,12 @@ fun App(nav: Nav) {
     if (top is Screen.Tab) {
         Scaffold(
             containerColor = C.bg,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
             bottomBar = {
                 NavigationBar(containerColor = Color.White, tonalElevation = 0.dp) {
                     val items = listOf(
                         Triple(Icons.Filled.Home, tr("Today", "আজ"), 0),
-                        Triple(Icons.Filled.Star, tr("Learn", "শেখা"), 1),
+                        Triple(Icons.Filled.Place, tr("Path", "পথ"), 1),
                         Triple(Icons.AutoMirrored.Filled.List, tr("Book", "বই"), 2),
                         Triple(Icons.Filled.Person, tr("Me", "আমি"), 3),
                     )
